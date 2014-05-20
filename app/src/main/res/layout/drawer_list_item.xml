@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="@drawable/list_selector">
+
+    <View
+        android:id="@+id/divider_top"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#E5E5E5" />
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="25dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:contentDescription="@string/desc_list_item_icon"
+        android:layout_centerVertical="true" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#000000"
+        android:gravity="center_vertical"
+        android:fontFamily="sans-serif-light"
+        android:paddingLeft="20dp"/>
+
+    <TextView
+        android:id="@+id/footer_text"
+        android:layout_width="215dp"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/icon"
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"
+        android:textColor="#000000"
+        android:text="HELP"
+        android:gravity="center_vertical"
+        android:fontFamily="sans-serif-light"
+        android:paddingRight="40dp"/>
+
+    <View
+        android:id="@+id/divider_bottom"
+        android:layout_marginTop="48dp"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#E5E5E5" />
+
+
+</RelativeLayout>

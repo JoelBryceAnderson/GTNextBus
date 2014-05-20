@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">GT NextBus</string>
+    <string name="desc_list_item_icon">icon</string>
+
+    <string-array name="buses">
+        <item name="red">Red Route</item>
+        <item name="blue">Blue Route</item>
+        <item name="green">Green Route</item>
+        <item name="trolley">Emory Shuttle</item>
+        <item name="midnight">Tech Trolley</item>
+        <item name="emory">Midnight Rambler</item>
+    </string-array>
+    <string-array name="sub">
+        <item name="about">ABOUT</item>
+        <item name="feedback">SETTINGS</item>
+    </string-array>
+
+    <array name="icons">
+        <item>@drawable/ic_help_40</item>
+        <item>@drawable/ic_gear_40</item>
+    </array>
+
+    <string-array name="red_routes">
+        <item name="head">Red Route</item>
+        <item name="first">Fitten Hall</item>
+        <item name="second">McMillian &amp; 8th</item>
+        <item name="third">8th &amp; Hemphill</item>
+        <item name="fourth">Ferst &amp; Hemphill</item>
+        <item name="fifth">Ferst &amp; State</item>
+        <item name="sixth">Ferst &amp; Atlantic</item>
+        <item name="seventh">Klaus</item>
+        <item name="eighth">Ferst &amp; Fowler</item>
+        <item name="ninth">Techwood &amp; 5th</item>
+        <item name="tenth">Techwood &amp; 4th</item>
+        <item name="eleventh">Techwood &amp; Bobby Dodd</item>
+        <item name="twelfth">Techwood &amp; North Ave</item>
+        <item name="thirteenth">North Ave Apartments</item>
+        <item name="fourteenth">North Ave &amp; President\'s Lot</item>
+        <item name="fifteenth">Tech &amp; Aerospace</item>
+        <item name="sixteenth">Tech &amp; State</item>
+        <item name="seventeenth">CRC</item>
+    </string-array>
+    <string-array name="blue_destinations">
+        <item name="first">Blue Route</item>
+        <item name="sixteenth">Fitten Hall</item>
+        <item name="second">McMillian &amp; 8th</item>
+        <item name="third">8th &amp; Hemphill</item>
+        <item name="fourth">CRC</item>
+        <item name="fifth">Tech &amp; State</item>
+        <item name="sixth">North Ave &amp; Burge Deck</item>
+        <item name="seventh">North Ave Apartments</item>
+        <item name="eighth">Techwood &amp; North Ave</item>
+        <item name="ninth">Techwood &amp; 3rd</item>
+        <item name="tenth">Techwood &amp; 4th</item>
+        <item name="eleventh">Techwood &amp; 5th</item>
+        <item name="twelfth">Ferst &amp; Fowler</item>
+        <item name="thirteenth">Klaus</item>
+        <item name="fourteenth">Ferst &amp; Atlantic</item>
+        <item name="fifteenth">Ferst &amp; State</item>
+    </string-array>
+    <string-array name="green_destinations">
+        <item name="header">Green Route Destinations</item>
+        <item name="tep">TEP</item>
+        <item name="hub">Transit Hub</item>
+        <item name="fourteenth">14th Street</item>
+    </string-array>
+    <string-array name="trolley_destinations">
+        <item name="header">Tech Trolley Destinations</item>
+        <item name="marta">Marta Station</item>
+        <item name="hub">Transit Hub</item>
+    </string-array>
+    <string-array name="midnight_destinations">
+        <item name="header">Midnight Rambler Destinations</item>
+        <item name="culc">CULC</item>
+        <item name="fitten">Fitten Hall</item>
+        <item name="coming_soon">Coming This Fall</item>
+    </string-array>
+    <string-array name="emory_destinations">
+        <item name="header">Emory Shuttle Destinations</item>
+        <item name="emory">Emory</item>
+        <item name="gatech">Georgia Tech</item>
+    </string-array>
+    <string-array name="green_tep_stops">
+        <item name="first">State &amp; Tech</item>
+        <item name="second">Hub</item>
+        <item name="third">Tech Tower</item>
+        <item name="fourth">NARA</item>
+        <item name="fifth">TEP</item>
+    </string-array>
+    <string-array name="green_hub_stops">
+        <item name="first">14th &amp; State</item>
+        <item name="second">GCATT</item>
+        <item name="third">GLC</item>
+        <item name="fourth">Baker Building</item>
+        <item name="fifth">Ferst &amp; State</item>
+        <item name="sixth">Ferst &amp; Hemphill</item>
+        <item name="seventh">CRC</item>
+        <item name="eighth">Student Center</item>
+    </string-array>
+    <string-array name="green_fourteenth_stops">
+        <item name="first">State &amp; Tech</item>
+        <item name="second">Student Center at Tech Parkway</item>
+        <item name="third">Hub</item>
+        <item name="fourth">Student Center</item>
+        <item name="fifth">CRC</item>
+        <item name="sixth">Ferst &amp; Hemphill</item>
+        <item name="seventh">Ferst &amp; State</item>
+        <item name="eighth">North Deck</item>
+        <item name="ninth">Hemphill &amp; 10th</item>
+        <item name="tenth">Hemphill &amp; Curran</item>
+        <item name="eleventh">14th Street Bus Yard</item>
+    </string-array>
+    <string-array name="trolley_marta_stops">
+        <item name="first">Student Center</item>
+        <item name="second">CRC</item>
+        <item name="third">Ferst &amp; Hemphill</item>
+        <item name="fourth">Ferst &amp; Atlantic</item>
+        <item name="fifth">Klaus</item>
+        <item name="sixth">Ferst &amp; Fowler</item>
+        <item name="seventh">Techwood &amp; 5th</item>
+        <item name="eighth">Tech Square</item>
+        <item name="ninth">College of Business</item>
+        <item name="tenth">Academy of Medicine</item>
+        <item name="eleventh">MARTA Midtown Station</item>
+    </string-array>
+    <string-array name="trolley_hub_stops">
+        <item name="first">Publix</item>
+        <item name="second">Tech Square</item>
+        <item name="third">Techwood &amp; 5th</item>
+        <item name="fourth">Ferst &amp; Fowler</item>
+        <item name="fifth">Klaus</item>
+        <item name="sixth">Ferst &amp; Atlantic</item>
+        <item name="seventh">Ferst &amp; Hemphill</item>
+        <item name="eighth">CRC</item>
+        <item name="ninth">Student Center</item>
+        <item name="tenth">Hub</item>
+    </string-array>
+    <string-array name="emory_emory_stops">
+        <item name="first">MARTA Midtown Station</item>
+        <item name="second">Clifton at Wesley Woods</item>
+        <item name="third">Clifton &amp; Gatewood</item>
+        <item name="fourth">HSRB</item>
+        <item name="fifth">Ferst &amp; Atlantic</item>
+    </string-array>
+    <string-array name="emory_gatech_stops">
+        <item name="first">Woodruff Memorial</item>
+        <item name="second">Clifton &amp; Gatewood</item>
+        <item name="third">Clifton at Wesley Woods</item>
+        <item name="fourth">MARTA Midtown Station</item>
+    </string-array>
+    <string-array name="midnight_culc_stops">
+        <item name="first">8th &amp; Hemphill</item>
+        <item name="second">CRC</item>
+        <item name="third">Transit Hub</item>
+        <item name="fourth">Techwood &amp; North Ave</item>
+        <item name="fifth">Techwood &amp; 4th</item>
+    </string-array>
+    <string-array name="midnight_fitten_stops">
+        <item name="first">CULC</item>
+        <item name="second">Techwood &amp; 4th</item>
+        <item name="third">Techwood &amp; North Ave</item>
+        <item name="fourth">Transit Hub</item>
+        <item name="fifth">CRC</item>
+        <item name="sixth">Fitten</item>
+    </string-array>
+    <string-array name="green_tep_stop_tags">
+        <item name="first">techstate</item>
+        <item name="second">fershub</item>
+        <item name="third">cherferst</item>
+        <item name="fourth">nara</item>
+        <item name="fifth">tep_a</item>
+    </string-array>
+    <string-array name="green_hub_stop_tags">
+        <item name="first">14thstat</item>
+        <item name="second">gcat</item>
+        <item name="third">glc</item>
+        <item name="fourth">bake</item>
+        <item name="fifth">fersstat</item>
+        <item name="sixth">fersherec</item>
+        <item name="seventh">recctr</item>
+        <item name="eighth">studcentr</item>
+    </string-array>
+    <string-array name="green_fourteenth_stop_tags">
+        <item name="first">statetech</item>
+        <item name="second">stuctr</item>
+        <item name="third">tranhub</item>
+        <item name="fourth">ctrstu</item>
+        <item name="fifth">765femrt</item>
+        <item name="sixth">fershemrt</item>
+        <item name="seventh">fersstmrt</item>
+        <item name="eighth">ndec</item>
+        <item name="ninth">10thhemp</item>
+        <item name="tenth">hempcurr</item>
+        <item name="eleventh">14thmcmi_a</item>
+    </string-array>
+    <string-array name="trolley_marta_stop_tags">
+        <item name="first">centrstud</item>
+        <item name="second">ferstdr</item>
+        <item name="third">fershemrt</item>
+        <item name="fourth">fersatmrt</item>
+        <item name="fifth">ferschmrt</item>
+        <item name="sixth">fersfomrt</item>
+        <item name="seventh">tech5mrt</item>
+        <item name="eighth">techmrt</item>
+        <item name="ninth">duprmrt</item>
+        <item name="tenth">wpe7mrt</item>
+        <item name="eleventh">marta_arr</item>
+    </string-array>
+    <string-array name="trolley_hub_stop_tags">
+        <item name="first">publix</item>
+        <item name="second">techrec</item>
+        <item name="third">tech5rec</item>
+        <item name="fourth">fersforec</item>
+        <item name="fifth">ferschrec</item>
+        <item name="sixth">fersatrec</item>
+        <item name="seventh">fersherec</item>
+        <item name="eighth">recctr</item>
+        <item name="ninth">studcentr</item>
+        <item name="tenth">tranhub_a</item>
+    </string-array>
+    <string-array name="emory_emory_stop_tags">
+        <item name="first">marta_e</item>
+        <item name="second">clifwesl_e</item>
+        <item name="third">clifgate_e</item>
+        <item name="fourth">hsrbldg_a</item>
+        <item name="fifth">fersatrec</item>
+    </string-array>
+    <string-array name="emory_gatech_stop_tags">
+        <item name="
+        ">emory_d</item>
+        <item name="second">clifgate_g</item>
+        <item name="third">clifwesl_g</item>
+        <item name="fourth">marta_g</item>
+    </string-array>
+
+    <item type="id" name="id_one"/>
+    <item type="id" name="id_two"/>
+    <item type="id" name="id_three"/>
+    <item type="id" name="id_four"/>
+    <item type="id" name="id_five"/>
+
+
+    <string name="title_activity_stop">Stop Times</string>
+    <string name="title_activity_stop_list">Route Stops</string>
+    <string name="title_activity_about">About</string>
+
+</resources>

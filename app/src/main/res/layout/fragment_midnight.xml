@@ -1,0 +1,28 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E5E5E5"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+    android:id="@+id/fragment_midnight"
+    tools:context="com.janderson.gtnextbus.navdrawerfragments.MidnightFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <ListView
+            android:id="@+id/midnight_cards"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:choiceMode="singleChoice"
+            android:background="#E5E5E5"
+            android:divider="#E5E5E5"
+            android:dividerHeight="1dp"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
