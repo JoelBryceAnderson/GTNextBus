@@ -3,19 +3,14 @@ package com.janderson.gtnextbus.activities;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.MenuItem;
-import android.view.View;
 import android.content.Intent;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-
-import uk.co.senab.actionbarpulltorefresh.library.DefaultHeaderTransformer;
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
-import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
-import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
-
 
 import com.janderson.gtnextbus.R;
 import com.janderson.gtnextbus.adapters.StopAdapter;
@@ -31,7 +26,6 @@ import java.util.ArrayList;
 
 public class StopActivity extends Activity {
 
-    private PullToRefreshLayout mPullToRefreshLayout;
     private String[] strings;
     private String title;
     private String route;
@@ -47,6 +41,7 @@ public class StopActivity extends Activity {
     private String secondTime;
     private String thirdTime;
     private String[] times;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
 
     @Override
@@ -54,26 +49,24 @@ public class StopActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stop);
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        tintManager.setStatusBarTintEnabled(true);
-        int actionBarColor = Color.parseColor("#FFBB33");
-        tintManager.setStatusBarTintColor(actionBarColor);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            int actionBarColor = Color.parseColor("#FFBB33");
+            tintManager.setStatusBarTintColor(actionBarColor);
+        }
 
-
-        mPullToRefreshLayout = (PullToRefreshLayout) findViewById(R.id.ptr_layout);
-        ActionBarPullToRefresh.from(this)
-                .allChildrenArePullable()
-                .listener(new OnRefreshListener() {
-                    @Override
-                    public void onRefreshStarted(View view) {
-                        runTask();
-                    }
-                })
-                .setup(mPullToRefreshLayout);
-        DefaultHeaderTransformer transformer = (DefaultHeaderTransformer) mPullToRefreshLayout
-                .getHeaderTransformer();
-        transformer.setProgressBarColor(Color.parseColor("#FFFFFF"));
-
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.container);
+        swipeRefreshLayout.setColorScheme(R.color.white,
+                R.color.yellow,
+                R.color.white,
+                R.color.yellow);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                runTask();
+            }
+        });
 
         Intent intent = getIntent();
         strings = intent.getStringArrayExtra("extra");
@@ -87,6 +80,7 @@ public class StopActivity extends Activity {
 
         runTask();
     }
+
 
     private void runTask() {
         RssFeedTask rssTask = new RssFeedTask(this);
@@ -153,8 +147,6 @@ public class StopActivity extends Activity {
 
         @Override
         protected void onPostExecute(String result) {
-            mPullToRefreshLayout.setRefreshComplete();
-
             stopLayout = (RelativeLayout) activity.findViewById(R.id.activity_stop);
             stopList = (ListView) activity.findViewById(R.id.stop_cards);
             stopItems = new ArrayList<StopItem>();
@@ -171,6 +163,7 @@ public class StopActivity extends Activity {
             SwingRightInAnimationAdapter swingRightInAnimationAdapter = new SwingRightInAnimationAdapter(adapter);
             swingRightInAnimationAdapter.setAbsListView(stopList);
             stopList.setAdapter(swingRightInAnimationAdapter);
+            swipeRefreshLayout.setRefreshing(false);
         }
     }
 }

@@ -61,7 +61,9 @@ public class NavDrawerListAdapter extends BaseAdapter {
             holder.dividerTop = (View) convertView.findViewById(R.id.divider_top);
             holder.dividerBottom = (View) convertView.findViewById(R.id.divider_bottom);
             holder.txtSubTitle = (TextView) convertView.findViewById(R.id.footer_text);
-            if (position == 0) { holder.txtTitle.setTypeface(null, Typeface.BOLD); }
+            if (position == 0) {
+                holder.txtTitle.setTypeface(null, Typeface.BOLD);
+            }
             convertView.setTag(R.id.id_one, holder.txtTitle);
             convertView.setTag(R.id.id_two, holder.imgIcon);
             convertView.setTag(R.id.id_three, holder.dividerTop);

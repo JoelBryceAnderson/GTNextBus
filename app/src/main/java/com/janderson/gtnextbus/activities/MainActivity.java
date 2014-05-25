@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.janderson.gtnextbus.items.NavDrawerItem;
@@ -44,22 +45,25 @@ public class MainActivity extends Activity {
     private NavDrawerListAdapter adapter;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        tintManager.setStatusBarTintEnabled(true);
-        int actionBarColor = Color.parseColor("#FFBB33");
-        tintManager.setStatusBarTintColor(actionBarColor);
         mTitle = mDrawerTitle = getTitle();
         navMenuTitles = getResources().getStringArray(R.array.buses);
         navSubTitles = getResources().getStringArray(R.array.sub);
         icons = getResources()
                 .obtainTypedArray(R.array.icons);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            int actionBarColor = Color.parseColor("#FFBB33");
+            tintManager.setStatusBarTintColor(actionBarColor);
+        } else {
+            mDrawerList.setPadding(0,0,0,0);
+        }
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navDrawerItems = new ArrayList<NavDrawerItem>();
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[0]));
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[1]));
@@ -79,7 +83,6 @@ public class MainActivity extends Activity {
                 R.string.app_name
         );
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-
         if (savedInstanceState == null) {
             displayView(0);
         }
@@ -88,11 +91,9 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // toggle nav drawer on selecting action bar app icon/title
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        // Handle action bar actions click
         switch (item.getItemId()) {
             default:
                 return super.onOptionsItemSelected(item);
@@ -156,7 +157,7 @@ public class MainActivity extends Activity {
             Log.e("MainActivity", "Error in creating fragment");
         }
     }
-
+44
     public void setNavDrawerItemNormal() {
         for (int i = 0; i < mDrawerList.getChildCount(); i++) {
             View view = mDrawerList.getChildAt(i);

@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E5E5E5"
+    android:id="@+id/fragment_red"
     android:fitsSystemWindows="true"
     android:clipToPadding="true"
-    android:id="@+id/fragment_red"
     tools:context="com.janderson.gtnextbus.navdrawerfragments.RedFragment">
 
         <LinearLayout

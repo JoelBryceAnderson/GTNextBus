@@ -4,6 +4,9 @@
     <string name="app_name">GT NextBus</string>
     <string name="desc_list_item_icon">icon</string>
 
+    <color name="white">#FFFFFF</color>
+    <color name="yellow">#FFBB33</color>
+
     <string-array name="buses">
         <item name="red">Red Route</item>
         <item name="blue">Blue Route</item>

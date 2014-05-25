@@ -2,11 +2,13 @@ package com.janderson.gtnextbus.activities;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.content.Intent;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -38,11 +40,12 @@ public class StopListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stop_list);
         getActionBar().setDisplayHomeAsUpEnabled(true);
-
-        SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        tintManager.setStatusBarTintEnabled(true);
-        int actionBarColor = Color.parseColor("#FFBB33");
-        tintManager.setStatusBarTintColor(actionBarColor);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            int actionBarColor = Color.parseColor("#FFBB33");
+            tintManager.setStatusBarTintColor(actionBarColor);
+        }
         Intent intent = getIntent();
         strings = intent.getStringArrayExtra("extra");
         stops = intent.getStringArrayExtra("stops");
@@ -61,7 +64,6 @@ public class StopListActivity extends Activity {
                 stopItems, color);
         stopList.setAdapter(adapter);
         stopList.setOnItemClickListener(new StopListClickListener());
-
     }
     private class StopListClickListener implements ListView.OnItemClickListener {
         @Override

@@ -2,6 +2,7 @@ package com.janderson.gtnextbus.activities;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,10 +17,13 @@ public class About extends Activity {
         setContentView(R.layout.activity_about);
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        SystemBarTintManager tintManager = new SystemBarTintManager(this);
-        tintManager.setStatusBarTintEnabled(true);
-        int actionBarColor = Color.parseColor("#FFBB33");
-        tintManager.setStatusBarTintColor(actionBarColor);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            int actionBarColor = Color.parseColor("#FFBB33");
+            tintManager.setStatusBarTintColor(actionBarColor);
+        }
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {

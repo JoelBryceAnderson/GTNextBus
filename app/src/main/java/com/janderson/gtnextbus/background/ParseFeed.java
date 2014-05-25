@@ -34,6 +34,7 @@ public class ParseFeed {
 
     public void fetchXML() {
         try {
+            time = "No Current Prediction";
             URL feed = new URL(url);
             HttpURLConnection conn = (HttpURLConnection)
                     feed.openConnection();
@@ -51,7 +52,7 @@ public class ParseFeed {
             parseXML(myparser);
             stream.close();
         } catch (Exception e) {
-            secondTime = e.toString();
+            time = "Error connecting to server. Try refreshing.";
         }
     }
 
@@ -95,8 +96,7 @@ public class ParseFeed {
                 event = xpp.next();
             }
         } catch (Exception e) {
-            secondTime = e.toString();
-            thirdTime = "error in parseXML!";
+            time = "Error getting bus times. Try refreshing.";
         }
     }
 }
