@@ -7,20 +7,17 @@
     <FrameLayout
         android:id="@+id/frame_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        android:clipToPadding="true"/>
+        android:layout_height="match_parent"/>
 
     <ListView
         android:id="@+id/left_drawer"
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:paddingTop="?android:attr/actionBarSize"
         android:choiceMode="singleChoice"
         android:background="#F7F7F7"
         android:fitsSystemWindows="true"
-        android:clipToPadding="true"
-        android:paddingTop="70dp"
         android:divider="@null"/>
 
 

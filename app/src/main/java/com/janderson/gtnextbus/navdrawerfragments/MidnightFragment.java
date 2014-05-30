@@ -5,7 +5,9 @@ package com.janderson.gtnextbus.navdrawerfragments;
  */
 
 import android.app.Fragment;
+import android.os.Build;
 import android.util.Log;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.content.Intent;
 import android.os.Bundle;
@@ -45,12 +47,39 @@ public class MidnightFragment extends Fragment {
         destinations = getResources().getStringArray(R.array.midnight_destinations);
         midnightDestinationLayout = (RelativeLayout) getView().findViewById(R.id.fragment_midnight);
         mRouteList = (ListView) getView().findViewById(R.id.midnight_cards);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            mRouteList.setPadding(0,72,0,10);
+        }
         midnightDestinationItems = new ArrayList<RouteItem>();
         midnightDestinationItems.add(new RouteItem(destinations[0]));
         midnightDestinationItems.add(new RouteItem(destinations[3]));
         adapter = new DestinationAdapter(getActivity().getApplicationContext(),
                 midnightDestinationItems);
         mRouteList.setAdapter(adapter);
+        mRouteList.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+            int mLastFirstVisibleItem = 0;
+
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int i, int i2, int i3) {
+                final int currentFirstVisibleItem = mRouteList.getFirstVisiblePosition();
+                if (currentFirstVisibleItem > mLastFirstVisibleItem)
+                {
+                    getActivity().getActionBar().hide();
+                }
+                else if (currentFirstVisibleItem < mLastFirstVisibleItem)
+                {
+                    getActivity().getActionBar().show();
+                }
+
+                mLastFirstVisibleItem = currentFirstVisibleItem;
+            }
+        });
     }
 
 

@@ -6,6 +6,7 @@ package com.janderson.gtnextbus.navdrawerfragments;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,6 +48,9 @@ public class BlueFragment extends Fragment {
         routes = getResources().getStringArray(R.array.blue_destinations);
         blueRouteLayout = (RelativeLayout) getView().findViewById(R.id.fragment_blue);
         mRouteList = (ListView) getView().findViewById(R.id.blue_cards);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            mRouteList.setPadding(0,72,0,10);
+        }
         blueRouteItems = new ArrayList<RouteItem>();
         for (int i = 0; i < 15; i++) {
             blueRouteItems.add(new RouteItem(routes[i]));
@@ -55,6 +59,30 @@ public class BlueFragment extends Fragment {
                 blueRouteItems);
         mRouteList.setAdapter(adapter);
         mRouteList.setOnItemClickListener(new StopClickListener());
+        mRouteList.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+            int mLastFirstVisibleItem = 0;
+
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int i, int i2, int i3) {
+                final int currentFirstVisibleItem = mRouteList.getFirstVisiblePosition();
+                if (currentFirstVisibleItem > mLastFirstVisibleItem)
+                {
+                    getActivity().getActionBar().hide();
+                }
+                else if (currentFirstVisibleItem < mLastFirstVisibleItem)
+                {
+                    getActivity().getActionBar().show();
+                }
+
+                mLastFirstVisibleItem = currentFirstVisibleItem;
+            }
+        });
     }
 
     private class StopClickListener implements ListView.OnItemClickListener {

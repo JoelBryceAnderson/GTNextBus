@@ -2,8 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:clipToPadding="true"
     android:background="#E5E5E5"
     tools:context="com.janderson.gtnextbus.activities.About">
 
@@ -14,7 +12,10 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_top"
+        android:paddingBottom="@dimen/padding_bottom"
+        android:id="@+id/lin_lay">
 
     <TextView
         android:layout_width="match_parent"
@@ -41,7 +42,7 @@
             android:background="@drawable/card"
             android:textSize="20sp"
             android:textColor="#000000"
-            android:text="GT NextBus Version 1.0.7"
+            android:text="GT NextBus Version 1.2.2"
             android:textStyle="italic"/>
 
     <TextView

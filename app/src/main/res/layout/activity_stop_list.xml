@@ -3,8 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E5E5E5"
-    android:fitsSystemWindows="true"
-    android:clipToPadding="true"
     android:id="@+id/activity_stop_list"
     tools:context="com.janderson.gtnextbus.activities.StopListActivity">
 
@@ -22,7 +20,8 @@
             android:background="#E5E5E5"
             android:divider="#E5E5E5"
             android:dividerHeight="1dp"
-            android:paddingBottom="10dp"
+            android:paddingBottom="@dimen/padding_bottom"
+            android:paddingTop="@dimen/padding_top"
             android:clipToPadding="false"/>
 
     </LinearLayout>

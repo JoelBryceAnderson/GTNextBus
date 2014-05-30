@@ -15,9 +15,7 @@ import android.widget.RelativeLayout;
 
 import com.janderson.gtnextbus.R;
 import com.janderson.gtnextbus.adapters.StopListAdapter;
-import com.janderson.gtnextbus.items.RouteItem;
 import com.janderson.gtnextbus.items.StopItem;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.util.ArrayList;
 
@@ -40,12 +38,6 @@ public class StopListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stop_list);
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            tintManager.setStatusBarTintEnabled(true);
-            int actionBarColor = Color.parseColor("#FFBB33");
-            tintManager.setStatusBarTintColor(actionBarColor);
-        }
         Intent intent = getIntent();
         strings = intent.getStringArrayExtra("extra");
         stops = intent.getStringArrayExtra("stops");
@@ -55,6 +47,9 @@ public class StopListActivity extends Activity {
         routeTag = strings[2];
         stopLayout = (RelativeLayout) this.findViewById(R.id.activity_stop_list);
         stopList = (ListView) this.findViewById(R.id.stop_list_cards);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            stopList.setPadding(0,72,0,10);
+        }
         stopItems = new ArrayList<StopItem>();
         stopItems.add(new StopItem(title));
         for (int i = 0; i < stops.length; i++) {
@@ -64,6 +59,30 @@ public class StopListActivity extends Activity {
                 stopItems, color);
         stopList.setAdapter(adapter);
         stopList.setOnItemClickListener(new StopListClickListener());
+        stopList.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+            int mLastFirstVisibleItem = 0;
+
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int i, int i2, int i3) {
+                final int currentFirstVisibleItem = stopList.getFirstVisiblePosition();
+                if (currentFirstVisibleItem > mLastFirstVisibleItem)
+                {
+                    getActionBar().hide();
+                }
+                else if (currentFirstVisibleItem < mLastFirstVisibleItem)
+                {
+                    getActionBar().show();
+                }
+
+                mLastFirstVisibleItem = currentFirstVisibleItem;
+            }
+        });
     }
     private class StopListClickListener implements ListView.OnItemClickListener {
         @Override

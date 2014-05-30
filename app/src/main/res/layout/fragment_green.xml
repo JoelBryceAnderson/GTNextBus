@@ -3,8 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E5E5E5"
-    android:fitsSystemWindows="true"
-    android:clipToPadding="true"
     android:id="@+id/fragment_green"
     tools:context="com.janderson.gtnextbus.navdrawerfragments.GreenFragment">
 
@@ -12,6 +10,7 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
+
 
         <ListView
             android:id="@+id/green_cards"
@@ -21,7 +20,9 @@
             android:choiceMode="singleChoice"
             android:background="#E5E5E5"
             android:divider="#E5E5E5"
-            android:dividerHeight="1dp"/>
+            android:paddingTop="@dimen/padding_top"
+            android:dividerHeight="1dp"
+            android:clipToPadding="false"/>
 
     </LinearLayout>
 

@@ -1,13 +1,13 @@
 package com.janderson.gtnextbus.activities;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+
 import com.janderson.gtnextbus.R;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 public class About extends Activity {
 
@@ -15,15 +15,11 @@ public class About extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-
-            SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            tintManager.setStatusBarTintEnabled(true);
-            int actionBarColor = Color.parseColor("#FFBB33");
-            tintManager.setStatusBarTintColor(actionBarColor);
+        LinearLayout linLay = (LinearLayout) findViewById(R.id.lin_lay);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            linLay.setPadding(0,72,0,10);
         }
+        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -3,9 +3,17 @@
 
     <string name="app_name">GT NextBus</string>
     <string name="desc_list_item_icon">icon</string>
+    <string name="action_save">Add favorite</string>
+    <string name="action_saved">Remove favorite</string>
+    <string name="favorite_destinations_header">Favorite Stops</string>
 
     <color name="white">#FFFFFF</color>
     <color name="yellow">#FFBB33</color>
+    <color name="red">#CC0000</color>
+    <color name="blue">#0000FF</color>
+    <color name="green">#669900</color>
+    <color name="navy">#000080</color>
+    <color name="purple">#9933CC</color>
 
     <string-array name="buses">
         <item name="red">Red Route</item>
@@ -14,6 +22,7 @@
         <item name="trolley">Emory Shuttle</item>
         <item name="midnight">Tech Trolley</item>
         <item name="emory">Midnight Rambler</item>
+        <item name="favorites">Favorite Stops</item>
     </string-array>
     <string-array name="sub">
         <item name="about">ABOUT</item>
@@ -231,11 +240,79 @@
         <item name="fifth">fersatrec</item>
     </string-array>
     <string-array name="emory_gatech_stop_tags">
-        <item name="
-        ">emory_d</item>
+        <item name="first">emory_d</item>
         <item name="second">clifgate_g</item>
         <item name="third">clifwesl_g</item>
         <item name="fourth">marta_g</item>
+    </string-array>
+
+    <string-array name="green_tep_stop_titles">
+        <item name="first">greentechstate</item>
+        <item name="second">greenfershub</item>
+        <item name="third">greencherferst</item>
+        <item name="fourth">greennara</item>
+        <item name="fifth">greentep_a</item>
+    </string-array>
+    <string-array name="green_hub_stop_titles">
+        <item name="first">green14thstat</item>
+        <item name="second">greengcat</item>
+        <item name="third">greenglc</item>
+        <item name="fourth">greenbake</item>
+        <item name="fifth">greenfersstat</item>
+        <item name="sixth">greenfersherec</item>
+        <item name="seventh">greenrecctr</item>
+        <item name="eighth">greenstudcentr</item>
+    </string-array>
+    <string-array name="green_fourteenth_stop_titles">
+        <item name="first">greenstatetech</item>
+        <item name="second">greenstuctr</item>
+        <item name="third">greentranhub</item>
+        <item name="fourth">greenctrstu</item>
+        <item name="fifth">green765femrt</item>
+        <item name="sixth">greenfershemrt</item>
+        <item name="seventh">greenfersstmrt</item>
+        <item name="eighth">greenndec</item>
+        <item name="ninth">green10thhemp</item>
+        <item name="tenth">greenhempcurr</item>
+        <item name="eleventh">green14thmcmi_a</item>
+    </string-array>
+    <string-array name="trolley_marta_stop_titles">
+        <item name="first">trolleycentrstud</item>
+        <item name="second">trolleyferstdr</item>
+        <item name="third">trolleyfershemrt</item>
+        <item name="fourth">trolleyfersatmrt</item>
+        <item name="fifth">trolleyferschmrt</item>
+        <item name="sixth">trolleyfersfomrt</item>
+        <item name="seventh">trolleytech5mrt</item>
+        <item name="eighth">trolleytechmrt</item>
+        <item name="ninth">trolleyduprmrt</item>
+        <item name="tenth">trolleywpe7mrt</item>
+        <item name="eleventh">trolleymarta_arr</item>
+    </string-array>
+    <string-array name="trolley_hub_stop_titles">
+        <item name="first">trolleypublix</item>
+        <item name="second">trolleytechrec</item>
+        <item name="third">trolleytech5rec</item>
+        <item name="fourth">trolleyfersforec</item>
+        <item name="fifth">trolleyferschrec</item>
+        <item name="sixth">trolleyfersatrec</item>
+        <item name="seventh">trolleyfersherec</item>
+        <item name="eighth">trolleyrecctr</item>
+        <item name="ninth">trolleystudcentr</item>
+        <item name="tenth">trolleytranhub_a</item>
+    </string-array>
+    <string-array name="emory_emory_stop_titles">
+        <item name="first">emorymarta_e</item>
+        <item name="second">emoryclifwesl_e</item>
+        <item name="third">emoryclifgate_e</item>
+        <item name="fourth">emoryhsrbldg_a</item>
+        <item name="fifth">emoryfersatrec</item>
+    </string-array>
+    <string-array name="emory_gatech_stop_titles">
+        <item name="first">emoryemory_d</item>
+        <item name="second">emoryclifgate_g</item>
+        <item name="third">emoryclifwesl_g</item>
+        <item name="fourth">emorymarta_g</item>
     </string-array>
 
     <item type="id" name="id_one"/>

@@ -98,6 +98,11 @@ public class DestinationAdapter extends BaseAdapter {
             headerSize = 25;
         }
 
+        if (holder.mText.getText().toString().equals("Favorite Stops")) {
+            color = Color.parseColor("#000000");
+            headerSize = 25;
+        }
+
         holder.mText.setTextColor(color);
 
         if (position == 0) {

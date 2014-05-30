@@ -12,11 +12,11 @@ import com.janderson.gtnextbus.adapters.NavDrawerListAdapter;
 import com.janderson.gtnextbus.R;
 import com.janderson.gtnextbus.navdrawerfragments.BlueFragment;
 import com.janderson.gtnextbus.navdrawerfragments.EmoryFragment;
+import com.janderson.gtnextbus.navdrawerfragments.FavoriteFragment;
 import com.janderson.gtnextbus.navdrawerfragments.GreenFragment;
 import com.janderson.gtnextbus.navdrawerfragments.MidnightFragment;
 import com.janderson.gtnextbus.navdrawerfragments.RedFragment;
 import com.janderson.gtnextbus.navdrawerfragments.TrolleyFragment;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 import android.app.FragmentManager;
 import android.util.Log;
 import android.app.Fragment;
@@ -55,14 +55,6 @@ public class MainActivity extends Activity {
         icons = getResources()
                 .obtainTypedArray(R.array.icons);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            tintManager.setStatusBarTintEnabled(true);
-            int actionBarColor = Color.parseColor("#FFBB33");
-            tintManager.setStatusBarTintColor(actionBarColor);
-        } else {
-            mDrawerList.setPadding(0,0,0,0);
-        }
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navDrawerItems = new ArrayList<NavDrawerItem>();
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[0]));
@@ -71,6 +63,7 @@ public class MainActivity extends Activity {
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[3]));
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[4]));
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[5]));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[6]));
         navDrawerItems.add(new NavDrawerItem(navSubTitles[0], icons.getResourceId(0, -1), true));
         adapter = new NavDrawerListAdapter(getApplicationContext(),
                 navDrawerItems);
@@ -81,7 +74,13 @@ public class MainActivity extends Activity {
                 R.drawable.ic_navigation_drawer,
                 R.string.app_name,
                 R.string.app_name
-        );
+        ) {
+            public void onDrawerStateChanged(int newState) {
+                if (!getActionBar().isShowing()) {
+                    getActionBar().show();
+                }
+            }
+        };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         if (savedInstanceState == null) {
             displayView(0);
@@ -135,6 +134,9 @@ public class MainActivity extends Activity {
                 fragment = new MidnightFragment();
                 break;
             case 6:
+                fragment = new FavoriteFragment();
+                break;
+            case 7:
                 Intent intent = new Intent(this, About.class);
                 startActivity(intent);
                 break;
@@ -157,7 +159,7 @@ public class MainActivity extends Activity {
             Log.e("MainActivity", "Error in creating fragment");
         }
     }
-44
+
     public void setNavDrawerItemNormal() {
         for (int i = 0; i < mDrawerList.getChildCount(); i++) {
             View view = mDrawerList.getChildAt(i);
@@ -170,7 +172,7 @@ public class MainActivity extends Activity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,
                                 long id) {
-            if (position < 6) {
+            if (position < 7) {
                 setNavDrawerItemNormal();
                 TextView TV = (TextView) view.findViewById(R.id.title);
                 TV.setTypeface(null, Typeface.BOLD);
