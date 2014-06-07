@@ -137,7 +137,7 @@ public class MainActivity extends Activity {
                 fragment = new FavoriteFragment();
                 break;
             case 7:
-                Intent intent = new Intent(this, About.class);
+                Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 break;
             default:

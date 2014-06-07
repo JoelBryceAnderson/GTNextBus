@@ -76,6 +76,7 @@ public class ParseFeed {
                         }
                         if (name.equals("prediction") && keepGoing && notYetFirst) {
                             time = predict + " minutes";
+
                             notYetFirst = false;
                         } else if (name.equals("prediction") && keepGoing && notYetSecond) {
                             secondTime = predict + " minutes";

@@ -47,9 +47,6 @@ public class StopListActivity extends Activity {
         routeTag = strings[2];
         stopLayout = (RelativeLayout) this.findViewById(R.id.activity_stop_list);
         stopList = (ListView) this.findViewById(R.id.stop_list_cards);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            stopList.setPadding(0,72,0,10);
-        }
         stopItems = new ArrayList<StopItem>();
         stopItems.add(new StopItem(title));
         for (int i = 0; i < stops.length; i++) {
@@ -103,6 +100,7 @@ public class StopListActivity extends Activity {
                 intent = new Intent(this, StopActivity.class);
                 strings = new String [] {stops[position - 1],routeTag, stopTags[position - 1], color};
                 intent.putExtra("extra", strings);
+                intent.putExtra("started_from", "other");
                 break;
         }
         if (intent != null) {

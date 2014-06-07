@@ -48,9 +48,6 @@ public class BlueFragment extends Fragment {
         routes = getResources().getStringArray(R.array.blue_destinations);
         blueRouteLayout = (RelativeLayout) getView().findViewById(R.id.fragment_blue);
         mRouteList = (ListView) getView().findViewById(R.id.blue_cards);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            mRouteList.setPadding(0,72,0,10);
-        }
         blueRouteItems = new ArrayList<RouteItem>();
         for (int i = 0; i < 15; i++) {
             blueRouteItems.add(new RouteItem(routes[i]));
@@ -105,71 +102,85 @@ public class BlueFragment extends Fragment {
                 intent = new Intent(getActivity(), StopActivity.class);
                 strings = new String [] {"Fitten Hall","blue","fitten_a", "#0000FF"};
                 intent.putExtra("extra", strings);
+                intent.putExtra("started_from", "other");
                 break;
             case 2:
                 intent = new Intent(getActivity(), StopActivity.class);
                 strings = new String [] {"McMillian & 8th","blue","mcm8th", "#0000FF"};
                 intent.putExtra("extra", strings);
+                intent.putExtra("started_from", "other");
                 break;
             case 3:
                 intent = new Intent(getActivity(), StopActivity.class);
                 strings = new String [] {"8th & Hemphill","blue","8thhemp", "#0000FF"};
                 intent.putExtra("extra", strings);
+                intent.putExtra("started_from", "other");
                 break;
             case 4:
                 intent = new Intent(getActivity(), StopActivity.class);
                 strings = new String [] {"CRC","blue","recctr", "#0000FF"};
                 intent.putExtra("extra", strings);
+                intent.putExtra("started_from", "other");
                 break;
             case 5:
                 intent = new Intent(getActivity(), StopActivity.class);
                 strings = new String [] {"Tech & State","blue","techstat", "#0000FF"};
                 intent.putExtra("extra", strings);
+                intent.putExtra("started_from", "other");
                 break;
             case 6:
                 intent = new Intent(getActivity(), StopActivity.class);
                 strings = new String [] {"North Ave & Burge Deck","blue","nortburg", "#0000FF"};
                 intent.putExtra("extra", strings);
+                intent.putExtra("started_from", "other");
                 break;
             case 7:
                 intent = new Intent(getActivity(), StopActivity.class);
                 strings = new String [] {"North Avenue Apartments","blue","nortavea_a", "#0000FF"};
                 intent.putExtra("extra", strings);
+                intent.putExtra("started_from", "other");
                 break;
             case 8:
                 intent = new Intent(getActivity(), StopActivity.class);
                 strings = new String [] {"Techwood & North Ave","blue","technorth", "#0000FF"};
                 intent.putExtra("extra", strings);
+                intent.putExtra("started_from", "other");
                 break;
             case 9:
                 intent = new Intent(getActivity(), StopActivity.class);
                 strings = new String [] {"Techwood & 3rd","blue","3rdtech", "#0000FF"};
                 intent.putExtra("extra", strings);
+                intent.putExtra("started_from", "other");
                 break;
             case 10:
                 intent = new Intent(getActivity(), StopActivity.class);
                 strings = new String [] {"Techwood & 4th","blue","4thtech", "#0000FF"};
                 intent.putExtra("extra", strings);
+                intent.putExtra("started_from", "other");
                 break;
             case 11:
                 intent = new Intent(getActivity(), StopActivity.class);
                 strings = new String [] {"Techwood & 5th","blue","5thtech", "#0000FF"};
                 intent.putExtra("extra", strings);
+                intent.putExtra("started_from", "other");
                 break;
             case 12:
                 intent = new Intent(getActivity(), StopActivity.class);
                 strings = new String [] {"Ferst & Fowler","blue","fersforec", "#0000FF"};
                 intent.putExtra("extra", strings);
+                intent.putExtra("started_from", "other");
                 break;
             case 13:
                 intent = new Intent(getActivity(), StopActivity.class);
                 strings = new String [] {"Klaus","blue","ferschrec", "#0000FF"};
                 intent.putExtra("extra", strings);
+                intent.putExtra("started_from", "other");
                 break;
             case 14:
                 intent = new Intent(getActivity(), StopActivity.class);
                 strings = new String [] {"Ferst & Atlantic","blue","fersatrec", "#0000FF"};
                 intent.putExtra("extra", strings);
+                intent.putExtra("started_from", "other");
                 break;
             default:
                 break;

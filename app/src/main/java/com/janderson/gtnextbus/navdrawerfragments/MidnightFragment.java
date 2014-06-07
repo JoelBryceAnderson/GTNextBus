@@ -47,9 +47,6 @@ public class MidnightFragment extends Fragment {
         destinations = getResources().getStringArray(R.array.midnight_destinations);
         midnightDestinationLayout = (RelativeLayout) getView().findViewById(R.id.fragment_midnight);
         mRouteList = (ListView) getView().findViewById(R.id.midnight_cards);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            mRouteList.setPadding(0,72,0,10);
-        }
         midnightDestinationItems = new ArrayList<RouteItem>();
         midnightDestinationItems.add(new RouteItem(destinations[0]));
         midnightDestinationItems.add(new RouteItem(destinations[3]));

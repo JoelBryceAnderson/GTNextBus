@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.janderson.gtnextbus">
+    package="com.janderson.gtnextbus" >
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:hardwareAccelerated="true">
+        android:theme="@style/AppTheme" >
         <activity
             android:name="com.janderson.gtnextbus.activities.MainActivity"
             android:label="@string/app_name" >
@@ -19,31 +19,34 @@
         </activity>
         <activity
             android:name="com.janderson.gtnextbus.activities.StopActivity"
-            android:label="@string/title_activity_stop">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="MainActivity" />
+            android:label="@string/title_activity_stop" >
         </activity>
         <activity
             android:name="com.janderson.gtnextbus.activities.StopListActivity"
-            android:label="@string/title_activity_stop_list">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="MainActivity" />
+            android:label="@string/title_activity_stop_list" >
         </activity>
         <activity
             android:name="com.janderson.gtnextbus.activities.About"
-            android:label="@string/title_activity_about">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="MainActivity" />
+            android:label="@string/title_activity_about" >
         </activity>
+        <activity
+            android:name="com.janderson.gtnextbus.activities.SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
+        <activity
+            android:name="com.janderson.gtnextbus.activities.AlertsActivity"
+            android:label="@string/title_activity_alerts" >
+        </activity>
+
+        <service
+            android:name="com.janderson.gtnextbus.activities.StopActivity$NotificationService"
+            android:enabled="true" />
     </application>
 
-    <uses-sdk
-    android:minSdkVersion="14"/>
-
+    <uses-sdk android:minSdkVersion="14" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
 </manifest>

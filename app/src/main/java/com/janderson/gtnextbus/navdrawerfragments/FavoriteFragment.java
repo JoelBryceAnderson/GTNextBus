@@ -12,14 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.janderson.gtnextbus.R;
 import com.janderson.gtnextbus.activities.StopActivity;
-import com.janderson.gtnextbus.adapters.DestinationAdapter;
 import com.janderson.gtnextbus.adapters.FavoriteAdapter;
-import com.janderson.gtnextbus.adapters.StopListAdapter;
 import com.janderson.gtnextbus.items.StopItem;
 
 import java.util.ArrayList;
@@ -55,6 +55,8 @@ public class FavoriteFragment extends Fragment {
     private String[] trolleyHubStopTags;
     private String[] emoryEmoryStopTags;
     private String[] emoryGatechStopTags;
+    private TextView noFavoritesText;
+    private ImageView noFavoritesImage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,13 +72,23 @@ public class FavoriteFragment extends Fragment {
         header = getResources().getString(R.string.favorite_destinations_header);
         favoriteLayout = (RelativeLayout) getView().findViewById(R.id.fragment_favorite);
         mRouteList = (ListView) getView().findViewById(R.id.favorite_cards);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            mRouteList.setPadding(0,72,0,10);
-        }
+        noFavoritesText = (TextView) getView().findViewById(R.id.no_favorites_text);
+        noFavoritesImage = (ImageView) getView().findViewById(R.id.no_favorites_image);
         favoriteDestinationItems = new ArrayList<StopItem>();
-        favoriteDestinationItems.add(new StopItem(header, "#000000"));
         preferences = getActivity().getSharedPreferences("saved_favorites", Context.MODE_PRIVATE);
         Map<String, ?> keys = preferences.getAll();
+        if (!keys.isEmpty()) {
+            favoriteDestinationItems.add(new StopItem(header, "#000000"));
+            noFavoritesText.setVisibility(View.GONE);
+            noFavoritesImage.setVisibility(View.GONE);
+            mRouteList.setVisibility(View.VISIBLE);
+        } else {
+            noFavoritesText.setVisibility(View.VISIBLE);
+            noFavoritesImage.setVisibility(View.VISIBLE);
+            mRouteList.setVisibility(View.GONE);
+            noFavoritesText.setText("You don't have any favorites yet!");
+            noFavoritesImage.setImageResource(R.drawable.ic_favorites_empty);
+        }
         names = new String[keys.size()];
         routeTags = new String[keys.size()];
         stopTags = new String[keys.size()];
@@ -142,6 +154,90 @@ public class FavoriteFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        pos = 0;
+        header = getResources().getString(R.string.favorite_destinations_header);
+        favoriteLayout = (RelativeLayout) getView().findViewById(R.id.fragment_favorite);
+        mRouteList = (ListView) getView().findViewById(R.id.favorite_cards);
+        noFavoritesText = (TextView) getView().findViewById(R.id.no_favorites_text);
+        noFavoritesImage = (ImageView) getView().findViewById(R.id.no_favorites_image);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            mRouteList.setPadding(0,72,0,10);
+        }
+        favoriteDestinationItems = new ArrayList<StopItem>();
+        preferences = getActivity().getSharedPreferences("saved_favorites", Context.MODE_PRIVATE);
+        Map<String, ?> keys = preferences.getAll();
+        if (!keys.isEmpty()) {
+            favoriteDestinationItems.add(new StopItem(header, "#000000"));
+            noFavoritesText.setVisibility(View.GONE);
+            noFavoritesImage.setVisibility(View.GONE);
+            mRouteList.setVisibility(View.VISIBLE);
+        } else {
+            noFavoritesText.setVisibility(View.VISIBLE);
+            noFavoritesImage.setVisibility(View.VISIBLE);
+            mRouteList.setVisibility(View.GONE);
+            noFavoritesText.setText("You don't have any favorites yet!");
+            noFavoritesImage.setImageResource(R.drawable.ic_favorites_empty);
+        }
+        names = new String[keys.size()];
+        routeTags = new String[keys.size()];
+        stopTags = new String[keys.size()];
+        colors = new String[keys.size()];
+        for (Map.Entry<String, ?> entry : keys.entrySet()) {
+            Set<String> item = (Set<String>) entry.getValue();
+            Object[] itemArray = item.toArray();
+            for (int i = 0; i < itemArray.length; i++) {
+                if (itemArray[i].toString().startsWith("?")) {
+                    name = itemArray[i].toString().substring(1);
+                    names[pos] = name;
+                } else if (itemArray[i].toString().startsWith("*")) {
+                    route = itemArray[i].toString().substring(1);
+                    routeTags[pos] = route;
+                } else if (itemArray[i].toString().startsWith("$")) {
+                    stop = itemArray[i].toString().substring(1);
+                    stopTags[pos] = stop;
+                } else if (itemArray[i].toString().startsWith("#")) {
+                    color = itemArray[i].toString();
+                    colors[pos] = color;
+                }
+            }
+            routeStopCombo = route.concat(stop);
+            addDestination();
+            favoriteDestinationItems.add(new StopItem(name, color));
+            pos++;
+        }
+        adapter = new FavoriteAdapter(getActivity().getApplicationContext(),
+                favoriteDestinationItems);
+        mRouteList.setAdapter(adapter);
+        mRouteList.setOnItemClickListener(new StopListClickListener());
+        mRouteList.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+            int mLastFirstVisibleItem = 0;
+
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int i, int i2, int i3) {
+                final int currentFirstVisibleItem = mRouteList.getFirstVisiblePosition();
+                if (currentFirstVisibleItem > mLastFirstVisibleItem)
+                {
+                    getActivity().getActionBar().hide();
+                }
+                else if (currentFirstVisibleItem < mLastFirstVisibleItem)
+                {
+                    getActivity().getActionBar().show();
+                }
+
+                mLastFirstVisibleItem = currentFirstVisibleItem;
+            }
+        });
+    }
+
     private void displayView(int position) {
         Intent intent = null;
         String[] strings = null;
@@ -153,6 +249,7 @@ public class FavoriteFragment extends Fragment {
                 intent = new Intent(getActivity(), StopActivity.class);
                 strings = new String [] {names[position - 1],routeTags[position - 1], stopTags[position - 1], colors[position -1]};
                 intent.putExtra("extra", strings);
+                intent.putExtra("started_from", "other");
                 break;
         }
         if (intent != null) {

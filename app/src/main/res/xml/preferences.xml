@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="Preferences"
+        android:layout="@layout/activity_settings">
+        </PreferenceCategory>
+    <PreferenceCategory
+        android:title="BUS ARRIVAL ALERTS">
+        <Preference
+            android:title="Active alerts"
+            android:key="activeAlerts">
+        </Preference>
+        <CheckBoxPreference
+            android:title="Vibrate"
+            android:defaultValue="true"
+            android:key="vibrateNotification">
+        </CheckBoxPreference>
+        <CheckBoxPreference
+            android:title="Play sound"
+            android:defaultValue="true"
+            android:key="soundNotification">
+        </CheckBoxPreference>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="ABOUT">
+        <Preference
+            android:title="About GT NextBus"
+            android:key="openAbout">
+            </Preference>
+    </PreferenceCategory>
+</PreferenceScreen>

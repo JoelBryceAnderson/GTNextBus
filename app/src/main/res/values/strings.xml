@@ -25,13 +25,13 @@
         <item name="favorites">Favorite Stops</item>
     </string-array>
     <string-array name="sub">
+        <item name="settings">SETTINGS</item>
         <item name="about">ABOUT</item>
-        <item name="feedback">SETTINGS</item>
     </string-array>
 
     <array name="icons">
-        <item>@drawable/ic_help_40</item>
         <item>@drawable/ic_gear_40</item>
+        <item>@drawable/ic_help_40</item>
     </array>
 
     <string-array name="red_routes">
@@ -325,5 +325,8 @@
     <string name="title_activity_stop">Stop Times</string>
     <string name="title_activity_stop_list">Route Stops</string>
     <string name="title_activity_about">About</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_alerts">Active Alerts</string>
+
 
 </resources>

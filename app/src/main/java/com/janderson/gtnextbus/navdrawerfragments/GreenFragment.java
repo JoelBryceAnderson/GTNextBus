@@ -48,9 +48,6 @@ public class GreenFragment extends Fragment {
         destinations = getResources().getStringArray(R.array.green_destinations);
         greenDestinationLayout = (RelativeLayout) getView().findViewById(R.id.fragment_green);
         mRouteList = (ListView) getView().findViewById(R.id.green_cards);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            mRouteList.setPadding(0,72,0,10);
-        }
         greenDestinationItems = new ArrayList<RouteItem>();
         greenDestinationItems.add(new RouteItem(destinations[0]));
         greenDestinationItems.add(new RouteItem(destinations[1]));

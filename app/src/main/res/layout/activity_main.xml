@@ -14,10 +14,11 @@
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:paddingTop="?android:attr/actionBarSize"
         android:choiceMode="singleChoice"
         android:background="#F7F7F7"
-        android:fitsSystemWindows="true"
+        android:paddingBottom="@dimen/padding_bottom"
+        android:paddingTop="@dimen/padding_top"
+        android:clipToPadding="false"
         android:divider="@null"/>
 
 

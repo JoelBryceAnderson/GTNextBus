@@ -15,10 +15,6 @@ public class About extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        LinearLayout linLay = (LinearLayout) findViewById(R.id.lin_lay);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            linLay.setPadding(0,72,0,10);
-        }
         getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 

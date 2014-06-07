@@ -48,9 +48,6 @@ public class TrolleyFragment extends Fragment {
         destinations = getResources().getStringArray(R.array.trolley_destinations);
         trolleyDestinationLayout = (RelativeLayout) getView().findViewById(R.id.fragment_trolley);
         mRouteList = (ListView) getView().findViewById(R.id.trolley_cards);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            mRouteList.setPadding(0,72,0,10);
-        }
         trolleyDestinationItems = new ArrayList<RouteItem>();
         trolleyDestinationItems.add(new RouteItem(destinations[0]));
         trolleyDestinationItems.add(new RouteItem(destinations[1]));

@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E5E5E5"
-    android:id="@+id/fragment_favorite"
-    tools:context="com.janderson.gtnextbus.navdrawerfragments.FavoriteFragment">
-
+    android:id="@+id/activity_alerts"
+    tools:context="com.janderson.gtnextbus.activities.AlertsActivity">
 
     <LinearLayout
         android:orientation="vertical"
@@ -15,20 +12,19 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:id="@+id/no_favorites_layout">
+        android:id="@+id/no_alerts_layout">
 
         <ImageView
             android:clipToPadding="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:id="@+id/no_favorites_image"/>
+            android:id="@+id/no_alerts_image"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:id="@+id/no_favorites_text"
+            android:id="@+id/no_alerts_text"
             android:gravity="center"
             android:paddingLeft="60dp"
             android:paddingRight="60dp"
@@ -44,16 +40,16 @@
         android:layout_height="wrap_content">
 
         <ListView
-            android:id="@+id/favorite_cards"
+            android:id="@+id/alert_cards"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:choiceMode="singleChoice"
             android:background="#E5E5E5"
             android:divider="#E5E5E5"
-            android:paddingTop="@dimen/padding_top"
-            android:paddingBottom="@dimen/padding_bottom"
             android:dividerHeight="1dp"
+            android:paddingBottom="@dimen/padding_bottom"
+            android:paddingTop="@dimen/padding_top"
             android:clipToPadding="false"/>
 
     </LinearLayout>

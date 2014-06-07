@@ -48,9 +48,6 @@ public class EmoryFragment extends Fragment {
         destinations = getResources().getStringArray(R.array.emory_destinations);
         emoryDestinationLayout = (RelativeLayout) getView().findViewById(R.id.fragment_emory);
         mRouteList = (ListView) getView().findViewById(R.id.emory_cards);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            mRouteList.setPadding(0,72,0,10);
-        }
         emoryDestinationItems = new ArrayList<RouteItem>();
         emoryDestinationItems.add(new RouteItem(destinations[0]));
         emoryDestinationItems.add(new RouteItem(destinations[1]));
