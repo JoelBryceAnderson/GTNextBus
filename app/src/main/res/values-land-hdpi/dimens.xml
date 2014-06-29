@@ -3,4 +3,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="padding_bottom">10dp</dimen>
     <dimen name="padding_top">40dp</dimen>
+    <dimen name="padding_top_translucent">40dp</dimen>
+    <dimen name="padding_bottom_translucent">10dp</dimen>
 </resources>

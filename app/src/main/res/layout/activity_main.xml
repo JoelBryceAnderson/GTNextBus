@@ -16,11 +16,12 @@
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
         android:background="#F7F7F7"
-        android:paddingBottom="@dimen/padding_bottom"
         android:paddingTop="@dimen/padding_top"
+        android:paddingBottom="@dimen/padding_bottom"
         android:clipToPadding="false"
         android:divider="@null"/>
 
 
 </android.support.v4.widget.DrawerLayout>
+
 

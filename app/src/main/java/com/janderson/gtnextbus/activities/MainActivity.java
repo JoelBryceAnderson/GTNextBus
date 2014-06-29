@@ -1,15 +1,32 @@
 package com.janderson.gtnextbus.activities;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.os.Build;
+import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.FrameLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 
-import com.janderson.gtnextbus.items.NavDrawerItem;
-import com.janderson.gtnextbus.adapters.NavDrawerListAdapter;
 import com.janderson.gtnextbus.R;
+import com.janderson.gtnextbus.adapters.NavDrawerListAdapter;
+import com.janderson.gtnextbus.items.NavDrawerItem;
 import com.janderson.gtnextbus.navdrawerfragments.BlueFragment;
 import com.janderson.gtnextbus.navdrawerfragments.EmoryFragment;
 import com.janderson.gtnextbus.navdrawerfragments.FavoriteFragment;
@@ -17,19 +34,8 @@ import com.janderson.gtnextbus.navdrawerfragments.GreenFragment;
 import com.janderson.gtnextbus.navdrawerfragments.MidnightFragment;
 import com.janderson.gtnextbus.navdrawerfragments.RedFragment;
 import com.janderson.gtnextbus.navdrawerfragments.TrolleyFragment;
-import android.app.FragmentManager;
-import android.util.Log;
-import android.app.Fragment;
-import android.support.v4.widget.DrawerLayout;
-import android.widget.ListView;
-import android.support.v4.app.ActionBarDrawerToggle;
+
 import java.util.ArrayList;
-import android.view.View;
-import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.content.res.Configuration;
-import android.widget.TextView;
-import android.graphics.Typeface;
 
 public class MainActivity extends Activity {
 
@@ -43,13 +49,21 @@ public class MainActivity extends Activity {
     private TypedArray icons;
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
+    private ColorDrawable headerColor;
+    private float originalRatio = 1;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        headerColor = new ColorDrawable(
+                Color.parseColor("#ffca28"));
+        getActionBar().setBackgroundDrawable(headerColor);
         setContentView(R.layout.activity_main);
-        mTitle = mDrawerTitle = getTitle();
+        if (savedInstanceState == null) {
+        } else {
+            setTitle(savedInstanceState.getCharSequence("title"));
+        }
         navMenuTitles = getResources().getStringArray(R.array.buses);
         navSubTitles = getResources().getStringArray(R.array.sub);
         icons = getResources()
@@ -75,9 +89,21 @@ public class MainActivity extends Activity {
                 R.string.app_name,
                 R.string.app_name
         ) {
-            public void onDrawerStateChanged(int newState) {
+            public void onDrawerSlide(View drawerView, float slideOffset) {
                 if (!getActionBar().isShowing()) {
                     getActionBar().show();
+                }
+                super.onDrawerSlide(drawerView, slideOffset);
+                final float ratio = Math.min(Math.max(slideOffset, originalRatio), 1) / 1;
+                int alphaVal = (int) (ratio * 255);
+                headerColor.setAlpha(alphaVal);
+                getActionBar().setBackgroundDrawable(headerColor);
+            }
+
+            public void onDrawerStateChanged(int newState) {
+                if (!mDrawerLayout.isDrawerVisible(mDrawerList)) {
+                    int originalAlpha = headerColor.getAlpha();
+                    originalRatio = (float) originalAlpha / 255;
                 }
             }
         };
@@ -86,6 +112,40 @@ public class MainActivity extends Activity {
             displayView(0);
         }
         mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(
+                        getApplicationContext());
+        if (sharedPreferences.getBoolean("transparentNav", true)) {
+            Window window = getWindow();
+            if (android.os.Build.VERSION.SDK_INT>=19) {
+                if(getResources().
+                        getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
+                            WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+                    int topPadding = getApplicationContext().
+                            getResources().getDimensionPixelSize(R.dimen.padding_top_translucent);
+                    int bottomPadding = getApplicationContext().
+                            getResources().getDimensionPixelSize(R.dimen.padding_bottom_translucent);
+                    mDrawerList.setPadding(0, topPadding, 0, bottomPadding);
+                } else {
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+                    int topPadding = getApplicationContext().
+                            getResources().getDimensionPixelSize(R.dimen.padding_top);
+                    int bottomPadding = getApplicationContext().
+                            getResources().getDimensionPixelSize(R.dimen.padding_bottom);
+                    mDrawerList.setPadding(0, topPadding, 0 , bottomPadding);
+                }
+            }
+        } else {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            int topPadding = getApplicationContext().
+                    getResources().getDimensionPixelSize(R.dimen.padding_top);
+            int bottomPadding = getApplicationContext().
+                    getResources().getDimensionPixelSize(R.dimen.padding_bottom);
+            mDrawerList.setPadding(0, topPadding, 0 , bottomPadding);
+        }
     }
 
     @Override
@@ -112,7 +172,6 @@ public class MainActivity extends Activity {
     }
 
     private void displayView(int position) {
-        // update the main content by replacing fragments
         Fragment fragment = null;
         switch (position) {
             case 0:
@@ -146,16 +205,15 @@ public class MainActivity extends Activity {
 
         if (fragment != null) {
             FragmentManager fragmentManager = getFragmentManager();
+            FrameLayout frameLayout = (FrameLayout) findViewById(R.id.frame_container);
             fragmentManager.beginTransaction()
                     .replace(R.id.frame_container, fragment).commit();
 
-            // update selected item and title, then close the drawer
             mDrawerList.setItemChecked(position, true);
             mDrawerList.setSelection(position);
             setTitle(navMenuTitles[position]);
             mDrawerLayout.closeDrawer(mDrawerList);
         } else {
-            // error in creating fragment
             Log.e("MainActivity", "Error in creating fragment");
         }
     }
@@ -168,6 +226,15 @@ public class MainActivity extends Activity {
         }
     }
 
+    public void setActionBarAlpha(int actionBarAlpha) {
+        headerColor.setAlpha(actionBarAlpha);
+        getActionBar().setBackgroundDrawable(headerColor);
+    }
+
+    public int getActionBarAlpha() {
+        return headerColor.getAlpha();
+    }
+
     private class SlideMenuClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -176,9 +243,18 @@ public class MainActivity extends Activity {
                 setNavDrawerItemNormal();
                 TextView TV = (TextView) view.findViewById(R.id.title);
                 TV.setTypeface(null, Typeface.BOLD);
+                originalRatio = 1;
             }
             displayView(position);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putCharSequence("title", getTitle());
+        outState.putBoolean("isDrawerOpen",
+                mDrawerLayout.isDrawerOpen(mDrawerList));
     }
 
 }

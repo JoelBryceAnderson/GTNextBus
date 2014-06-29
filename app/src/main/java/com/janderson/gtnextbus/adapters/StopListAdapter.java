@@ -5,18 +5,20 @@ package com.janderson.gtnextbus.adapters;
  */
 
 
-import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.graphics.Typeface;
 import android.widget.TextView;
+
 import com.janderson.gtnextbus.R;
 import com.janderson.gtnextbus.items.StopItem;
+
+import java.util.ArrayList;
 
 public class StopListAdapter extends BaseAdapter {
 
@@ -67,12 +69,19 @@ public class StopListAdapter extends BaseAdapter {
             holder.mText.setTextSize(20);
             holder.mText.setTypeface(null, Typeface.ITALIC);
         }
-
         return convertView;
     }
 
     private class ViewHolder {
         TextView mText;
+    }
+
+    @Override
+    public boolean isEnabled(int position) {
+        if (position == 0) {
+            return false;
+        }
+        return true;
     }
 
 }

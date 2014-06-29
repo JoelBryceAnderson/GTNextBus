@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
     android:background="#E5E5E5"
     android:id="@+id/activity_alerts"
     tools:context="com.janderson.gtnextbus.activities.AlertsActivity">
@@ -12,6 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:layoutAnimation="@anim/favorite_fade_in"
+        android:animateLayoutChanges="true"
         android:id="@+id/no_alerts_layout">
 
         <ImageView
@@ -37,17 +39,20 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="fill_parent"
+        android:paddingLeft="10dp"
+        android:paddingTop="@dimen/card_padding">
 
         <ListView
             android:id="@+id/alert_cards"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:choiceMode="singleChoice"
             android:background="#E5E5E5"
             android:divider="#E5E5E5"
-            android:dividerHeight="1dp"
+            android:dividerHeight="15dp"
+            android:scrollbarStyle="outsideInset"
             android:paddingBottom="@dimen/padding_bottom"
             android:paddingTop="@dimen/padding_top"
             android:clipToPadding="false"/>

@@ -1,13 +1,22 @@
 package com.janderson.gtnextbus.activities;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Color;
-import android.os.Build;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.content.Intent;
+import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -32,10 +41,15 @@ public class StopListActivity extends Activity {
     private String[] stops;
     private String routeTag;
     private String[] stopTags;
+    private ColorDrawable headerColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActionBar().setTitle("Route Stops");
+        headerColor = new ColorDrawable(
+                Color.parseColor("#ffca28"));
+        getActionBar().setBackgroundDrawable(headerColor);
         setContentView(R.layout.activity_stop_list);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
@@ -74,12 +88,53 @@ public class StopListActivity extends Activity {
                 }
                 else if (currentFirstVisibleItem < mLastFirstVisibleItem)
                 {
-                    getActionBar().show();
+                    if (!getActionBar().isShowing() ||
+                            headerColor.getAlpha() != 255) {
+                        final float ratio = (float) Math.min(Math.max(i, 0), (i3)) / (i3);
+                        final float finalRatio = (float) (1 - ratio);
+                        int alphaVal = (int) (finalRatio * 255);
+                        Log.v("alphaVal", Float.toString(ratio));
+                        headerColor.setAlpha(alphaVal);
+                        getActionBar().show();
+                    }
                 }
 
                 mLastFirstVisibleItem = currentFirstVisibleItem;
             }
         });
+        SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(
+                        getApplicationContext());
+        if (sharedPreferences.getBoolean("transparentNav", true)) {
+            Window window = getWindow();
+            if (android.os.Build.VERSION.SDK_INT>=19) {
+                if(getResources().
+                        getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
+                            WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+                    int topPadding = getApplicationContext().
+                            getResources().getDimensionPixelSize(R.dimen.padding_top_translucent);
+                    int bottomPadding = getApplicationContext().
+                            getResources().getDimensionPixelSize(R.dimen.padding_bottom_translucent);
+                    stopList.setPadding(0, topPadding, 0, bottomPadding);
+                } else {
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+                    int topPadding = getApplicationContext().
+                            getResources().getDimensionPixelSize(R.dimen.padding_top);
+                    int bottomPadding = getApplicationContext().
+                            getResources().getDimensionPixelSize(R.dimen.padding_bottom);
+                    stopList.setPadding(0, topPadding, 0 , bottomPadding);
+                }
+            }
+        } else {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            int topPadding = getApplicationContext().
+                    getResources().getDimensionPixelSize(R.dimen.padding_top);
+            int bottomPadding = getApplicationContext().
+                    getResources().getDimensionPixelSize(R.dimen.padding_bottom);
+            stopList.setPadding(0, topPadding, 0 , bottomPadding);
+        }
     }
     private class StopListClickListener implements ListView.OnItemClickListener {
         @Override

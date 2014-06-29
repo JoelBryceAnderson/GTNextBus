@@ -7,23 +7,21 @@ package com.janderson.gtnextbus.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.janderson.gtnextbus.R;
+import com.janderson.gtnextbus.items.RouteItem;
+
 import java.util.ArrayList;
 
 /**
  * Created by JoelAnderson on 5/15/14.
  */
-
-
-import android.graphics.Typeface;
-
-import com.janderson.gtnextbus.R;
-import com.janderson.gtnextbus.items.RouteItem;
 
 public class DestinationAdapter extends BaseAdapter {
 
@@ -38,6 +36,7 @@ public class DestinationAdapter extends BaseAdapter {
         this.context = context;
         this.destinationItems = destinationItems;
     }
+
 
     @Override
     public int getCount() {
@@ -112,11 +111,18 @@ public class DestinationAdapter extends BaseAdapter {
             holder.mText.setTextSize(20);
             holder.mText.setTypeface(null, Typeface.ITALIC);
         }
-
         return convertView;
     }
 
     private class ViewHolder {
         TextView mText;
+    }
+
+    @Override
+    public boolean isEnabled(int position) {
+        if (position == 0) {
+            return false;
+        }
+        return true;
     }
 }

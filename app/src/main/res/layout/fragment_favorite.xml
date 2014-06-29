@@ -3,7 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
     android:background="#E5E5E5"
     android:id="@+id/fragment_favorite"
     tools:context="com.janderson.gtnextbus.navdrawerfragments.FavoriteFragment">
@@ -15,7 +15,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:id="@+id/no_favorites_layout">
+        android:id="@+id/no_favorites_layout"
+        android:layoutAnimation="@anim/favorite_fade_in">
 
         <ImageView
             android:clipToPadding="false"
@@ -41,7 +42,8 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="fill_parent"
+        android:clipChildren="false">
 
         <ListView
             android:id="@+id/favorite_cards"
@@ -51,9 +53,10 @@
             android:choiceMode="singleChoice"
             android:background="#E5E5E5"
             android:divider="#E5E5E5"
-            android:paddingTop="@dimen/padding_top"
-            android:paddingBottom="@dimen/padding_bottom"
-            android:dividerHeight="1dp"
+            android:dividerHeight="0dp"
+            android:fitsSystemWindows="true"
+            android:clipChildren="false"
+            android:layoutAnimation="@anim/listview_anim"
             android:clipToPadding="false"/>
 
     </LinearLayout>

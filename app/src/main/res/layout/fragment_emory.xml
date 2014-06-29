@@ -1,15 +1,17 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:background="#E5E5E5"
-android:id="@+id/fragment_emory"
-tools:context="com.janderson.gtnextbus.navdrawerfragments.EmoryFragment">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="#E5E5E5"
+    android:id="@+id/fragment_emory"
+    tools:context="com.janderson.gtnextbus.navdrawerfragments.EmoryFragment">
 
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:clipChildren="false">
+
 
     <ListView
         android:id="@+id/emory_cards"
@@ -19,10 +21,11 @@ tools:context="com.janderson.gtnextbus.navdrawerfragments.EmoryFragment">
         android:choiceMode="singleChoice"
         android:background="#E5E5E5"
         android:divider="#E5E5E5"
-        android:paddingTop="@dimen/padding_top"
-        android:dividerHeight="1dp"
+        android:layoutAnimation="@anim/listview_anim"
+        android:dividerHeight="0dp"
+        android:fitsSystemWindows="true"
         android:clipToPadding="false"/>
 
-</LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

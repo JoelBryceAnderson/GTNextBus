@@ -9,20 +9,19 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="fill_parent">
 
         <ListView
             android:id="@+id/blue_cards"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:choiceMode="singleChoice"
             android:background="#E5E5E5"
             android:divider="#E5E5E5"
-            android:dividerHeight="1dp"
-            android:paddingBottom="@dimen/padding_bottom"
-            android:paddingTop="@dimen/padding_top"
-            android:clipToPadding="false"/>
+            android:dividerHeight="0dp"
+            android:clipToPadding="false"
+            android:layoutAnimation="@anim/listview_anim"/>
 
     </LinearLayout>
 

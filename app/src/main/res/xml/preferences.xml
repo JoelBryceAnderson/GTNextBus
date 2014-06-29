@@ -9,24 +9,27 @@
         android:title="BUS ARRIVAL ALERTS">
         <Preference
             android:title="Active alerts"
-            android:key="activeAlerts">
-        </Preference>
+            android:key="activeAlerts"/>
         <CheckBoxPreference
             android:title="Vibrate"
             android:defaultValue="true"
-            android:key="vibrateNotification">
-        </CheckBoxPreference>
+            android:key="vibrateNotification"/>
         <CheckBoxPreference
             android:title="Play sound"
             android:defaultValue="true"
-            android:key="soundNotification">
-        </CheckBoxPreference>
+            android:key="soundNotification"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="APPEARANCE">
+        <CheckBoxPreference
+            android:title="Transparent navigation bar"
+            android:defaultValue="false"
+            android:key="transparentNav"/>
     </PreferenceCategory>
     <PreferenceCategory
         android:title="ABOUT">
         <Preference
             android:title="About GT NextBus"
-            android:key="openAbout">
-            </Preference>
+            android:key="openAbout"/>
     </PreferenceCategory>
 </PreferenceScreen>

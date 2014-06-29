@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="/Users/JoelAnderson/AndroidStudioProjects/GTNextBus/app/build/intermediates/pre-dexed/debug/classes-5ea2c48f3bafcd8cb694758dd96637a2281b3e65.jar"
+        jar="/Users/JoelAnderson/AndroidStudioProjects/GTNextBus/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
+    <item
+        dex="/Users/JoelAnderson/AndroidStudioProjects/GT Nextbus L Release/app/build/intermediates/pre-dexed/debug/classes-16552f8da05b897e261ccdb2460c719d7b92988d.jar"
+        jar="/Users/JoelAnderson/AndroidStudioProjects/GT Nextbus L Release/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
+    <item
+        dex="/Users/JoelAnderson/AndroidStudioProjects/GT Nextbus L Release/app/build/intermediates/pre-dexed/debug/support-v4-19.1.0-fe930dc68beb1e566675ce71b270d4091c6c249b.jar"
+        jar="/Applications/Android Studio.app/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
+    <item
+        dex="/Users/JoelAnderson/AndroidStudioProjects/GT Nextbus L Release/app/build/intermediates/pre-dexed/debug/classes-bb8373582fb4095b2cbff3d5d6b0a75776b9672a.jar"
+        jar="/Users/JoelAnderson/AndroidStudioProjects/GT Nextbus L Release/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.0-rc1/classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="25c58e61f70a3d78e5c5abcfc9db0555fc869b7d"/>
+    <item
+        dex="/Users/JoelAnderson/AndroidStudioProjects/GT Nextbus L Release/app/build/intermediates/pre-dexed/debug/library-2.4.0-b8c0fa9d3d2956f7e40abd61217cf5f74ca1cbdd.jar"
+        jar="/Users/JoelAnderson/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb"/>
+    <item
+        dex="/Users/JoelAnderson/AndroidStudioProjects/GT Nextbus L Release/app/build/intermediates/pre-dexed/debug/library-2.6.0-b6bf26fb0e851f9d124b99b7a9c12ebfaa1fdc98.jar"
+        jar="/Users/JoelAnderson/.gradle/caches/modules-2/files-2.1/com.nhaarman.listviewanimations/library/2.6.0/59351ccb0a1631d30358f6a92749a072f2df7602/library-2.6.0.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="59351ccb0a1631d30358f6a92749a072f2df7602"/>
+
+</pre-dex-items>

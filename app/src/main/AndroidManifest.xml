@@ -4,6 +4,7 @@
 
     <application
         android:allowBackup="true"
+        android:backupAgent="com.janderson.gtnextbus.background.MyBackupAgent"
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -12,8 +13,7 @@
             android:name="com.janderson.gtnextbus.activities.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.MAIN"  />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -31,7 +31,7 @@
         </activity>
         <activity
             android:name="com.janderson.gtnextbus.activities.SettingsActivity"
-            android:label="@string/title_activity_settings" >
+            android:label="@string/title_activity_settings">
         </activity>
         <activity
             android:name="com.janderson.gtnextbus.activities.AlertsActivity"
@@ -41,6 +41,9 @@
         <service
             android:name="com.janderson.gtnextbus.activities.StopActivity$NotificationService"
             android:enabled="true" />
+        <meta-data
+            android:name="com.google.android.backup.api_key"
+            android:value="AEdPqrEAAAAIiKYlOoXdy_LwyYgbvVxFXsWDh_lUTSJNIkDv6w" />
     </application>
 
     <uses-sdk android:minSdkVersion="14" />

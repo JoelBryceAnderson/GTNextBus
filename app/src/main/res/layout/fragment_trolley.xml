@@ -9,19 +9,21 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="fill_parent"
+        android:clipChildren="false">
 
         <ListView
             android:id="@+id/trolley_cards"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clipChildren="false"
             android:layout_gravity="center"
             android:choiceMode="singleChoice"
             android:background="#E5E5E5"
             android:divider="#E5E5E5"
-            android:paddingTop="@dimen/padding_top"
-            android:dividerHeight="1dp"
-            android:clipToPadding="false"/>
+            android:dividerHeight="0dp"
+            android:clipToPadding="false"
+            android:layoutAnimation="@anim/listview_anim"/>
 
     </LinearLayout>
 

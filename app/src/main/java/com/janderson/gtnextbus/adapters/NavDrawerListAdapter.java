@@ -5,28 +5,28 @@ package com.janderson.gtnextbus.adapters;
  */
 
 
-import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.graphics.Typeface;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.janderson.gtnextbus.items.NavDrawerItem;
 import com.janderson.gtnextbus.R;
+import com.janderson.gtnextbus.items.NavDrawerItem;
 
-import org.w3c.dom.Text;
+import java.util.ArrayList;
 
 public class NavDrawerListAdapter extends BaseAdapter {
 
     private Context context;
     private ArrayList<NavDrawerItem> navDrawerItems;
     private TextView txtTitle;
+    private int mSelectedItem;
 
     ViewHolder holder = new ViewHolder();
 
@@ -50,6 +50,13 @@ public class NavDrawerListAdapter extends BaseAdapter {
         return position;
     }
 
+    public int getSelectedItem() {
+        return mSelectedItem;
+    }
+    public void setSelectedItem(int selectedItem) {
+        mSelectedItem = selectedItem;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
@@ -61,7 +68,7 @@ public class NavDrawerListAdapter extends BaseAdapter {
             holder.dividerTop = (View) convertView.findViewById(R.id.divider_top);
             holder.dividerBottom = (View) convertView.findViewById(R.id.divider_bottom);
             holder.txtSubTitle = (TextView) convertView.findViewById(R.id.footer_text);
-            if (position == 0) {
+            if (position == mSelectedItem) {
                 holder.txtTitle.setTypeface(null, Typeface.BOLD);
             }
             convertView.setTag(R.id.id_one, holder.txtTitle);

@@ -3,31 +3,38 @@ package com.janderson.gtnextbus.activities;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.IntentService;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.support.v4.app.TaskStackBuilder;
+import android.app.backup.BackupManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.content.Intent;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.ViewConfiguration;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -39,12 +46,13 @@ import com.janderson.gtnextbus.R;
 import com.janderson.gtnextbus.adapters.StopAdapter;
 import com.janderson.gtnextbus.background.ParseFeed;
 import com.janderson.gtnextbus.items.StopItem;
-import com.nhaarman.listviewanimations.swinginadapters.prepared.SwingRightInAnimationAdapter;
 
-import java.util.ArrayList;;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.Set;
+
+;
 
 
 public class StopActivity extends Activity {
@@ -79,13 +87,20 @@ public class StopActivity extends Activity {
     private int maxVal;
     private int roundVal;
     private boolean isLessThanTen;
+    private LinearLayout linear;
+    private Dialog dialog;
+    private View dialogView;
+    private WindowManager.LayoutParams wmlp;
+    private BackupManager backupManager;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        backupManager = new BackupManager(this);
         setContentView(R.layout.activity_stop);
+        getActionBar().setTitle("Stop Times");
         LinearLayout lay = (LinearLayout) findViewById(R.id.lay);
         preferences = getSharedPreferences("saved_favorites", MODE_PRIVATE);
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -119,6 +134,37 @@ public class StopActivity extends Activity {
         createRouteName();
         swipeRefreshLayout.setRefreshing(true);
         runTask();
+        SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(
+                        getApplicationContext());
+        if (sharedPreferences.getBoolean("transparentNav", true)) {
+            Window window = getWindow();
+            if (android.os.Build.VERSION.SDK_INT>=19) {
+                if(getResources().
+                        getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
+                            WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+                    int topPadding = getApplicationContext().
+                            getResources().getDimensionPixelSize(R.dimen.padding_top_translucent);
+                    int bottomPadding = getApplicationContext().
+                            getResources().getDimensionPixelSize(R.dimen.padding_bottom_translucent);
+                    lay.setPadding(0, topPadding, 0, bottomPadding);
+                } else {
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+                    int topPadding = getApplicationContext().
+                            getResources().getDimensionPixelSize(R.dimen.padding_top);
+                    int bottomPadding = getApplicationContext().
+                            getResources().getDimensionPixelSize(R.dimen.padding_bottom);
+                    lay.setPadding(0, topPadding, 0 , bottomPadding);
+                }
+            }
+        } else {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            int topPadding = getApplicationContext().
+                    getResources().getDimensionPixelSize(R.dimen.padding_top);
+            lay.setPadding(0, topPadding, 0 , 0);
+        }
     }
 
 
@@ -182,18 +228,18 @@ public class StopActivity extends Activity {
             case R.id.action_save:
                 if (savedStop) {
                     preferences.edit().remove(favoriteKey).commit();
-                    Toast.makeText(this, "Removed stop from favorites.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Removed from favorites", Toast.LENGTH_SHORT).show();
                     item.setIcon(R.drawable.ic_action_save);
                     item.setTitle("Add favorite");
                     savedStop = false;
-
                 } else {
                     preferences.edit().putStringSet(favoriteKey, stringSet).commit();
-                    Toast.makeText(this, "Added stop to favorites.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show();
                     item.setIcon(R.drawable.ic_action_saved);
                     item.setTitle("Remove favorite");
                     savedStop = true;
                 }
+                backupManager.dataChanged();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -238,9 +284,7 @@ public class StopActivity extends Activity {
             }
             adapter = new StopAdapter(activity.getApplicationContext(),
                     stopItems, color);
-            SwingRightInAnimationAdapter swingRightInAnimationAdapter = new SwingRightInAnimationAdapter(adapter);
-            swingRightInAnimationAdapter.setAbsListView(stopList);
-            stopList.setAdapter(swingRightInAnimationAdapter);
+            stopList.setAdapter(adapter);
             stopList.setOnScrollListener(new AbsListView.OnScrollListener() {
 
                 int mLastFirstVisibleItem = 0;
@@ -297,7 +341,7 @@ public class StopActivity extends Activity {
                 posString = Integer.toString(position);
                 String stringKey = routeName + title + stop + posString;
                 if (alertPref.contains(stringKey)) {
-                    Toast.makeText(this, "You've already added this alert!",
+                    Toast.makeText(this, "You've already added this alert",
                             Toast.LENGTH_SHORT).show();
                 } else {
                     if (isNumeric(Character.toString(onClickText.charAt(0)))) {
@@ -308,9 +352,11 @@ public class StopActivity extends Activity {
                         if (isNumeric(Character.toString(onClickText.charAt(2)))) {
                             minutes = minutes.concat(Character.toString(onClickText.charAt(2)));
                         }
-                        LinearLayout linear=new LinearLayout(this);
-                        linear.setOrientation(LinearLayout.VERTICAL);
-                        seek=new SeekBar(this);
+                        LayoutInflater layoutInflater = LayoutInflater.from(
+                                getApplicationContext());
+                        View dialogView = layoutInflater.inflate(R.layout.alert_dialog_card, null);
+                        linear = (LinearLayout) dialogView.findViewById(R.id.alert_dialog_card);
+                        seek = (SeekBar) dialogView.findViewById(R.id.seekbar);
                         if (Integer.parseInt(minutes) > 10) {
                             maxVal = Integer.parseInt(minutes) - 1;
                             isLessThanTen = false;
@@ -319,16 +365,31 @@ public class StopActivity extends Activity {
                             isLessThanTen =  true;
                         }
                         seek.setMax(maxVal);
-                        slideTitle = new TextView(this);
-                        slideTitle.setText("Set alert for 1 minute from now.");
-                        slideTitle.setPadding(40, 40, 40, 40);
-                        slideTitle.setTextSize(20);
-                        linear.addView(slideTitle);
+                        slideTitle = (TextView) dialogView.findViewById(R.id.dialog_text);
                         slideVal = seek.getProgress();
                         if (!minutes.equals("1")) {
-                            linear.addView(seek);
                             slideTitle.setText("Set alert for when the bus arrives.");
+                        } else {
+                            slideTitle.setText("Set alert for 1 minute from now.");
+                            seek.setVisibility(View.GONE);
                         }
+                        Button dialogButton = (Button)
+                                dialogView.findViewById(R.id.dialog_button);
+                        dialogButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                notifyManager();
+                                dialog.dismiss();
+                            }
+                        });
+                        Button dialogButtonCancel = (Button)
+                                dialogView.findViewById(R.id.dialog_button_cancel);
+                        dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dialog.dismiss();
+                            }
+                        });
                         seek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
                             @Override
@@ -340,7 +401,7 @@ public class StopActivity extends Activity {
                                                     + " minute before the bus arrives.");
                                         } else if (i / 10 == 0) {
                                             slideTitle.setText("Set alert for when the bus arrives.");
-                                        }else {
+                                        } else {
                                             slideTitle.setText("Set alert for " + String.valueOf(i / 10)
                                                     + " minutes before the bus arrives.");
                                         }
@@ -353,7 +414,7 @@ public class StopActivity extends Activity {
                                                 + " minute before the bus arrives.");
                                     } else if (i == 0) {
                                         slideTitle.setText("Set alert for when the bus arrives.");
-                                    }else {
+                                    } else {
                                         slideTitle.setText("Set alert for " + String.valueOf(i)
                                                 + " minutes before the bus arrives.");
                                     }
@@ -370,33 +431,25 @@ public class StopActivity extends Activity {
                             public void onStopTrackingTouch(SeekBar seekBar) {
                                 if (isLessThanTen) {
                                     if (roundVal % 10 != 0) {
-                                        double rounded = 10 * Math.round(((double)roundVal) / 10);
+                                        double rounded = 10 * Math.round(((double) roundVal) / 10);
                                         int roundInt = (int) rounded;
                                         seek.setProgress(roundInt);
                                     }
                                 }
                             }
                         });
-                        new AlertDialog.Builder(this)
-                                .setTitle("Set alert")
-                                .setView(linear)
-                                .setPositiveButton("Set", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        notifyManager();
-                                    }
-                                })
-                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                                    }
-                                })
-                                .show();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                                .setView(dialogView);
+                        dialog = builder.create();
+                        dialog.getWindow().getAttributes().windowAnimations =
+                                R.style.dialog_animation;
+                        wmlp = dialog.getWindow().getAttributes();
+                        dialog.show();
                     }
                 }
         }
     }
+
 
     private void notifyManager() {
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
@@ -413,7 +466,7 @@ public class StopActivity extends Activity {
                 randomNumber, notifIntent, 0);
         alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() +
                 Integer.parseInt(minutes) * 60000 - slideVal * 60000, pendingIntent);
-        Toast.makeText(this, "Alert set.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Alert set", Toast.LENGTH_SHORT).show();
         String alertRoute = "&".concat(routeName);
         String alertTitle = "/".concat(title);
         String alertNumber = "%".concat(Integer.toString(randomNumber));
@@ -511,4 +564,5 @@ public class StopActivity extends Activity {
             routeName = "Midnight Rambler";
         }
     }
+
 }
