@@ -24,7 +24,7 @@
             android:clipToPadding="false"
             android:clipChildren="false">
 
-            <LinearLayout
+            <RelativeLayout
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -43,8 +43,20 @@
                     android:clipChildren="false"
                     android:clipToPadding="false"/>
 
+                <ImageButton
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:id="@+id/floating_star_button"
+                    android:src="@drawable/ic_action_save"
+                    android:clickable="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/circle_button_selector"/>
 
-            </LinearLayout>
+
+            </RelativeLayout>
 
         </android.support.v4.widget.SwipeRefreshLayout>
 

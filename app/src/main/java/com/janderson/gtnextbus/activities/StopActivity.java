@@ -1,5 +1,6 @@
 package com.janderson.gtnextbus.activities;
 
+import android.animation.AnimatorSet;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
@@ -32,9 +33,13 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -52,7 +57,6 @@ import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.Set;
 
-;
 
 
 public class StopActivity extends Activity {
@@ -92,7 +96,9 @@ public class StopActivity extends Activity {
     private View dialogView;
     private WindowManager.LayoutParams wmlp;
     private BackupManager backupManager;
-
+    public ImageButton floatingButton;
+    public Animation floatingAnimation;
+    public boolean animateFloatingButton;
 
 
     @Override
@@ -128,6 +134,37 @@ public class StopActivity extends Activity {
         stringSet.add("$".concat(stop));
         stringSet.add(color);
         favoriteKey = route.concat(stop);
+        floatingButton = (ImageButton) findViewById(R.id.floating_star_button);
+        floatingAnimation =  AnimationUtils.loadAnimation(
+                getApplicationContext(), R.anim.slide_in);
+        animateFloatingButton = true;
+        floatingButton.setVisibility(View.GONE);
+        floatingButton.setAnimation(floatingAnimation);
+        if (preferences.contains(favoriteKey)) {
+            floatingButton.setImageResource(R.drawable.ic_action_saved);
+            savedStop = true;
+        }
+        floatingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (savedStop) {
+                    preferences.edit().remove(favoriteKey).commit();
+                    Toast.makeText(getApplicationContext(),
+                            "Removed from favorites", Toast.LENGTH_SHORT).show();
+                    floatingButton.animate().rotation(360);
+                    floatingButton.setImageResource(R.drawable.ic_action_save);
+                    savedStop = false;
+                } else {
+                    preferences.edit().putStringSet(favoriteKey, stringSet).commit();
+                    Toast.makeText(getApplicationContext(),
+                            "Added to favorites", Toast.LENGTH_SHORT).show();
+                    floatingButton.animate().rotation(-360);
+                    floatingButton.setImageResource(R.drawable.ic_action_saved);
+                    savedStop = true;
+                }
+                backupManager.dataChanged();
+            }
+        });
         secondTime = "time";
         thirdTime = "time";
         times = new String[]{time, secondTime, thirdTime};
@@ -207,12 +244,6 @@ public class StopActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.favorite, menu);
-        if (preferences.contains(favoriteKey)) {
-            menu.findItem(R.id.action_save).setIcon(R.drawable.ic_action_saved);
-            menu.findItem(R.id.action_save).setTitle("Remove favorite");
-            savedStop = true;
-        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -225,21 +256,6 @@ public class StopActivity extends Activity {
                 }
                 finish();
                 return true;
-            case R.id.action_save:
-                if (savedStop) {
-                    preferences.edit().remove(favoriteKey).commit();
-                    Toast.makeText(this, "Removed from favorites", Toast.LENGTH_SHORT).show();
-                    item.setIcon(R.drawable.ic_action_save);
-                    item.setTitle("Add favorite");
-                    savedStop = false;
-                } else {
-                    preferences.edit().putStringSet(favoriteKey, stringSet).commit();
-                    Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show();
-                    item.setIcon(R.drawable.ic_action_saved);
-                    item.setTitle("Remove favorite");
-                    savedStop = true;
-                }
-                backupManager.dataChanged();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -307,6 +323,11 @@ public class StopActivity extends Activity {
                 }
             });
             stopList.setOnItemClickListener(new TimeClickListener());
+            if (animateFloatingButton) {
+                floatingButton.setVisibility(View.VISIBLE);
+                floatingButton.startAnimation(floatingAnimation);
+            }
+            animateFloatingButton = false;
             swipeRefreshLayout.setRefreshing(false);
         }
     }
