@@ -46,6 +46,7 @@ public class StopListActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.slide_in_activity, R.anim.stay_put_activity);
         getActionBar().setTitle("Route Stops");
         headerColor = new ColorDrawable(
                 Color.parseColor("#ffca28"));
@@ -171,10 +172,17 @@ public class StopListActivity extends Activity {
 
             case android.R.id.home:
                 finish();
+                overridePendingTransition(R.anim.stay_put_activity, R.anim.slide_out_activity);
 
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.stay_put_activity, R.anim.slide_out_activity);
     }
 }
 

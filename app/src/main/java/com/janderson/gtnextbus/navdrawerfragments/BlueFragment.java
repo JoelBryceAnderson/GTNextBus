@@ -41,6 +41,7 @@ public class BlueFragment extends Fragment {
     private ArrayList<RouteItem> blueRouteItems;
     private DestinationAdapter adapter;
     private ColorDrawable headerColor;
+    private boolean justRotated;
 
 
     public BlueFragment(){}
@@ -65,13 +66,15 @@ public class BlueFragment extends Fragment {
         mRouteList = (ListView) getView().findViewById(R.id.blue_cards);
         if (savedInstanceState != null) {
             mRouteList.setLayoutAnimation(null);
+            justRotated = savedInstanceState.getBoolean("justRotated");
         }
         blueRouteItems = new ArrayList<RouteItem>();
-        for (int i = 0; i < 15; i++) {
+        blueRouteItems.add(new RouteItem(routes[0], R.drawable.stinger_two, true));
+        for (int i = 1; i < 15; i++) {
             blueRouteItems.add(new RouteItem(routes[i]));
         }
         adapter = new DestinationAdapter(getActivity().getApplicationContext(),
-                blueRouteItems);
+                blueRouteItems, true);
         mRouteList.setAdapter(adapter);
         mRouteList.setOnItemClickListener(new StopClickListener());
         mRouteList.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -88,7 +91,12 @@ public class BlueFragment extends Fragment {
                 final int currentFirstVisibleItem = mRouteList.getFirstVisiblePosition();
                 if (currentFirstVisibleItem > mLastFirstVisibleItem)
                 {
-                    getActivity().getActionBar().hide();
+                    if (justRotated) {
+                        getActivity().getActionBar().show();
+                        justRotated = false;
+                    } else {
+                        getActivity().getActionBar().hide();
+                    }
                 }
                 else if (currentFirstVisibleItem < mLastFirstVisibleItem)
                 {
@@ -139,6 +147,12 @@ public class BlueFragment extends Fragment {
                     getResources().getDimensionPixelSize(R.dimen.padding_bottom);
             mRouteList.setPadding(0, topPadding, 0 , bottomPadding);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("justRotated", true);
     }
 
     private class StopClickListener implements ListView.OnItemClickListener {

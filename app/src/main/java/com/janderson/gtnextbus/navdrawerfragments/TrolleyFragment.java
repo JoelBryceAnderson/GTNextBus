@@ -40,6 +40,7 @@ public class TrolleyFragment extends Fragment {
     private ArrayList<RouteItem> trolleyDestinationItems;
     private DestinationAdapter adapter;
     private ColorDrawable headerColor;
+    private boolean justRotated;
 
 
     public TrolleyFragment(){}
@@ -63,13 +64,13 @@ public class TrolleyFragment extends Fragment {
         mRouteList = (ListView) getView().findViewById(R.id.trolley_cards);
         if (savedInstanceState != null) {
             mRouteList.setLayoutAnimation(null);
+            justRotated = savedInstanceState.getBoolean("justRotated");
         }
         trolleyDestinationItems = new ArrayList<RouteItem>();
-        trolleyDestinationItems.add(new RouteItem(destinations[0]));
-        trolleyDestinationItems.add(new RouteItem(destinations[1]));
-        trolleyDestinationItems.add(new RouteItem(destinations[2]));
+        trolleyDestinationItems.add(new RouteItem(destinations[1], R.drawable.marta, true));
+        trolleyDestinationItems.add(new RouteItem(destinations[2], R.drawable.hub, true));
         adapter = new DestinationAdapter(getActivity().getApplicationContext(),
-                trolleyDestinationItems);
+                trolleyDestinationItems, false);
         mRouteList.setAdapter(adapter);
         mRouteList.setOnItemClickListener(new StopClickListener());
         mRouteList.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -86,7 +87,12 @@ public class TrolleyFragment extends Fragment {
                 final int currentFirstVisibleItem = mRouteList.getFirstVisiblePosition();
                 if (currentFirstVisibleItem > mLastFirstVisibleItem)
                 {
-                    getActivity().getActionBar().hide();
+                    if (justRotated) {
+                        getActivity().getActionBar().show();
+                        justRotated = false;
+                    } else {
+                        getActivity().getActionBar().hide();
+                    }
                 }
                 else if (currentFirstVisibleItem < mLastFirstVisibleItem)
                 {
@@ -139,6 +145,12 @@ public class TrolleyFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("justRotated", true);
+    }
+
     private class StopClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -154,8 +166,6 @@ public class TrolleyFragment extends Fragment {
         String[] stopTags = null;
         switch (position) {
             case 0:
-                break;
-            case 1:
                 intent = new Intent(getActivity(), StopListActivity.class);
                 strings = new String [] {"To MARTA Station", "#FFBB33", "trolley"};
                 stops = getResources().getStringArray(R.array.trolley_marta_stops);
@@ -164,7 +174,7 @@ public class TrolleyFragment extends Fragment {
                 intent.putExtra("stops", stops);
                 intent.putExtra("extra", strings);
                 break;
-            case 2:
+            case 1:
                 intent = new Intent(getActivity(), StopListActivity.class);
                 strings = new String [] {"To Transit Hub", "#FFBB33", "trolley"};
                 stops = getResources().getStringArray(R.array.trolley_hub_stops);

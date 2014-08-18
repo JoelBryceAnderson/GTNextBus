@@ -41,6 +41,7 @@ public class GreenFragment extends Fragment {
     private ArrayList<RouteItem> greenDestinationItems;
     private DestinationAdapter adapter;
     private ColorDrawable headerColor;
+    private boolean justRotated;
 
 
     @Override
@@ -63,14 +64,15 @@ public class GreenFragment extends Fragment {
         mRouteList = (ListView) getView().findViewById(R.id.green_cards);
         if (savedInstanceState != null) {
             mRouteList.setLayoutAnimation(null);
+            justRotated = savedInstanceState.getBoolean("justRotated");
         }
         greenDestinationItems = new ArrayList<RouteItem>();
-        greenDestinationItems.add(new RouteItem(destinations[0]));
-        greenDestinationItems.add(new RouteItem(destinations[1]));
-        greenDestinationItems.add(new RouteItem(destinations[2]));
-        greenDestinationItems.add(new RouteItem(destinations[3]));
+        greenDestinationItems.add(new RouteItem(destinations[1], R.drawable.tep, true));
+        greenDestinationItems.add(new RouteItem(destinations[2], R.drawable.hub, true));
+        greenDestinationItems.add(new RouteItem(destinations[3],
+                R.drawable.fourteenthstreet, true));
         adapter = new DestinationAdapter(getActivity().getApplicationContext(),
-                greenDestinationItems);
+                greenDestinationItems, false);
         mRouteList.setAdapter(adapter);
         mRouteList.setOnItemClickListener(new StopClickListener());
         mRouteList.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -87,7 +89,12 @@ public class GreenFragment extends Fragment {
                 final int currentFirstVisibleItem = mRouteList.getFirstVisiblePosition();
                 if (currentFirstVisibleItem > mLastFirstVisibleItem)
                 {
-                    getActivity().getActionBar().hide();
+                    if (justRotated) {
+                        getActivity().getActionBar().show();
+                        justRotated = false;
+                    } else {
+                        getActivity().getActionBar().hide();
+                    }
                 }
                 else if (currentFirstVisibleItem < mLastFirstVisibleItem)
                 {
@@ -140,6 +147,12 @@ public class GreenFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("justRotated", true);
+    }
+
     private class StopClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -155,8 +168,6 @@ public class GreenFragment extends Fragment {
         String[] stopTags = null;
         switch (position) {
             case 0:
-                break;
-            case 1:
                 intent = new Intent(getActivity(), StopListActivity.class);
                 strings = new String [] {"To TEP", "#669900", "green"};
                 stops = getResources().getStringArray(R.array.green_tep_stops);
@@ -165,7 +176,7 @@ public class GreenFragment extends Fragment {
                 intent.putExtra("extra", strings);
                 intent.putExtra("stops", stops);
                 break;
-            case 2:
+            case 1:
                 intent = new Intent(getActivity(), StopListActivity.class);
                 strings = new String [] {"To Transit Hub", "#669900", "green"};
                 stops = getResources().getStringArray(R.array.green_hub_stops);
@@ -174,7 +185,7 @@ public class GreenFragment extends Fragment {
                 intent.putExtra("stops", stops);
                 intent.putExtra("extra", strings);
                 break;
-            case 3:
+            case 2:
                 intent = new Intent(getActivity(), StopListActivity.class);
                 strings = new String [] {"To 14th Street", "#669900", "green"};
                 stops = getResources().getStringArray(R.array.green_fourteenth_stops);

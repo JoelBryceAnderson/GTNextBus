@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -62,9 +63,12 @@ public class FavoriteFragment extends Fragment {
     private String[] trolleyHubStopTags;
     private String[] emoryEmoryStopTags;
     private String[] emoryGatechStopTags;
+    private String[] nightFittenStopTags;
+    private String[] nightCulcStopTags;
     private TextView noFavoritesText;
     private ImageView noFavoritesImage;
     private ColorDrawable headerColor;
+    private boolean justRotated;
 
 
     @Override
@@ -85,8 +89,12 @@ public class FavoriteFragment extends Fragment {
         header = getResources().getString(R.string.favorite_destinations_header);
         favoriteLayout = (RelativeLayout) getView().findViewById(R.id.fragment_favorite);
         mRouteList = (ListView) getView().findViewById(R.id.favorite_cards);
+        LinearLayout noFavoritesLayout = (LinearLayout)
+                getView().findViewById(R.id.no_favorites_layout);
         if (savedInstanceState != null) {
             mRouteList.setLayoutAnimation(null);
+            noFavoritesLayout.setLayoutAnimation(null);
+            justRotated = savedInstanceState.getBoolean("justRotated");
         }
         noFavoritesText = (TextView) getView().findViewById(R.id.no_favorites_text);
         noFavoritesImage = (ImageView) getView().findViewById(R.id.no_favorites_image);
@@ -150,7 +158,12 @@ public class FavoriteFragment extends Fragment {
                 final int currentFirstVisibleItem = mRouteList.getFirstVisiblePosition();
                 if (currentFirstVisibleItem > mLastFirstVisibleItem)
                 {
-                    getActivity().getActionBar().hide();
+                    if (justRotated) {
+                        getActivity().getActionBar().show();
+                        justRotated = false;
+                    } else {
+                        getActivity().getActionBar().hide();
+                    }
                 }
                 else if (currentFirstVisibleItem < mLastFirstVisibleItem)
                 {
@@ -201,6 +214,12 @@ public class FavoriteFragment extends Fragment {
                     getResources().getDimensionPixelSize(R.dimen.padding_bottom);
             mRouteList.setPadding(0, topPadding, 0 , bottomPadding);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("justRotated", true);
     }
 
     private class StopListClickListener implements ListView.OnItemClickListener {
@@ -325,6 +344,9 @@ public class FavoriteFragment extends Fragment {
         trolleyMartaStopTags = getResources().getStringArray(R.array.trolley_marta_stop_titles);
         emoryEmoryStopTags = getResources().getStringArray(R.array.emory_emory_stop_titles);
         emoryGatechStopTags = getResources().getStringArray(R.array.emory_gatech_stop_titles);
+        nightFittenStopTags = getResources().getStringArray(R.array.night_fitten_stop_titles);
+        nightCulcStopTags = getResources().getStringArray(R.array.night_culc_stop_titles);
+
         for (String tag : greenTepStopTags) {
             if (tag.contains(routeStopCombo)) {
                 name = "-To TEP- \n" + name;
@@ -364,6 +386,18 @@ public class FavoriteFragment extends Fragment {
         for (String tag : emoryGatechStopTags) {
             if (tag.contains(routeStopCombo)) {
                 name = "-To Georgia Tech- \n" + name;
+                return true;
+            }
+        }
+        for (String tag : nightFittenStopTags) {
+            if (tag.contains(routeStopCombo)) {
+                name = "-To Fitten Hall- \n" + name;
+                return true;
+            }
+        }
+        for (String tag : nightCulcStopTags) {
+            if (tag.contains(routeStopCombo)) {
+                name = "-To CULC- \n" + name;
                 return true;
             }
         }

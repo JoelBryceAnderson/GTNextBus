@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.janderson.gtnextbus.R;
@@ -27,6 +28,7 @@ public class StopAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<StopItem> stopItems;
     private String color;
+    private ImageView imgIcon;
 
     public StopAdapter(Context context, ArrayList<StopItem> stopItems, String color) {
         this.context = context;
@@ -58,6 +60,8 @@ public class StopAdapter extends BaseAdapter {
             TextView txtTitle = (TextView) convertView.findViewById(R.id.stop);
             txtTitle.setText(stopItems.get(position).getTitle());
             txtTitle.setTextColor(Color.parseColor(color));
+            imgIcon = (ImageView) convertView.findViewById(R.id.card_image);
+            imgIcon.setVisibility(View.GONE);
             if (position == 0) {
                 txtTitle.setTextSize(30);
                 txtTitle.setTypeface(null, Typeface.BOLD_ITALIC);

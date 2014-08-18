@@ -3,6 +3,7 @@ package com.janderson.gtnextbus.activities;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -19,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
@@ -42,8 +44,6 @@ public class MainActivity extends Activity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-    private CharSequence mDrawerTitle;
-    private CharSequence mTitle;
     private String[] navMenuTitles;
     private String[] navSubTitles;
     private TypedArray icons;
@@ -51,6 +51,8 @@ public class MainActivity extends Activity {
     private NavDrawerListAdapter adapter;
     private ColorDrawable headerColor;
     private float originalRatio = 1;
+    private int selectedItemPosition;
+    private int currentFragmentPosition;
 
 
     @Override
@@ -61,8 +63,11 @@ public class MainActivity extends Activity {
         getActionBar().setBackgroundDrawable(headerColor);
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
+            currentFragmentPosition = 2000;
         } else {
             setTitle(savedInstanceState.getCharSequence("title"));
+            selectedItemPosition = savedInstanceState.getInt("selectedItemValue");
+            currentFragmentPosition = savedInstanceState.getInt("currentFragmentPosition");
         }
         navMenuTitles = getResources().getStringArray(R.array.buses);
         navSubTitles = getResources().getStringArray(R.array.sub);
@@ -81,6 +86,7 @@ public class MainActivity extends Activity {
         navDrawerItems.add(new NavDrawerItem(navSubTitles[0], icons.getResourceId(0, -1), true));
         adapter = new NavDrawerListAdapter(getApplicationContext(),
                 navDrawerItems);
+        adapter.setSelectedItem(selectedItemPosition);
         mDrawerList.setAdapter(adapter);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
@@ -118,7 +124,7 @@ public class MainActivity extends Activity {
                         getApplicationContext());
         if (sharedPreferences.getBoolean("transparentNav", true)) {
             Window window = getWindow();
-            if (android.os.Build.VERSION.SDK_INT>=19) {
+            if (android.os.Build.VERSION.SDK_INT >= 19) {
                 if(getResources().
                         getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
                     window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
@@ -169,9 +175,12 @@ public class MainActivity extends Activity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
+        adapter.setSelectedItem(selectedItemPosition);
+        adapter.notifyDataSetChanged();
     }
 
     private void displayView(int position) {
+        selectedItemPosition = position;
         Fragment fragment = null;
         switch (position) {
             case 0:
@@ -204,27 +213,23 @@ public class MainActivity extends Activity {
         }
 
         if (fragment != null) {
-            FragmentManager fragmentManager = getFragmentManager();
-            FrameLayout frameLayout = (FrameLayout) findViewById(R.id.frame_container);
-            fragmentManager.beginTransaction()
-                    .replace(R.id.frame_container, fragment).commit();
-
-            mDrawerList.setItemChecked(position, true);
-            mDrawerList.setSelection(position);
-            setTitle(navMenuTitles[position]);
             mDrawerLayout.closeDrawer(mDrawerList);
+            if (selectedItemPosition != currentFragmentPosition) {
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.setCustomAnimations(R.anim.slide_in_fragment, R.anim.slide_out_left);
+                transaction.replace(R.id.frame_container, fragment);
+                transaction.commit();
+                mDrawerList.setItemChecked(position, true);
+                mDrawerList.setSelection(position);
+                setTitle(navMenuTitles[position]);
+                currentFragmentPosition = selectedItemPosition;
+            }
         } else {
             Log.e("MainActivity", "Error in creating fragment");
         }
     }
 
-    public void setNavDrawerItemNormal() {
-        for (int i = 0; i < mDrawerList.getChildCount(); i++) {
-            View view = mDrawerList.getChildAt(i);
-            TextView TV = ((TextView) view.findViewById(R.id.title));
-            TV.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
-        }
-    }
 
     public void setActionBarAlpha(int actionBarAlpha) {
         headerColor.setAlpha(actionBarAlpha);
@@ -240,10 +245,9 @@ public class MainActivity extends Activity {
         public void onItemClick(AdapterView<?> parent, View view, int position,
                                 long id) {
             if (position < 7) {
-                setNavDrawerItemNormal();
-                TextView TV = (TextView) view.findViewById(R.id.title);
-                TV.setTypeface(null, Typeface.BOLD);
                 originalRatio = 1;
+                adapter.setSelectedItem(position);
+                adapter.notifyDataSetChanged();
             }
             displayView(position);
         }
@@ -255,6 +259,8 @@ public class MainActivity extends Activity {
         outState.putCharSequence("title", getTitle());
         outState.putBoolean("isDrawerOpen",
                 mDrawerLayout.isDrawerOpen(mDrawerList));
+        outState.putInt("selectedItemValue", selectedItemPosition);
+        outState.putInt("currentFragmentPosition", currentFragmentPosition);
     }
 
 }

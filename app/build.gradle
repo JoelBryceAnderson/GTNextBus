@@ -7,7 +7,7 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 19
-        versionCode 13
+        versionCode 20
         versionName "1.5"
     }
     buildTypes {
@@ -26,5 +26,5 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     compile 'com.android.support:appcompat-v7:19.+'
-    compile 'com.android.support:support-v4:19.+'
+    compile 'com.android.support:support-v4:20.0+'
 }

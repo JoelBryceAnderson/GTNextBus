@@ -53,8 +53,8 @@ public class NavDrawerListAdapter extends BaseAdapter {
     public int getSelectedItem() {
         return mSelectedItem;
     }
-    public void setSelectedItem(int selectedItem) {
-        mSelectedItem = selectedItem;
+    public void setSelectedItem(int mSelectedItem) {
+        this.mSelectedItem = mSelectedItem;
     }
 
     @Override
@@ -65,12 +65,9 @@ public class NavDrawerListAdapter extends BaseAdapter {
             convertView = mInflater.inflate(R.layout.drawer_list_item, null);
             holder.imgIcon = (ImageView) convertView.findViewById(R.id.icon);
             holder.txtTitle = (TextView) convertView.findViewById(R.id.title);
-            holder.dividerTop = (View) convertView.findViewById(R.id.divider_top);
-            holder.dividerBottom = (View) convertView.findViewById(R.id.divider_bottom);
+            holder.dividerTop = convertView.findViewById(R.id.divider_top);
+            holder.dividerBottom = convertView.findViewById(R.id.divider_bottom);
             holder.txtSubTitle = (TextView) convertView.findViewById(R.id.footer_text);
-            if (position == mSelectedItem) {
-                holder.txtTitle.setTypeface(null, Typeface.BOLD);
-            }
             convertView.setTag(R.id.id_one, holder.txtTitle);
             convertView.setTag(R.id.id_two, holder.imgIcon);
             convertView.setTag(R.id.id_three, holder.dividerTop);
@@ -92,6 +89,12 @@ public class NavDrawerListAdapter extends BaseAdapter {
         holder.txtSubTitle.setVisibility(View.VISIBLE);
         holder.dividerTop.setVisibility(View.VISIBLE);
         holder.dividerBottom.setVisibility(View.VISIBLE);
+
+        if (position == mSelectedItem) {
+            holder.txtTitle.setTypeface(null, Typeface.BOLD);
+        } else {
+            holder.txtTitle.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
+        }
 
         if(navDrawerItems.get(position).getIconVisibility()){
             holder.txtTitle.setVisibility(View.GONE);

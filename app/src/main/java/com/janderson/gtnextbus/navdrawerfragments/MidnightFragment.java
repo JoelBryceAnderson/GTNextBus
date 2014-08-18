@@ -24,6 +24,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.janderson.gtnextbus.R;
 import com.janderson.gtnextbus.activities.StopListActivity;
@@ -41,6 +42,7 @@ public class MidnightFragment extends Fragment {
     private ArrayList<RouteItem> midnightDestinationItems;
     private DestinationAdapter adapter;
     private ColorDrawable headerColor;
+    private boolean justRotated;
 
 
     @Override
@@ -62,12 +64,13 @@ public class MidnightFragment extends Fragment {
         mRouteList = (ListView) getView().findViewById(R.id.midnight_cards);
         if (savedInstanceState != null) {
             mRouteList.setLayoutAnimation(null);
+            justRotated = savedInstanceState.getBoolean("justRotated");
         }
         midnightDestinationItems = new ArrayList<RouteItem>();
-        midnightDestinationItems.add(new RouteItem(destinations[0]));
-        midnightDestinationItems.add(new RouteItem(destinations[3]));
+        midnightDestinationItems.add(new RouteItem(destinations[1], R.drawable.culc, true));
+        midnightDestinationItems.add(new RouteItem(destinations[2], R.drawable.fitten, true));
         adapter = new DestinationAdapter(getActivity().getApplicationContext(),
-                midnightDestinationItems);
+                midnightDestinationItems, false);
         mRouteList.setAdapter(adapter);
         mRouteList.setOnScrollListener(new AbsListView.OnScrollListener() {
 
@@ -83,7 +86,12 @@ public class MidnightFragment extends Fragment {
                 final int currentFirstVisibleItem = mRouteList.getFirstVisiblePosition();
                 if (currentFirstVisibleItem > mLastFirstVisibleItem)
                 {
-                    getActivity().getActionBar().hide();
+                    if (justRotated) {
+                        getActivity().getActionBar().show();
+                        justRotated = false;
+                    } else {
+                        getActivity().getActionBar().hide();
+                    }
                 }
                 else if (currentFirstVisibleItem < mLastFirstVisibleItem)
                 {
@@ -134,6 +142,14 @@ public class MidnightFragment extends Fragment {
                     getResources().getDimensionPixelSize(R.dimen.padding_bottom);
             mRouteList.setPadding(0, topPadding, 0 , bottomPadding);
         }
+
+        mRouteList.setOnItemClickListener(new StopClickListener());
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("justRotated", true);
     }
 
 
@@ -152,21 +168,19 @@ public class MidnightFragment extends Fragment {
         String[] stopTags = null;
         switch (position) {
             case 0:
-                break;
-            case 1:
                 intent = new Intent(getActivity(), StopListActivity.class);
                 strings = new String [] {"To CULC", "#9933CC", "night"};
-                stops = getResources().getStringArray(R.array.midnight_culc_stops);
-                stopTags = getResources().getStringArray(R.array.green_tep_stop_tags);
+                stops = getResources().getStringArray(R.array.night_culc_stops);
+                stopTags = getResources().getStringArray(R.array.night_culc_stop_tags);
                 intent.putExtra("stopTags", stopTags);
                 intent.putExtra("stops", stops);
                 intent.putExtra("extra", strings);
                 break;
-            case 2:
+            case 1:
                 intent = new Intent(getActivity(), StopListActivity.class);
                 strings = new String [] {"To Fitten Hall", "#9933CC", "night"};
-                stops = getResources().getStringArray(R.array.midnight_fitten_stops);
-                stopTags = getResources().getStringArray(R.array.green_tep_stop_tags);
+                stops = getResources().getStringArray(R.array.night_fitten_stops);
+                stopTags = getResources().getStringArray(R.array.night_fitten_stop_tags);
                 intent.putExtra("stopTags", stopTags);
                 intent.putExtra("stops", stops);
                 intent.putExtra("extra", strings);

@@ -6,17 +6,24 @@ package com.janderson.gtnextbus.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
+import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.janderson.gtnextbus.R;
 import com.janderson.gtnextbus.items.RouteItem;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 /**
@@ -28,11 +35,15 @@ public class DestinationAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<RouteItem> destinationItems;
     private int color;
-    private int headerSize;
+    private boolean headerIsDisabled;
+    private boolean boldFirst;
+
 
     ViewHolder holder = new ViewHolder();
 
-    public DestinationAdapter(Context context, ArrayList<RouteItem> destinationItems){
+    public DestinationAdapter(Context context,
+                              ArrayList<RouteItem> destinationItems, boolean headerIsDisabled){
+        this.headerIsDisabled = headerIsDisabled;
         this.context = context;
         this.destinationItems = destinationItems;
     }
@@ -59,70 +70,145 @@ public class DestinationAdapter extends BaseAdapter {
             LayoutInflater mInflater = (LayoutInflater)
                     context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             convertView = mInflater.inflate(R.layout.card, null);
+            holder.imgIcon = (ImageView) convertView.findViewById(R.id.card_image);
             holder.mText = (TextView) convertView.findViewById(R.id.stop);
-            convertView.setTag(holder.mText);
+            loadBitmap(destinationItems.get(position).getIcon(), holder.imgIcon);
+            convertView.setTag(R.id.id_one, holder.mText);
+            convertView.setTag(R.id.id_two, holder.imgIcon);
         } else {
-            holder.mText = (TextView) convertView.getTag();
+            holder.mText = (TextView) convertView.getTag(R.id.id_one);
+            holder.imgIcon = (ImageView) convertView.getTag(R.id.id_two);
         }
-
+        holder.imgIcon.setVisibility(View.VISIBLE);
         holder.mText.setText(destinationItems.get(position).getTitle());
+
+        boldFirst = false;
 
         if (holder.mText.getText().toString().equals("Red Route")) {
             color = Color.parseColor("#CC0000");
-            headerSize = 30;
+            boldFirst = true;
         }
 
         if (holder.mText.getText().toString().equals("Blue Route")) {
             color = Color.parseColor("#0000FF");
-            headerSize = 30;
+            boldFirst = true;
         }
 
-        if (holder.mText.getText().toString().equals("Green Route Destinations")) {
+        if (holder.mText.getText().toString().equals("To Technology Enterprise Park")) {
             color = Color.parseColor("#669900");
-            headerSize = 25;
         }
 
-        if (holder.mText.getText().toString().equals("Tech Trolley Destinations")) {
+        if (holder.mText.getText().toString().equals("To Marta Station")) {
             color = Color.parseColor("#FFBB33");
-            headerSize = 25;
         }
 
-        if (holder.mText.getText().toString().equals("Midnight Rambler Destinations")) {
+        if (holder.mText.getText().toString().equals("To CULC")) {
             color = Color.parseColor("#9933CC");
-            headerSize = 22;
         }
 
-        if (holder.mText.getText().toString().equals("Emory Shuttle Destinations")) {
+        if (holder.mText.getText().toString().equals("To Emory")) {
             color = Color.parseColor("#000080");
-            headerSize = 25;
         }
 
         if (holder.mText.getText().toString().equals("Favorite Stops")) {
             color = Color.parseColor("#000000");
-            headerSize = 25;
+        }
+
+        if(!destinationItems.get(position).getIconVisibility()){
+            holder.imgIcon.setVisibility(View.GONE);
         }
 
         holder.mText.setTextColor(color);
+        holder.mText.setTextSize(20);
+        holder.mText.setTypeface(null, Typeface.ITALIC);
 
-        if (position == 0) {
-            holder.mText.setTextSize(headerSize);
-            holder.mText.setTypeface(null, Typeface.BOLD_ITALIC);
-        } else {
-            holder.mText.setTextSize(20);
-            holder.mText.setTypeface(null, Typeface.ITALIC);
+        if (boldFirst) {
+            if (position == 0) {
+                holder.mText.setTypeface(null, Typeface.BOLD_ITALIC);
+            }
         }
+
         return convertView;
     }
 
     private class ViewHolder {
         TextView mText;
+        ImageView imgIcon;
     }
 
     @Override
     public boolean isEnabled(int position) {
-        if (position == 0) {
-            return false;
+        if (headerIsDisabled) {
+            if (position == 0) {
+                return false;
+            }
         }
         return true;
     }
+
+    public void loadBitmap(int resId, ImageView mImageView) {
+        BitmapWorkerTask task = new BitmapWorkerTask(mImageView);
+        task.execute(resId);
+    }
+
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            while ((halfHeight / inSampleSize) > reqHeight
+                    && (halfWidth / inSampleSize) > reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+
+    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
+                                                         int reqWidth, int reqHeight) {
+
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res, resId, options);
+
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(res, resId, options);
+    }
+
+    class BitmapWorkerTask extends AsyncTask<Integer, Void, Bitmap> {
+        private final WeakReference<ImageView> imageViewReference;
+        private int data = 0;
+
+        public BitmapWorkerTask(ImageView imageView) {
+            imageViewReference = new WeakReference<ImageView>(imageView);
+        }
+
+        @Override
+        protected Bitmap doInBackground(Integer... params) {
+            data = params[0];
+            final Bitmap bitmap = decodeSampledBitmapFromResource(
+                    context.getResources(), params[0], 1000, 800);
+            return bitmap;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            if (imageViewReference != null && bitmap != null) {
+                final ImageView imageView = imageViewReference.get();
+                if (imageView != null) {
+                    imageView.setImageBitmap(bitmap);
+                }
+            }
+        }
+    }
+
 }

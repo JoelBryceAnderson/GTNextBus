@@ -44,7 +44,7 @@ public class RedFragment extends Fragment {
     private ArrayList<RouteItem> redRouteItems;
     private DestinationAdapter adapter;
     private ColorDrawable headerColor;
-    private View viewToAnimate;
+    private boolean justRotated;
 
     public RedFragment(){}
 
@@ -66,13 +66,15 @@ public class RedFragment extends Fragment {
         mRouteList = (ListView) getView().findViewById(R.id.red_cards);
         if (savedInstanceState != null) {
             mRouteList.setLayoutAnimation(null);
+            justRotated = savedInstanceState.getBoolean("justRotated");
         }
         redRouteItems = new ArrayList<RouteItem>();
-        for (int i = 0; i < 18; i++) {
+        redRouteItems.add(new RouteItem(routes[0], R.drawable.stinger, true));
+        for (int i = 1; i < 18; i++) {
             redRouteItems.add(new RouteItem(routes[i]));
         }
         adapter = new DestinationAdapter(getActivity().getApplicationContext(),
-                redRouteItems);
+                redRouteItems, true);
         mRouteList.setAdapter(adapter);
         mRouteList.setOnItemClickListener(new StopClickListener());
         mRouteList.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -89,7 +91,12 @@ public class RedFragment extends Fragment {
                 final int currentFirstVisibleItem = mRouteList.getFirstVisiblePosition();
                 if (currentFirstVisibleItem > mLastFirstVisibleItem)
                 {
-                    getActivity().getActionBar().hide();
+                    if (justRotated) {
+                        getActivity().getActionBar().show();
+                        justRotated = false;
+                    } else {
+                        getActivity().getActionBar().hide();
+                    }
                 }
                 else if (currentFirstVisibleItem < mLastFirstVisibleItem)
                 {
@@ -135,6 +142,13 @@ public class RedFragment extends Fragment {
             mRouteList.setPadding(0, topPadding, 0 , bottomPadding);
         }
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("justRotated", true);
+    }
+
 
     private class StopClickListener implements ListView.OnItemClickListener {
         @Override

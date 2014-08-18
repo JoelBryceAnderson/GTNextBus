@@ -1,24 +1,22 @@
 package com.janderson.gtnextbus.activities;
 
-import android.animation.AnimatorSet;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.IntentService;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.backup.BackupManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Color;
+import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
@@ -104,10 +102,11 @@ public class StopActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.slide_in_activity, R.anim.stay_put_activity);
         backupManager = new BackupManager(this);
         setContentView(R.layout.activity_stop);
         getActionBar().setTitle("Stop Times");
-        LinearLayout lay = (LinearLayout) findViewById(R.id.lay);
+        RelativeLayout lay = (RelativeLayout) findViewById(R.id.lay);
         preferences = getSharedPreferences("saved_favorites", MODE_PRIVATE);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.container);
@@ -149,17 +148,37 @@ public class StopActivity extends Activity {
             public void onClick(View view) {
                 if (savedStop) {
                     preferences.edit().remove(favoriteKey).commit();
-                    Toast.makeText(getApplicationContext(),
-                            "Removed from favorites", Toast.LENGTH_SHORT).show();
-                    floatingButton.animate().rotation(360);
-                    floatingButton.setImageResource(R.drawable.ic_action_save);
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
+                        floatingButton.animate().rotationY(floatingButton.getRotationY() + 90)
+                                .setDuration(150).withEndAction(new Runnable() {
+                            @Override
+                            public void run() {
+                                floatingButton.setImageResource(R.drawable.ic_action_save);
+                                floatingButton.animate().setDuration(150)
+                                        .rotationY(floatingButton.getRotationY() + 90);
+                            }
+                        });
+                    } else {
+                        floatingButton.animate().rotationY(floatingButton.getRotationY() + 180);
+                        floatingButton.setImageResource(R.drawable.ic_action_save);
+                    }
                     savedStop = false;
                 } else {
                     preferences.edit().putStringSet(favoriteKey, stringSet).commit();
-                    Toast.makeText(getApplicationContext(),
-                            "Added to favorites", Toast.LENGTH_SHORT).show();
-                    floatingButton.animate().rotation(-360);
-                    floatingButton.setImageResource(R.drawable.ic_action_saved);
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
+                        floatingButton.animate().rotationY(floatingButton.getRotationY() + 90)
+                                .setDuration(150).withEndAction(new Runnable() {
+                            @Override
+                            public void run() {
+                                floatingButton.setImageResource(R.drawable.ic_action_saved);
+                                floatingButton.animate().setDuration(150)
+                                        .rotationY(floatingButton.getRotationY() + 90);
+                            }
+                        });
+                    } else {
+                        floatingButton.animate().rotationY(floatingButton.getRotationY() + 180);
+                        floatingButton.setImageResource(R.drawable.ic_action_saved);
+                    }
                     savedStop = true;
                 }
                 backupManager.dataChanged();
@@ -255,6 +274,7 @@ public class StopActivity extends Activity {
                     startActivity(returnToMain);
                 }
                 finish();
+                overridePendingTransition(R.anim.stay_put_activity, R.anim.slide_out_activity);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -268,6 +288,7 @@ public class StopActivity extends Activity {
             Intent returnToMain = new Intent(this, MainActivity.class);
             startActivity(returnToMain);
         }
+        overridePendingTransition(R.anim.stay_put_activity, R.anim.slide_out_activity);
     }
 
 
@@ -462,6 +483,7 @@ public class StopActivity extends Activity {
                         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                                 .setView(dialogView);
                         dialog = builder.create();
+                        dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
                         dialog.getWindow().getAttributes().windowAnimations =
                                 R.style.dialog_animation;
                         wmlp = dialog.getWindow().getAttributes();
@@ -521,7 +543,7 @@ public class StopActivity extends Activity {
             String posString = intent.getStringExtra("posString");
             String stop = intent.getStringExtra("stop");
             String slideVal = intent.getStringExtra("slideVal");
-            long[] vibrationPattern = {0, 200, 0, 200};
+            long[] vibrationPattern = {0, 200, 200, 200};
             if (Integer.parseInt(slideVal) > 1) {
                 tickerText = "The " + routeName + " is arriving at " + title + " in " +
                         slideVal + " minutes.";
@@ -546,6 +568,9 @@ public class StopActivity extends Activity {
                     new NotificationCompat.Builder(getApplicationContext())
                             .setSmallIcon(R.drawable.ic_stat_bus)
                             .setContentTitle(routeName)
+                            .extend(new NotificationCompat.WearableExtender()
+                                    .setBackground(BitmapFactory.decodeResource(getResources(),
+                                    R.drawable.wearable_background)))
                             .setContentText(notifText)
                             .setTicker(tickerText)
                             .setContentIntent(resultPendingIntent)

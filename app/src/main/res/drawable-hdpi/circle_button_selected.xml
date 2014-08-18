@@ -5,8 +5,8 @@
             android:dither="true">
 
             <gradient
-                android:startColor="#000000"
-                android:endColor="#e5e5e5"
+                android:startColor="#FF000000"
+                android:endColor="#02000000"
                 android:centerX="50%"
                 android:centerY="50%"
                 android:type="radial"
@@ -19,7 +19,7 @@
         </shape>
     </item>
 
-    <item android:bottom="5dp" android:left="5dp" android:right="5dp" android:top="5dp">
+    <item android:bottom="5dp" android:left="2dp" android:right="2dp" android:top="0dp">
         <shape android:shape="oval"
             android:dither="true">
 

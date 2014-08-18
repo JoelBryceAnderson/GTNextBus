@@ -19,10 +19,6 @@
 
             <solid android:color="#F6F6F6" />
 
-            <padding android:bottom="8dp"
-                android:left="8dp"
-                android:right="8dp"
-                android:top="8dp" />
         </shape>
     </item>
 </layer-list>

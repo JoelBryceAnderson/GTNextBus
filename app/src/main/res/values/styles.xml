@@ -4,6 +4,7 @@
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/MyActionBar</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_ab_back_white</item>
+        <item name="android:windowBackground">@color/gray</item>
         <item name="android:windowActionBarOverlay">true</item>
     </style>
 
@@ -11,20 +12,19 @@
         <item name="android:background">#ffca28</item>
         <item name="android:title">Red Route</item>
         <item name="android:titleTextStyle">@style/MyActionBarTitleText</item>
-        <item name="android:icon">@drawable/actionbariconnew</item>
+        <item name="android:icon">@android:color/transparent</item>
+        <item name="android:height">56dp</item>
     </style>
 
     <style name="MyActionBarTitleText" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textColor">#FFFFFF</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+=    </style>
 
     <style name="dialog_animation">
         <item name="android:windowEnterAnimation">@anim/card_fly_up</item>
         <item name="android:windowExitAnimation">@anim/slide_out</item>
     </style>
-
-
 
 </resources>

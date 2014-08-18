@@ -41,6 +41,7 @@ public class EmoryFragment extends Fragment {
     private ArrayList<RouteItem> emoryDestinationItems;
     private DestinationAdapter adapter;
     private ColorDrawable headerColor;
+    private boolean justRotated;
 
 
     @Override
@@ -63,13 +64,13 @@ public class EmoryFragment extends Fragment {
         mRouteList = (ListView) getView().findViewById(R.id.emory_cards);
         if (savedInstanceState != null) {
             mRouteList.setLayoutAnimation(null);
+            justRotated = savedInstanceState.getBoolean("justRotated");
         }
         emoryDestinationItems = new ArrayList<RouteItem>();
-        emoryDestinationItems.add(new RouteItem(destinations[0]));
-        emoryDestinationItems.add(new RouteItem(destinations[1]));
-        emoryDestinationItems.add(new RouteItem(destinations[2]));
+        emoryDestinationItems.add(new RouteItem(destinations[1], R.drawable.emory, true));
+        emoryDestinationItems.add(new RouteItem(destinations[2], R.drawable.tech, true));
         adapter = new DestinationAdapter(getActivity().getApplicationContext(),
-                emoryDestinationItems);
+                emoryDestinationItems, false);
         mRouteList.setAdapter(adapter);
         mRouteList.setOnItemClickListener(new StopClickListener());
         mRouteList.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -86,7 +87,12 @@ public class EmoryFragment extends Fragment {
                 final int currentFirstVisibleItem = mRouteList.getFirstVisiblePosition();
                 if (currentFirstVisibleItem > mLastFirstVisibleItem)
                 {
-                    getActivity().getActionBar().hide();
+                    if (justRotated) {
+                        getActivity().getActionBar().show();
+                        justRotated = false;
+                    } else {
+                        getActivity().getActionBar().hide();
+                    }
                 }
                 else if (currentFirstVisibleItem < mLastFirstVisibleItem)
                 {
@@ -139,6 +145,12 @@ public class EmoryFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("justRotated", true);
+    }
+
     private class StopClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -154,8 +166,6 @@ public class EmoryFragment extends Fragment {
         String[] stopTags = null;
         switch (position) {
             case 0:
-                break;
-            case 1:
                 intent = new Intent(getActivity(), StopListActivity.class);
                 strings = new String [] {"To Emory", "#000080", "emory"};
                 stops = getResources().getStringArray(R.array.emory_emory_stops);
@@ -164,7 +174,7 @@ public class EmoryFragment extends Fragment {
                 intent.putExtra("stops", stops);
                 intent.putExtra("extra", strings);
                 break;
-            case 2:
+            case 1:
                 intent = new Intent(getActivity(), StopListActivity.class);
                 strings = new String [] {"To Georgia Tech", "#000080", "emory"};
                 stops = getResources().getStringArray(R.array.emory_gatech_stops);

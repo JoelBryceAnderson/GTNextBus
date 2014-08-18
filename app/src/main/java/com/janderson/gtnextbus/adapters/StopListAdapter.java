@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.janderson.gtnextbus.R;
@@ -55,9 +56,12 @@ public class StopListAdapter extends BaseAdapter {
                     context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             convertView = mInflater.inflate(R.layout.card, null);
             holder.mText = (TextView) convertView.findViewById(R.id.stop);
-            convertView.setTag(holder.mText);
+            holder.imgIcon = (ImageView) convertView.findViewById(R.id.card_image);
+            convertView.setTag(R.id.id_one, holder.mText);
+            convertView.setTag(R.id.id_two, holder.imgIcon);
         } else {
-            holder.mText = (TextView) convertView.getTag();
+            holder.mText = (TextView) convertView.getTag(R.id.id_one);
+            holder.imgIcon = (ImageView) convertView.getTag(R.id.id_two);
         }
 
         holder.mText.setText(stopItems.get(position).getTitle());
@@ -69,11 +73,18 @@ public class StopListAdapter extends BaseAdapter {
             holder.mText.setTextSize(20);
             holder.mText.setTypeface(null, Typeface.ITALIC);
         }
+
+        if(!stopItems.get(position).getIconVisibility()){
+            holder.imgIcon.setVisibility(View.GONE);
+        }
+
+
         return convertView;
     }
 
     private class ViewHolder {
         TextView mText;
+        ImageView imgIcon;
     }
 
     @Override

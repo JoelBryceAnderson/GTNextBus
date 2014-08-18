@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.janderson.gtnextbus.R;
@@ -60,11 +61,16 @@ public class FavoriteAdapter extends BaseAdapter {
             LayoutInflater mInflater = (LayoutInflater)
                     context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             convertView = mInflater.inflate(R.layout.card, null);
+            holder.imgIcon = (ImageView) convertView.findViewById(R.id.card_image);
             holder.mText = (TextView) convertView.findViewById(R.id.stop);
-            convertView.setTag(holder.mText);
+            convertView.setTag(R.id.id_one, holder.mText);
+            convertView.setTag(R.id.id_two, holder.imgIcon);
         } else {
-            holder.mText = (TextView) convertView.getTag();
+            holder.mText = (TextView) convertView.getTag(R.id.id_one);
+            holder.imgIcon = (ImageView) convertView.getTag(R.id.id_two);
         }
+        holder.imgIcon.setImageResource(stopItems.get(position).getIcon());
+        holder.imgIcon.setVisibility(View.VISIBLE);
         holder.mText.setText(stopItems.get(position).getTitle());
         holder.mText.setTextColor(Color.parseColor(stopItems.get(position).getColor()));
         if (position == 0) {
@@ -80,10 +86,16 @@ public class FavoriteAdapter extends BaseAdapter {
         if (isEnabled(position)) {
             convertView.setOnTouchListener(mTouchListener);
         }
+
+        if(!stopItems.get(position).getIconVisibility()){
+            holder.imgIcon.setVisibility(View.GONE);
+        }
+
         return convertView;
     }
 
     private class ViewHolder {
+        ImageView imgIcon;
         TextView mText;
     }
 

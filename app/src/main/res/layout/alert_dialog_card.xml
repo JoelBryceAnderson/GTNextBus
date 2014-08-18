@@ -4,8 +4,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="8dp"
     android:id="@+id/alert_dialog_card"
-    android:background="@drawable/card">
+    android:background="@drawable/nine_card">
 
     <TextView
         android:layout_width="wrap_content"

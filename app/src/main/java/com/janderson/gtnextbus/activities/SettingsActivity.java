@@ -27,6 +27,7 @@ public class SettingsActivity extends PreferenceActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.slide_in_activity, R.anim.stay_put_activity);
         getActionBar().setTitle("Settings");
         getFragmentManager().beginTransaction().replace(
                 android.R.id.content, new MyPreferenceFragment()).commit();
@@ -73,10 +74,17 @@ public class SettingsActivity extends PreferenceActivity {
 
             case android.R.id.home:
                 finish();
+                overridePendingTransition(R.anim.stay_put_activity, R.anim.slide_out_activity);
 
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.stay_put_activity, R.anim.slide_out_activity);
     }
 
     public static class MyPreferenceFragment extends PreferenceFragment {

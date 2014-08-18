@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:background="#E5E5E5"
     tools:context="com.janderson.gtnextbus.activities.About">
 
     <ScrollView
@@ -15,79 +14,109 @@
         android:layout_height="fill_parent"
         android:paddingTop="@dimen/padding_top"
         android:paddingBottom="@dimen/padding_bottom"
+        android:focusable="true"
         android:id="@+id/about_layout">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-        android:padding="15dp"
-        android:background="@drawable/card"
-        android:textSize="30sp"
-        android:textColor="#000000"
-        android:text="About"
-        android:textStyle="bold|italic"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:padding="15dp"
+            android:textSize="30sp"
+            android:textColor="#000000"
+            android:background="@drawable/nine_card"
+            android:text="About"
+            android:textStyle="bold|italic"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-        android:padding="15dp"
-        android:background="@drawable/card"
-        android:textSize="20sp"
-        android:textColor="#000000"
-        android:text="GT NextBus Version 1.5"
-        android:textStyle="italic"/>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:orientation="vertical"
+            android:background="@drawable/nine_card"
+            android:id="@+id/about_details_card"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-        android:padding="15dp"
-        android:background="@drawable/card"
-        android:textSize="20sp"
-        android:textColor="#000000"
-        android:text="By Joel Anderson"
-        android:id="@+id/joel_name_card"
-        android:textStyle="italic"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:padding="15dp"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:text="GT NextBus Version 1.5"
+                android:textStyle="italic"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-        android:padding="15dp"
-        android:background="@drawable/card"
-        android:textSize="20sp"
-        android:textColor="#000000"
-        android:text="JAnderson97@mail.gatech.edu"
-        android:id="@+id/email_card"
-        android:textStyle="italic"/>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:background="#e5e5e5"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-        android:padding="15dp"
-        android:background="@drawable/card"
-        android:textSize="20sp"
-        android:textColor="#000000"
-        android:text="All Data Copyright Georgia Tech Campus 2014"
-        android:textStyle="italic"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:padding="15dp"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:text="By Joel Anderson"
+                android:id="@+id/joel_name_card"
+                android:textStyle="italic"/>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:background="#e5e5e5"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:padding="15dp"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:text="JAnderson97@mail.gatech.edu"
+                android:id="@+id/email_card"
+                android:textStyle="italic"/>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:background="#e5e5e5"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:padding="15dp"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:text="All Data Copyright Georgia Tech Campus 2014"
+                android:textStyle="italic"/>
+
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
