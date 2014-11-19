@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="?android:attr/selectableItemBackground"
     android:layout_height="48dp">
 
     <View
@@ -8,6 +9,12 @@
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:background="#E5E5E5" />
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="160dp"
+        android:scaleType="centerCrop"
+        android:id="@+id/large_image_drawer"/>
 
     <ImageView
         android:id="@+id/icon"
@@ -23,24 +30,13 @@
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:minHeight="?android:attr/listPreferredItemHeight"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:minHeight="48dp"
+        android:textAppearance="?android:attr/textAppearanceListItem"
         android:textColor="#000000"
         android:gravity="center_vertical"
-        android:fontFamily="sans-serif-light"
-        android:paddingLeft="20dp"/>
-
-    <TextView
-        android:id="@+id/footer_text"
-        android:layout_width="215dp"
-        android:layout_height="fill_parent"
-        android:layout_toRightOf="@id/icon"
-        android:minHeight="?android:attr/listPreferredItemHeightSmall"
-        android:textColor="#000000"
-        android:text="HELP"
-        android:gravity="center_vertical"
-        android:fontFamily="sans-serif-light"
-        android:paddingRight="40dp"/>
+        android:fontFamily="sans-serif"
+        android:focusable="false"
+        android:paddingLeft="60dp"/>
 
     <View
         android:id="@+id/divider_bottom"

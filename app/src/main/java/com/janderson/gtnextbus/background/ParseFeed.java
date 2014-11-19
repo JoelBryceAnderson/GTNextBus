@@ -8,9 +8,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * Created by JoelAnderson on 5/18/14.
- */
 public class ParseFeed {
 
     public String secondTime;
@@ -18,10 +15,6 @@ public class ParseFeed {
     protected String url;
     public String time;
     public String thirdTime;
-    private boolean keepGoing;
-    private boolean notYetFirst;
-    private boolean notYetSecond;
-    private boolean notYetThird;
 
     public ParseFeed(String url, String stop, String time, String secondTime, String thirdTime) {
         this.url = url;
@@ -58,11 +51,10 @@ public class ParseFeed {
 
     public void parseXML(XmlPullParser xpp) {
         int event;
-        String text=null;
-        keepGoing = false;
-        notYetFirst = true;
-        notYetSecond = true;
-        notYetThird = true;
+        boolean keepGoing = false;
+        boolean notYetFirst = true;
+        boolean notYetSecond = true;
+        boolean notYetThird = true;
         try {
             event = xpp.getEventType();
             while (event != XmlPullParser.END_DOCUMENT) {

@@ -2,23 +2,11 @@
 <pre-dex-items>
 
     <item
-        dex="/Users/JoelAnderson/AndroidStudioProjects/GTNextBus/app/build/intermediates/pre-dexed/debug/support-annotations-20.0.0-bca9cd8c8082330ef7549e0398af852faae531fd.jar"
-        jar="/Applications/Android Studio.app/sdk/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0.jar"
+        dex="/Users/JoelAnderson/AndroidStudioProjects/GTNextBus/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.0-ee576f91b45a6538d4156fc6e674b6f65034f74e.jar"
+        jar="/Applications/Android Studio.app/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.0/support-annotations-21.0.0.jar"
         jumboMode="false"
-        revision="20.0.0"
-        sha1="9d9013e9ff35fc3756411e62873c363c70c638fa"/>
-    <item
-        dex="/Users/JoelAnderson/AndroidStudioProjects/GTNextBus/app/build/intermediates/pre-dexed/debug/classes-6e17dd14789a5d57e04f29044dd37404519e40c7.jar"
-        jar="/Users/JoelAnderson/AndroidStudioProjects/GTNextBus/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/classes.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
-    <item
-        dex="/Users/JoelAnderson/AndroidStudioProjects/GTNextBus/app/build/intermediates/pre-dexed/debug/classes-c5cdf9ce780619afba99c981228bcc6b0be932d0.jar"
-        jar="/Users/JoelAnderson/AndroidStudioProjects/GTNextBus/app/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/classes.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
+        revision="21.0.1"
+        sha1="1a578b9607b36266c63d43a4fa0ab5664dbe911e"/>
     <item
         dex="/Users/JoelAnderson/AndroidStudioProjects/GT Nextbus L Release/app/build/intermediates/pre-dexed/debug/library-2.4.0-b8c0fa9d3d2956f7e40abd61217cf5f74ca1cbdd.jar"
         jar="/Users/JoelAnderson/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
@@ -26,16 +14,40 @@
         revision="20.0.0"
         sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb"/>
     <item
-        dex="/Users/JoelAnderson/AndroidStudioProjects/GTNextBus/app/build/intermediates/pre-dexed/debug/internal_impl-20.0.0-890b931248aaf5548867d14bb4037dbc56ed3389.jar"
-        jar="/Users/JoelAnderson/AndroidStudioProjects/GTNextBus/app/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/libs/internal_impl-20.0.0.jar"
+        dex="/Users/JoelAnderson/AndroidStudioProjects/GTNextBus/app/build/intermediates/pre-dexed/debug/classes-f599b8a4b741e5237a710f3327e5417b66f7202f.jar"
+        jar="/Users/JoelAnderson/AndroidStudioProjects/GTNextBus/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.0/classes.jar"
         jumboMode="false"
-        revision="20.0.0"
-        sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
+        revision="21.0.1"
+        sha1="7d2525cba8ed61fff102977caed964fc22061e34"/>
+    <item
+        dex="/Users/JoelAnderson/AndroidStudioProjects/GTNextBus/app/build/intermediates/pre-dexed/debug/classes-19dfa4701bd568542b2a0221d93697ef5e022ba4.jar"
+        jar="/Users/JoelAnderson/AndroidStudioProjects/GTNextBus/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.0.1"
+        sha1="95fd37732ec852e99f07eeb516a3650172f1d136"/>
     <item
         dex="/Users/JoelAnderson/AndroidStudioProjects/GT Nextbus L Release/app/build/intermediates/pre-dexed/debug/library-2.6.0-b6bf26fb0e851f9d124b99b7a9c12ebfaa1fdc98.jar"
         jar="/Users/JoelAnderson/.gradle/caches/modules-2/files-2.1/com.nhaarman.listviewanimations/library/2.6.0/59351ccb0a1631d30358f6a92749a072f2df7602/library-2.6.0.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="59351ccb0a1631d30358f6a92749a072f2df7602"/>
+    <item
+        dex="/Users/JoelAnderson/AndroidStudioProjects/GTNextBus/app/build/intermediates/pre-dexed/debug/classes-721348d04b2610d5516c6a726340080eeb266f88.jar"
+        jar="/Users/JoelAnderson/AndroidStudioProjects/GTNextBus/app/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.1.11/classes.jar"
+        jumboMode="false"
+        revision="21.0.1"
+        sha1="0f700f6802ba1a1f1fa7ac26d5db0666a89d75a6"/>
+    <item
+        dex="/Users/JoelAnderson/AndroidStudioProjects/GTNextBus/app/build/intermediates/pre-dexed/debug/classes-ef37eefd360cd8195d8fa1cc3f491c9743fbaf65.jar"
+        jar="/Users/JoelAnderson/AndroidStudioProjects/GTNextBus/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.0.1"
+        sha1="686344a780033e4ba22b926cd225f8d4941247e6"/>
+    <item
+        dex="/Users/JoelAnderson/AndroidStudioProjects/GTNextBus/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.0-11e00898477d19d3fc19fdc71bc2be71a870cbc1.jar"
+        jar="/Users/JoelAnderson/AndroidStudioProjects/GTNextBus/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/libs/internal_impl-21.0.0.jar"
+        jumboMode="false"
+        revision="21.0.1"
+        sha1="1609e6d42d0480b0f4188e2c29f75388fa12a8f0"/>
 
 </pre-dex-items>

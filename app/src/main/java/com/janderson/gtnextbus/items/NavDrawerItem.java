@@ -1,15 +1,11 @@
 package com.janderson.gtnextbus.items;
 
-/**
- * Created by JoelAnderson on 5/15/14.
- */
 public class NavDrawerItem {
 
     private String title;
     private int icon;
     private boolean isIcon;
-
-    public NavDrawerItem(){}
+    private int largeImage;
 
     public NavDrawerItem(String title, int icon, boolean isIcon){
         this.title = title;
@@ -20,7 +16,6 @@ public class NavDrawerItem {
     public NavDrawerItem(String title){
         this.title = title;
     }
-
 
     public String getTitle(){
         return this.title;
@@ -40,9 +35,5 @@ public class NavDrawerItem {
 
     public boolean getIconVisibility(){
         return this.isIcon;
-    }
-
-    public void setIconVisibility(boolean isIcon){
-        this.isIcon = isIcon;
     }
 }

@@ -1,12 +1,8 @@
 package com.janderson.gtnextbus.background;
 
 import android.app.backup.BackupAgentHelper;
-import android.app.backup.BackupManager;
 import android.app.backup.SharedPreferencesBackupHelper;
 
-/**
- * Created by JoelAnderson on 6/15/14.
- */
 public class MyBackupAgent extends BackupAgentHelper {
 
     static final String favoritePreferences = "saved_favorites";

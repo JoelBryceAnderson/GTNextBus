@@ -1,9 +1,9 @@
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="fill_parent"
-    android:id="@+id/fragment_emory"
-    tools:context="com.janderson.gtnextbus.navdrawerfragments.EmoryFragment">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="fill_parent"
+android:id="@+id/fragment_emory"
+tools:context="com.janderson.gtnextbus.navdrawerfragments.EmoryFragment">
 
     <LinearLayout
         android:orientation="vertical"
@@ -12,17 +12,18 @@
         android:clipChildren="false">
 
 
-    <ListView
-        android:id="@+id/emory_cards"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:choiceMode="singleChoice"
-        android:divider="#E5E5E5"
-        android:dividerHeight="0dp"
-        android:fitsSystemWindows="true"
-        android:listSelector="#00000000"
-        android:clipToPadding="false"/>
+        <ListView
+            android:id="@+id/emory_cards"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:choiceMode="singleChoice"
+            android:divider="#E5E5E5"
+            android:dividerHeight="0dp"
+            android:fitsSystemWindows="true"
+            android:clipChildren="false"
+            android:listSelector="#00000000"
+            android:clipToPadding="false"/>
 
     </LinearLayout>
 

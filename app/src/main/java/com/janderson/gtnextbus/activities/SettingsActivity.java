@@ -1,72 +1,31 @@
 package com.janderson.gtnextbus.activities;
 
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
-import android.support.v4.content.IntentCompat;
+import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.LinearLayout;
 
 import com.janderson.gtnextbus.R;
 
-/**
- * Created by JoelAnderson on 5/31/14.
- */
-public class SettingsActivity extends PreferenceActivity {
+public class SettingsActivity extends ActionBarActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.slide_in_activity, R.anim.stay_put_activity);
-        getActionBar().setTitle("Settings");
-        getFragmentManager().beginTransaction().replace(
-                android.R.id.content, new MyPreferenceFragment()).commit();
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
         setContentView(R.layout.activity_settings);
-        LinearLayout settingsLayout = (LinearLayout) findViewById(R.id.settings_layout);
-        ViewGroup parent = (ViewGroup) settingsLayout.getParent();
-        SharedPreferences sharedPreferences =
-                PreferenceManager.getDefaultSharedPreferences(
-                        getApplicationContext());
-        if (sharedPreferences.getBoolean("transparentNav", true)) {
-            Window window = getWindow();
-            if (android.os.Build.VERSION.SDK_INT>=19) {
-                if(getResources().
-                        getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
-                            WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-                    int topPadding = getApplicationContext().
-                            getResources().getDimensionPixelSize(R.dimen.padding_top_translucent);
-                    int bottomPadding = getApplicationContext().
-                            getResources().getDimensionPixelSize(R.dimen.padding_bottom_translucent);
-                    parent.setPadding(0, topPadding, 0, bottomPadding);
-                } else {
-                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-                    int topPadding = getApplicationContext().
-                            getResources().getDimensionPixelSize(R.dimen.padding_top);
-                    int bottomPadding = getApplicationContext().
-                            getResources().getDimensionPixelSize(R.dimen.padding_bottom);
-                    parent.setPadding(0, topPadding, 0 , bottomPadding);
-                }
-            }
-        } else {
-            Window window = getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            int topPadding = getApplicationContext().
-                    getResources().getDimensionPixelSize(R.dimen.padding_top);
-            int bottomPadding = getApplicationContext().
-                    getResources().getDimensionPixelSize(R.dimen.padding_bottom);
-            parent.setPadding(0, topPadding, 0 , bottomPadding);
-        }
+        android.support.v7.widget.Toolbar mToolbar =
+                (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar_settings);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("Settings");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getFragmentManager().beginTransaction().add(R.id.settings_layout,
+                new MyPreferenceFragment()).commit();
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -91,9 +50,8 @@ public class SettingsActivity extends PreferenceActivity {
         @Override
         public void onCreate(final Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
             addPreferencesFromResource(R.xml.preferences);
-            Preference aboutCreator = (Preference) findPreference("openAbout");
+            Preference aboutCreator = findPreference("openAbout");
             aboutCreator.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -102,24 +60,12 @@ public class SettingsActivity extends PreferenceActivity {
                     return true;
                 }
             });
-            Preference activeAlerts = (Preference) findPreference("activeAlerts");
+            Preference activeAlerts = findPreference("activeAlerts");
             activeAlerts.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     Intent intent = new Intent(getActivity(), AlertsActivity.class);
                     startActivity(intent);
-                    return true;
-                }
-            });
-            CheckBoxPreference transparentNav =
-                    (CheckBoxPreference) findPreference("transparentNav");
-            transparentNav.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object o) {
-                    Intent intentToBeNewRoot = new Intent(getActivity(), MainActivity.class);
-                    ComponentName cn = intentToBeNewRoot.getComponent();
-                    Intent mainIntent = IntentCompat.makeRestartActivityTask(cn);
-                    startActivity(mainIntent);
                     return true;
                 }
             });

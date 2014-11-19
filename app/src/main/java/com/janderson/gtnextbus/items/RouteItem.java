@@ -1,16 +1,10 @@
 package com.janderson.gtnextbus.items;
 
-/**
- * Created by JoelAnderson on 5/16/14.
- */
 public class RouteItem {
 
     private String stop;
     private int icon;
     private boolean isIcon;
-
-
-    public RouteItem(){}
 
     public RouteItem(String stop){
         this.stop = stop;
@@ -38,10 +32,6 @@ public class RouteItem {
 
     public boolean getIconVisibility(){
         return this.isIcon;
-    }
-
-    public void setIconVisibility(boolean isIcon){
-        this.isIcon = isIcon;
     }
 }
 

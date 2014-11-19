@@ -1,28 +1,23 @@
 package com.janderson.gtnextbus.navdrawerfragments;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.janderson.gtnextbus.R;
@@ -34,13 +29,10 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * Created by JoelAnderson on 5/27/14.
- */
 public class FavoriteFragment extends Fragment {
 
     public FavoriteFragment(){}
-    private RelativeLayout favoriteLayout;
+
     private ListView mRouteList;
     private String header;
     private SharedPreferences preferences;
@@ -56,45 +48,31 @@ public class FavoriteFragment extends Fragment {
     private String stop;
     private String route;
     private String routeStopCombo;
-    private String[] greenTepStopTags;
-    private String[] greenHubStopTags;
-    private String[] greenFourteenthStopTags;
-    private String[] trolleyMartaStopTags;
-    private String[] trolleyHubStopTags;
-    private String[] emoryEmoryStopTags;
-    private String[] emoryGatechStopTags;
-    private String[] nightFittenStopTags;
-    private String[] nightCulcStopTags;
     private TextView noFavoritesText;
     private ImageView noFavoritesImage;
-    private ColorDrawable headerColor;
-    private boolean justRotated;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_favorite, container, false);
-
-        return rootView;
+        return inflater.inflate(R.layout.fragment_favorite, container, false);
     }
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getActivity().getActionBar().setTitle("Favorite Stops");
-        headerColor = new ColorDrawable(
+        final ActionBar actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
+        actionBar.setTitle("Favorite Stops");
+        ColorDrawable headerColor = new ColorDrawable(
                 Color.parseColor("#ffca28"));
-        getActivity().getActionBar().setBackgroundDrawable(headerColor);
+        actionBar.setBackgroundDrawable(headerColor);
         header = getResources().getString(R.string.favorite_destinations_header);
-        favoriteLayout = (RelativeLayout) getView().findViewById(R.id.fragment_favorite);
         mRouteList = (ListView) getView().findViewById(R.id.favorite_cards);
         LinearLayout noFavoritesLayout = (LinearLayout)
                 getView().findViewById(R.id.no_favorites_layout);
         if (savedInstanceState != null) {
             mRouteList.setLayoutAnimation(null);
             noFavoritesLayout.setLayoutAnimation(null);
-            justRotated = savedInstanceState.getBoolean("justRotated");
         }
         noFavoritesText = (TextView) getView().findViewById(R.id.no_favorites_text);
         noFavoritesImage = (ImageView) getView().findViewById(R.id.no_favorites_image);
@@ -120,18 +98,18 @@ public class FavoriteFragment extends Fragment {
         for (Map.Entry<String, ?> entry : keys.entrySet()) {
             Set<String> item = (Set<String>) entry.getValue();
             Object[] itemArray = item.toArray();
-            for (int i = 0; i < itemArray.length; i++) {
-                if (itemArray[i].toString().startsWith("?")) {
-                    name = itemArray[i].toString().substring(1);
+            for (Object anItemArray : itemArray) {
+                if (anItemArray.toString().startsWith("?")) {
+                    name = anItemArray.toString().substring(1);
                     names[pos] = name;
-                } else if (itemArray[i].toString().startsWith("*")) {
-                    route = itemArray[i].toString().substring(1);
+                } else if (anItemArray.toString().startsWith("*")) {
+                    route = anItemArray.toString().substring(1);
                     routeTags[pos] = route;
-                } else if (itemArray[i].toString().startsWith("$")) {
-                    stop = itemArray[i].toString().substring(1);
+                } else if (anItemArray.toString().startsWith("$")) {
+                    stop = anItemArray.toString().substring(1);
                     stopTags[pos] = stop;
-                } else if (itemArray[i].toString().startsWith("#")) {
-                    color = itemArray[i].toString();
+                } else if (anItemArray.toString().startsWith("#")) {
+                    color = anItemArray.toString();
                     colors[pos] = color;
                 }
             }
@@ -144,82 +122,6 @@ public class FavoriteFragment extends Fragment {
                 favoriteDestinationItems);
         mRouteList.setAdapter(adapter);
         mRouteList.setOnItemClickListener(new StopListClickListener());
-        mRouteList.setOnScrollListener(new AbsListView.OnScrollListener() {
-
-            int mLastFirstVisibleItem = 0;
-
-            @Override
-            public void onScrollStateChanged(AbsListView absListView, int i) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView absListView, int i, int i2, int i3) {
-                final int currentFirstVisibleItem = mRouteList.getFirstVisiblePosition();
-                if (currentFirstVisibleItem > mLastFirstVisibleItem)
-                {
-                    if (justRotated) {
-                        getActivity().getActionBar().show();
-                        justRotated = false;
-                    } else {
-                        getActivity().getActionBar().hide();
-                    }
-                }
-                else if (currentFirstVisibleItem < mLastFirstVisibleItem)
-                {
-                    if (!getActivity().getActionBar().isShowing() ||
-                            headerColor.getAlpha() != 255) {
-                        final float ratio = (float) Math.min(Math.max(i, 0), i3) / i3;
-                        final float finalRatio = (float) (1 - ratio);
-                        int alphaVal = (int) (finalRatio * 255);
-                        Log.v("alphaVal", Float.toString(ratio));
-                        headerColor.setAlpha(alphaVal);
-                        getActivity().getActionBar().show();
-                    }
-                }
-
-                mLastFirstVisibleItem = currentFirstVisibleItem;
-            }
-        });
-        SharedPreferences sharedPreferences =
-                PreferenceManager.getDefaultSharedPreferences(
-                        getActivity().getApplicationContext());
-        if (sharedPreferences.getBoolean("transparentNav", true)) {
-            Window window = getActivity().getWindow();
-            if (android.os.Build.VERSION.SDK_INT>=19) {
-                if(getResources().
-                        getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
-                            WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-                    int topPadding = getActivity().getApplicationContext().
-                            getResources().getDimensionPixelSize(R.dimen.padding_top_translucent);
-                    int bottomPadding = getActivity().getApplicationContext().
-                            getResources().getDimensionPixelSize(R.dimen.padding_bottom_translucent);
-                    mRouteList.setPadding(0, topPadding, 0, bottomPadding);
-                } else {
-                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-                    int topPadding = getActivity().getApplicationContext().
-                            getResources().getDimensionPixelSize(R.dimen.padding_top);
-                    int bottomPadding = getActivity().getApplicationContext().
-                            getResources().getDimensionPixelSize(R.dimen.padding_bottom);
-                    mRouteList.setPadding(0, topPadding, 0 , bottomPadding);
-                }
-            }
-        } else {
-            Window window = getActivity().getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            int topPadding = getActivity().getApplicationContext().
-                    getResources().getDimensionPixelSize(R.dimen.padding_top);
-            int bottomPadding = getActivity().getApplicationContext().
-                    getResources().getDimensionPixelSize(R.dimen.padding_bottom);
-            mRouteList.setPadding(0, topPadding, 0 , bottomPadding);
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putBoolean("justRotated", true);
     }
 
     private class StopListClickListener implements ListView.OnItemClickListener {
@@ -233,15 +135,12 @@ public class FavoriteFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        final ActionBar actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
         pos = 0;
         header = getResources().getString(R.string.favorite_destinations_header);
-        favoriteLayout = (RelativeLayout) getView().findViewById(R.id.fragment_favorite);
         mRouteList = (ListView) getView().findViewById(R.id.favorite_cards);
         noFavoritesText = (TextView) getView().findViewById(R.id.no_favorites_text);
         noFavoritesImage = (ImageView) getView().findViewById(R.id.no_favorites_image);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            mRouteList.setPadding(0,72,0,10);
-        }
         favoriteDestinationItems = new ArrayList<StopItem>();
         preferences = getActivity().getSharedPreferences("saved_favorites", Context.MODE_PRIVATE);
         Map<String, ?> keys = preferences.getAll();
@@ -302,11 +201,11 @@ public class FavoriteFragment extends Fragment {
                 final int currentFirstVisibleItem = mRouteList.getFirstVisiblePosition();
                 if (currentFirstVisibleItem > mLastFirstVisibleItem)
                 {
-                    getActivity().getActionBar().hide();
+                    actionBar.hide();
                 }
                 else if (currentFirstVisibleItem < mLastFirstVisibleItem)
                 {
-                    getActivity().getActionBar().show();
+                    actionBar.show();
                 }
 
                 mLastFirstVisibleItem = currentFirstVisibleItem;
@@ -316,8 +215,7 @@ public class FavoriteFragment extends Fragment {
 
     private void displayView(int position) {
         Intent intent = null;
-        String[] strings = null;
-        ArrayList<String> stringArrayList = null;
+        String[] strings;
         switch (position) {
             case 0:
                 break;
@@ -337,25 +235,18 @@ public class FavoriteFragment extends Fragment {
     }
 
     public boolean addDestination() {
-        greenTepStopTags = getResources().getStringArray(R.array.green_tep_stop_titles);
-        greenHubStopTags = getResources().getStringArray(R.array.green_hub_stop_titles);
-        greenFourteenthStopTags = getResources().getStringArray(R.array.green_fourteenth_stop_titles);
-        trolleyHubStopTags = getResources().getStringArray(R.array.trolley_hub_stop_titles);
-        trolleyMartaStopTags = getResources().getStringArray(R.array.trolley_marta_stop_titles);
-        emoryEmoryStopTags = getResources().getStringArray(R.array.emory_emory_stop_titles);
-        emoryGatechStopTags = getResources().getStringArray(R.array.emory_gatech_stop_titles);
-        nightFittenStopTags = getResources().getStringArray(R.array.night_fitten_stop_titles);
-        nightCulcStopTags = getResources().getStringArray(R.array.night_culc_stop_titles);
+        String[] greenTepStopTags = getResources().getStringArray(R.array.green_tep_stop_titles);
+        String[] greenFourteenthStopTags = getResources().getStringArray(R.array.green_fourteenth_stop_titles);
+        String[] trolleyHubStopTags = getResources().getStringArray(R.array.trolley_hub_stop_titles);
+        String[] trolleyMartaStopTags = getResources().getStringArray(R.array.trolley_marta_stop_titles);
+        String[] emoryEmoryStopTags = getResources().getStringArray(R.array.emory_emory_stop_titles);
+        String[] emoryGatechStopTags = getResources().getStringArray(R.array.emory_gatech_stop_titles);
+        String[] nightFittenStopTags = getResources().getStringArray(R.array.night_fitten_stop_titles);
+        String[] nightCulcStopTags = getResources().getStringArray(R.array.night_culc_stop_titles);
 
         for (String tag : greenTepStopTags) {
             if (tag.contains(routeStopCombo)) {
                 name = "-To TEP- \n" + name;
-                return true;
-            }
-        }
-        for (String tag : greenHubStopTags) {
-            if (tag.contains(routeStopCombo)) {
-                name = "-To Hub- \n" + name;
                 return true;
             }
         }

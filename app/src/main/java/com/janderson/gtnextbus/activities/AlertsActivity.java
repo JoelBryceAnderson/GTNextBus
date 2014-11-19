@@ -2,28 +2,18 @@ package com.janderson.gtnextbus.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.app.backup.BackupManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
+import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewTreeObserver;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
-import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -31,6 +21,7 @@ import android.widget.Toast;
 
 import com.janderson.gtnextbus.R;
 import com.janderson.gtnextbus.adapters.FavoriteAdapter;
+import com.janderson.gtnextbus.background.NotificationService;
 import com.janderson.gtnextbus.items.StopItem;
 
 import java.util.ArrayList;
@@ -41,7 +32,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class AlertsActivity extends Activity {
+public class AlertsActivity extends ActionBarActivity {
 
     private String[] alertRoutes;
     private String[] alertTitles;
@@ -49,23 +40,17 @@ public class AlertsActivity extends Activity {
     private String alertTitle;
     private int pos = 0;
     private ArrayList<StopItem> alertItems;
-    private String title;
     private FavoriteAdapter adapter;
     private TextView noAlertsText;
     private ImageView noAlertsImage;
     private ListView alertList;
-    private Set<String> item;
-    private int alertNumber;
     private Integer[] alertNumbers;
-    private String alertPosString;
-    private String alertStop;
     private String[] alertPosStrings;
     private String[] alertStops;
     private boolean mSwiping;
     private static final int MOVE_DURATION = 150;
     private static final int SWIPE_DURATION = 250;
     private int removedPosition;
-    private ColorDrawable headerColor;
     private HashMap<Long, Integer> mItemIdTopMap = new HashMap<Long, Integer>();
 
 
@@ -74,11 +59,14 @@ public class AlertsActivity extends Activity {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.slide_in_activity, R.anim.stay_put_activity);
         setContentView(R.layout.activity_alerts);
-        getActionBar().setTitle("Active Alerts");
+        android.support.v7.widget.Toolbar mToolbar =
+                (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar_alerts);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("Active Alerts");
         alertList = (ListView) findViewById(R.id.alert_cards);
         noAlertsText = (TextView) findViewById(R.id.no_alerts_text);
         noAlertsImage = (ImageView) findViewById(R.id.no_alerts_image);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         alertItems = new ArrayList<StopItem>();
         SharedPreferences alertPref = getSharedPreferences("alerts", MODE_PRIVATE);
         Map<String, ?> keys = alertPref.getAll();
@@ -100,88 +88,32 @@ public class AlertsActivity extends Activity {
             noAlertsImage.setImageResource(R.drawable.ic_empty_alerts);
         }
         for (Map.Entry<String, ?> entry : keys.entrySet()) {
-            item = (Set<String>) entry.getValue();
+            Set<String> item = (Set<String>) entry.getValue();
             Object[] itemArray = item.toArray();
-            for (int i = 0; i < itemArray.length; i++) {
-                if (itemArray[i].toString().startsWith("&")) {
-                    alertRoute = itemArray[i].toString().substring(1);
+            for (Object anItemArray : itemArray) {
+                if (anItemArray.toString().startsWith("&")) {
+                    alertRoute = anItemArray.toString().substring(1);
                     alertRoutes[pos] = alertRoute;
-                } else if (itemArray[i].toString().startsWith("/")) {
-                    alertTitle = itemArray[i].toString().substring(1);
+                } else if (anItemArray.toString().startsWith("/")) {
+                    alertTitle = anItemArray.toString().substring(1);
                     alertTitles[pos] = alertTitle;
-                } else if (itemArray[i].toString().startsWith("%")) {
-                    alertNumber = Integer.parseInt(itemArray[i].toString().substring(1));
+                } else if (anItemArray.toString().startsWith("%")) {
+                    int alertNumber = Integer.parseInt(anItemArray.toString().substring(1));
                     alertNumbers[pos] = alertNumber;
-                } else if (itemArray[i].toString().startsWith("*")) {
-                    alertPosString = itemArray[i].toString().substring(1);
+                } else if (anItemArray.toString().startsWith("*")) {
+                    String alertPosString = anItemArray.toString().substring(1);
                     alertPosStrings[pos] = alertPosString;
-                } else if (itemArray[i].toString().startsWith("@")) {
-                    alertStop = itemArray[i].toString().substring(1);
+                } else if (anItemArray.toString().startsWith("@")) {
+                    String alertStop = anItemArray.toString().substring(1);
                     alertStops[pos] = alertStop;
                 }
             }
-            title = alertRoute + " to " + alertTitle;
+            String title = alertRoute + " to " + alertTitle;
             alertItems.add(new StopItem(title, "#000000"));
             pos++;
         }
         adapter = new FavoriteAdapter(this.getApplicationContext(), alertItems, mTouchListener);
         alertList.setAdapter(adapter);
-        alertList.setOnScrollListener(new AbsListView.OnScrollListener() {
-
-            int mLastFirstVisibleItem = 0;
-
-            @Override
-            public void onScrollStateChanged(AbsListView absListView, int i) {
-            }
-
-            @Override
-            public void onScroll(AbsListView absListView, int i, int i2, int i3) {
-                final int currentFirstVisibleItem = alertList.getFirstVisiblePosition();
-                if (currentFirstVisibleItem > mLastFirstVisibleItem)
-                {
-                    getActionBar().hide();
-                }
-                else if (currentFirstVisibleItem < mLastFirstVisibleItem)
-                {
-                    if (!getActionBar().isShowing()) {
-                        getActionBar().show();
-                    }
-                }
-
-                mLastFirstVisibleItem = currentFirstVisibleItem;
-            }
-        });
-        SharedPreferences sharedPreferences =
-                PreferenceManager.getDefaultSharedPreferences(
-                        getApplicationContext());
-        if (sharedPreferences.getBoolean("transparentNav", true)) {
-            Window window = getWindow();
-            if (android.os.Build.VERSION.SDK_INT>=19) {
-                if(getResources().
-                        getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
-                            WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-                    int topPadding = getApplicationContext().
-                            getResources().getDimensionPixelSize(R.dimen.padding_top_translucent);
-                    int bottomPadding = getApplicationContext().
-                            getResources().getDimensionPixelSize(R.dimen.padding_bottom_translucent);
-                    alertList.setPadding(0, topPadding, 0, bottomPadding);
-                } else {
-                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-                    int topPadding = getApplicationContext().
-                            getResources().getDimensionPixelSize(R.dimen.padding_top);
-                    int bottomPadding = getApplicationContext().
-                            getResources().getDimensionPixelSize(R.dimen.padding_bottom);
-                    alertList.setPadding(0, topPadding, 0 , bottomPadding);
-                }
-            }
-        } else {
-            Window window = getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            int topPadding = getApplicationContext().
-                    getResources().getDimensionPixelSize(R.dimen.padding_top);
-            alertList.setPadding(0, topPadding, 0 , 0);
-        }
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -205,7 +137,7 @@ public class AlertsActivity extends Activity {
     private void removeItem(int position) {
         int arrayPosition = (position - 1);
         Intent notifIntent = new Intent(getApplicationContext(),
-                StopActivity.NotificationService.class);
+                NotificationService.class);
         PendingIntent pendingIntent = PendingIntent.getService
                 (getApplicationContext(),
                         alertNumbers[position - 1], notifIntent, 0);
@@ -249,7 +181,6 @@ public class AlertsActivity extends Activity {
         alertNumbersTemp.remove(arrayPosition);
         alertNumbers = alertNumbersTemp.toArray(new
                 Integer[alertNumbersTemp.size()]);
-        int lastPosition = alertList.getLastVisiblePosition();
         Toast.makeText(this, "Alert cancelled", Toast.LENGTH_SHORT).show();
     }
 

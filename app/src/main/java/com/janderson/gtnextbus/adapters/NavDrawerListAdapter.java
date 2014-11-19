@@ -1,13 +1,7 @@
 package com.janderson.gtnextbus.adapters;
 
-/**
- * Created by JoelAnderson on 5/15/14.
- */
-
-
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +19,6 @@ public class NavDrawerListAdapter extends BaseAdapter {
 
     private Context context;
     private ArrayList<NavDrawerItem> navDrawerItems;
-    private TextView txtTitle;
     private int mSelectedItem;
 
     ViewHolder holder = new ViewHolder();
@@ -50,9 +43,6 @@ public class NavDrawerListAdapter extends BaseAdapter {
         return position;
     }
 
-    public int getSelectedItem() {
-        return mSelectedItem;
-    }
     public void setSelectedItem(int mSelectedItem) {
         this.mSelectedItem = mSelectedItem;
     }
@@ -67,44 +57,45 @@ public class NavDrawerListAdapter extends BaseAdapter {
             holder.txtTitle = (TextView) convertView.findViewById(R.id.title);
             holder.dividerTop = convertView.findViewById(R.id.divider_top);
             holder.dividerBottom = convertView.findViewById(R.id.divider_bottom);
-            holder.txtSubTitle = (TextView) convertView.findViewById(R.id.footer_text);
+            holder.largeImage = (ImageView) convertView.findViewById(R.id.large_image_drawer);
             convertView.setTag(R.id.id_one, holder.txtTitle);
             convertView.setTag(R.id.id_two, holder.imgIcon);
             convertView.setTag(R.id.id_three, holder.dividerTop);
             convertView.setTag(R.id.id_four, holder.dividerBottom);
-            convertView.setTag(R.id.id_five, holder.txtSubTitle);
+            convertView.setTag(R.id.id_six, holder.largeImage);
         } else {
             holder.txtTitle = (TextView) convertView.getTag(R.id.id_one);
             holder.imgIcon = (ImageView) convertView.getTag(R.id.id_two);
             holder.dividerTop = (View) convertView.getTag(R.id.id_three);
             holder.dividerBottom = (View) convertView.getTag(R.id.id_four);
-            holder.txtSubTitle = (TextView) convertView.getTag(R.id.id_five);
+            holder.largeImage = (ImageView) convertView.getTag(R.id.id_six);
         }
-
         holder.imgIcon.setImageResource(navDrawerItems.get(position).getIcon());
-        holder.txtSubTitle.setText(navDrawerItems.get(position).getTitle());
         holder.txtTitle.setText(navDrawerItems.get(position).getTitle());
         holder.txtTitle.setVisibility(View.VISIBLE);
         holder.imgIcon.setVisibility(View.VISIBLE);
-        holder.txtSubTitle.setVisibility(View.VISIBLE);
         holder.dividerTop.setVisibility(View.VISIBLE);
         holder.dividerBottom.setVisibility(View.VISIBLE);
 
         if (position == mSelectedItem) {
             holder.txtTitle.setTypeface(null, Typeface.BOLD);
         } else {
-            holder.txtTitle.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
+            holder.txtTitle.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
         }
 
-        if(navDrawerItems.get(position).getIconVisibility()){
-            holder.txtTitle.setVisibility(View.GONE);
-            convertView.setBackgroundColor(Color.parseColor("#F7F7F7"));
-        } else{
+        if (position == 0) {
+            holder.largeImage.setImageResource(R.drawable.navigation_drawer_header);
             holder.imgIcon.setVisibility(View.GONE);
-            holder.txtSubTitle.setVisibility(View.GONE);
             holder.dividerTop.setVisibility(View.GONE);
             holder.dividerBottom.setVisibility(View.GONE);
-            convertView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+            holder.txtTitle.setVisibility(View.GONE);
+        } else {
+            holder.largeImage.setVisibility(View.GONE);
+        }
+
+        if (position != 8) {
+            holder.dividerTop.setVisibility(View.GONE);
+            holder.dividerBottom.setVisibility(View.GONE);
         }
         return convertView;
     }
@@ -114,7 +105,7 @@ public class NavDrawerListAdapter extends BaseAdapter {
         ImageView imgIcon;
         View dividerTop;
         View dividerBottom;
-        TextView txtSubTitle;
+        ImageView largeImage;
     }
 
 }

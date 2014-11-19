@@ -3,7 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:id="@+id/activity_alerts"
+    android:fitsSystemWindows="true"
     tools:context="com.janderson.gtnextbus.activities.AlertsActivity">
+
+    <android.support.v7.widget.Toolbar
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar_alerts"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:elevation="4dp"
+        android:background="#ffca28"/>
 
     <LinearLayout
         android:orientation="vertical"
@@ -11,6 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:paddingTop="@dimen/padding_top"
+        android:paddingBottom="@dimen/padding_bottom"
         android:layoutAnimation="@anim/favorite_fade_in"
         android:animateLayoutChanges="true"
         android:id="@+id/no_alerts_layout">
@@ -37,6 +50,8 @@
 
     <LinearLayout
         android:orientation="vertical"
+        android:paddingBottom="@dimen/padding_bottom"
+        android:paddingTop="@dimen/padding_top"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
@@ -48,9 +63,8 @@
             android:choiceMode="singleChoice"
             android:divider="#E5E5E5"
             android:dividerHeight="0dp"
-            android:paddingBottom="@dimen/padding_bottom"
-            android:paddingTop="@dimen/padding_top"
             android:listSelector="#00000000"
+            android:clipChildren="false"
             android:clipToPadding="false"/>
 
     </LinearLayout>

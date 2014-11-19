@@ -1,10 +1,5 @@
 package com.janderson.gtnextbus.adapters;
 
-/**
- * Created by JoelAnderson on 5/15/14.
- */
-
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
@@ -78,7 +73,6 @@ public class StopListAdapter extends BaseAdapter {
             holder.imgIcon.setVisibility(View.GONE);
         }
 
-
         return convertView;
     }
 
@@ -89,10 +83,7 @@ public class StopListAdapter extends BaseAdapter {
 
     @Override
     public boolean isEnabled(int position) {
-        if (position == 0) {
-            return false;
-        }
-        return true;
+        return position != 0;
     }
 
 }

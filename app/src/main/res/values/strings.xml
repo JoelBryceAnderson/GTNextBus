@@ -16,7 +16,6 @@
     <color name="purple">#9933CC</color>
     <color name="gray">#e5e5e5</color>
 
-
     <string-array name="buses">
         <item name="red">Red Route</item>
         <item name="blue">Blue Route</item>
@@ -25,15 +24,28 @@
         <item name="midnight">Tech Trolley</item>
         <item name="emory">Midnight Rambler</item>
         <item name="favorites">Favorite Stops</item>
+        <item name="settings">Settings</item>
     </string-array>
+
+    <string-array name="map_options">
+        <item name="red">Red Route</item>
+        <item name="blue">Blue Route</item>
+        <item name="green">Green Route</item>
+        <item name="trolley">Emory Shuttle</item>
+        <item name="midnight">Tech Trolley</item>
+        <item name="emory">Midnight Rambler</item>
+    </string-array>
+
     <string-array name="sub">
-        <item name="settings">SETTINGS</item>
-        <item name="about">ABOUT</item>
+=        <item name="about">ABOUT</item>
     </string-array>
 
     <array name="icons">
         <item>@drawable/ic_gear_40</item>
-        <item>@drawable/ic_help_40</item>
+        <item>@drawable/ic_nav_bus</item>
+        <item>@drawable/ic_nav_moon</item>
+        <item>@drawable/ic_nav_star</item>
+        <item>@drawable/ic_nav_trolley</item>
     </array>
 
     <string-array name="red_routes">
@@ -52,32 +64,34 @@
         <item name="twelfth">Techwood &amp; North Ave</item>
         <item name="thirteenth">North Ave Apartments</item>
         <item name="fourteenth">North Ave &amp; President\'s Lot</item>
-        <item name="fifteenth">Tech &amp; Aerospace</item>
-        <item name="sixteenth">Tech &amp; State</item>
-        <item name="seventeenth">CRC</item>
+        <item name="fifteenth">Tech Tower</item>
+        <item name="sixteenth">Transit Hub</item>
+        <item name="seventeenth">Student Center</item>
+        <item name="eighteenth">CRC</item>
     </string-array>
     <string-array name="blue_destinations">
         <item name="first">Blue Route</item>
         <item name="sixteenth">Fitten Hall</item>
         <item name="second">McMillian &amp; 8th</item>
         <item name="third">8th &amp; Hemphill</item>
-        <item name="fourth">CRC</item>
-        <item name="fifth">Tech &amp; State</item>
-        <item name="sixth">North Ave &amp; Burge Deck</item>
-        <item name="seventh">North Ave Apartments</item>
-        <item name="eighth">Techwood &amp; North Ave</item>
-        <item name="ninth">Techwood &amp; 3rd</item>
-        <item name="tenth">Techwood &amp; 4th</item>
-        <item name="eleventh">Techwood &amp; 5th</item>
-        <item name="twelfth">Ferst &amp; Fowler</item>
-        <item name="thirteenth">Klaus</item>
-        <item name="fourteenth">Ferst &amp; Atlantic</item>
-        <item name="fifteenth">Ferst &amp; State</item>
+        <item name="fourth">Ferst &amp; Hemphill</item>
+        <item name="fifth">CRC</item>
+        <item name="sixth">Student Center</item>
+        <item name="seventh">Transit Hub</item>
+        <item name="eighth">Tech Tower</item>
+        <item name="ninth">North Ave Apartments</item>
+        <item name="tenth">Techwood &amp; North Ave</item>
+        <item name="eleventh">Techwood &amp; 3rd</item>
+        <item name="twelfth">Techwood &amp; 4th</item>
+        <item name="thirteenth">Techwood &amp; 5th</item>
+        <item name="fourteenth">Ferst &amp; Fowler</item>
+        <item name="fifteenth">Klaus</item>
+        <item name="sixteenth">Ferst &amp; Atlantic</item>
+        <item name="seventeenth">Ferst &amp; State</item>
     </string-array>
     <string-array name="green_destinations">
         <item name="header">Green Route Destinations</item>
         <item name="tep">To Technology Enterprise Park</item>
-        <item name="hub">To Transit Hub</item>
         <item name="fourteenth">To 14th Street</item>
     </string-array>
     <string-array name="trolley_destinations">
@@ -97,13 +111,6 @@
         <item name="gatech">To Georgia Tech</item>
     </string-array>
     <string-array name="green_tep_stops">
-        <item name="first">State &amp; Tech</item>
-        <item name="second">Hub</item>
-        <item name="third">Tech Tower</item>
-        <item name="fourth">NARA</item>
-        <item name="fifth">TEP</item>
-    </string-array>
-    <string-array name="green_hub_stops">
         <item name="first">14th &amp; State</item>
         <item name="second">GCATT</item>
         <item name="third">GLC</item>
@@ -112,11 +119,15 @@
         <item name="sixth">Ferst &amp; Hemphill</item>
         <item name="seventh">CRC</item>
         <item name="eighth">Student Center</item>
+        <item name="ninth">Transit Hub</item>
+        <item name="tenth">Tech Tower</item>
+        <item name="eleventh">NARA</item>
+        <item name="twelfth">TEP</item>
     </string-array>
     <string-array name="green_fourteenth_stops">
         <item name="first">State &amp; Tech</item>
         <item name="second">Student Center at Tech Parkway</item>
-        <item name="third">Hub</item>
+        <item name="third">Transit Hub</item>
         <item name="fourth">Student Center</item>
         <item name="fifth">CRC</item>
         <item name="sixth">Ferst &amp; Hemphill</item>
@@ -152,111 +163,124 @@
         <item name="tenth">Hub</item>
     </string-array>
     <string-array name="emory_emory_stops">
-        <item name="first">MARTA Midtown Station</item>
-        <item name="second">Clifton at Wesley Woods</item>
-        <item name="third">Clifton &amp; Gatewood</item>
-        <item name="fourth">HSRB</item>
-        <item name="fifth">Ferst &amp; Atlantic</item>
+        <item name="first">Ferst &amp; Atlantic</item>
+        <item name="second">MARTA Midtown Station</item>
+        <item name="third">Piedmont &amp; Morningside</item>
+        <item name="fourth">Rock Springs &amp; Johnson</item>
+        <item name="fifth">Clifton at Wesley Woods</item>
+        <item name="sixth">Clifton &amp; Gatewood</item>
+        <item name="seventh">HSRB</item>
     </string-array>
     <string-array name="emory_gatech_stops">
-        <item name="first">Woodruff Memorial</item>
-        <item name="second">Clifton &amp; Gatewood</item>
-        <item name="third">Clifton at Wesley Woods</item>
-        <item name="fourth">MARTA Midtown Station</item>
+        <item name="first">HSRB</item>
+        <item name="second">Woodruff Memorial</item>
+        <item name="third">Clifton &amp; Gatewood</item>
+        <item name="fourth">Clifton at Wesley Woods</item>
+        <item name="fifth">Rock Springs &amp; Johnson</item>
+        <item name="sixth">Piedmont &amp; Morningside</item>
+        <item name="seventh">MARTA Midtown Station</item>
+        <item name="eighth">Ferst &amp; Atlantic</item>
     </string-array>
     <string-array name="night_culc_stops">
         <item name="first">8th &amp; Hemphill</item>
         <item name="second">CRC</item>
-        <item name="third">Techwood &amp; North Ave</item>
-        <item name="fourth">Techwood &amp; 4th</item>
+        <item name="third">Transit Hub</item>
+        <item name="fourth">Techwood &amp; North Ave</item>
+        <item name="fifth">Techwood &amp; 4th</item>
     </string-array>
     <string-array name="night_fitten_stops">
         <item name="first">CULC</item>
         <item name="second">Techwood &amp; 4th</item>
         <item name="third">Techwood &amp; North Ave</item>
+        <item name="fourth">Transit Hub</item>
         <item name="fifth">CRC</item>
         <item name="sixth">Fitten Hall</item>
     </string-array>
     <string-array name="green_tep_stop_tags">
-        <item name="first">techstate</item>
-        <item name="second">fershub</item>
-        <item name="third">cherferst</item>
-        <item name="fourth">nara</item>
-        <item name="fifth">tep_a</item>
-    </string-array>
-    <string-array name="green_hub_stop_tags">
         <item name="first">14thstat</item>
         <item name="second">gcat</item>
         <item name="third">glc</item>
-        <item name="fourth">bake</item>
-        <item name="fifth">fersstat</item>
-        <item name="sixth">fersherec</item>
-        <item name="seventh">recctr</item>
-        <item name="eighth">studcentr</item>
+        <item name="fourth">bakebldg</item>
+        <item name="fifth">fersstat_ob</item>
+        <item name="sixth">fershemp_ob</item>
+        <item name="seventh">reccent_ob</item>
+        <item name="eighth">studcent</item>
+        <item name="ninth">hubfers</item>
+        <item name="tenth">techtowe</item>
+        <item name="eleventh">nara</item>
+        <item name="twelfth">tep_a</item>
     </string-array>
     <string-array name="green_fourteenth_stop_tags">
-        <item name="first">statetech</item>
-        <item name="second">stuctr</item>
+        <item name="first">stattech</item>
+        <item name="second">studtech</item>
         <item name="third">tranhub</item>
-        <item name="fourth">ctrstu</item>
-        <item name="fifth">765femrt</item>
-        <item name="sixth">fershemrt</item>
-        <item name="seventh">fersstmrt</item>
+        <item name="fourth">studcent_ib</item>
+        <item name="fifth">creccent</item>
+        <item name="sixth">fershemp</item>
+        <item name="seventh">fersstat</item>
         <item name="eighth">ndec</item>
         <item name="ninth">10thhemp</item>
         <item name="tenth">hempcurr</item>
-        <item name="eleventh">14thmcmi_a</item>
+        <item name="eleventh">14thbusy_a</item>
     </string-array>
     <string-array name="trolley_marta_stop_tags">
         <item name="first">centrstud</item>
         <item name="second">ferstdr</item>
         <item name="third">fershemrt</item>
-        <item name="fourth">fersatmrt</item>
+        <item name="fourth">fersatl_ib</item>
         <item name="fifth">ferschmrt</item>
         <item name="sixth">fersfomrt</item>
         <item name="seventh">tech5mrt</item>
-        <item name="eighth">techmrt</item>
+        <item name="eighth">techsqua_ib</item>
         <item name="ninth">duprmrt</item>
         <item name="tenth">wpe7mrt</item>
-        <item name="eleventh">marta_arr</item>
+        <item name="eleventh">marta_a</item>
     </string-array>
     <string-array name="trolley_hub_stop_tags">
         <item name="first">publix</item>
-        <item name="second">techrec</item>
+        <item name="second">techsqua</item>
         <item name="third">tech5rec</item>
         <item name="fourth">fersforec</item>
         <item name="fifth">ferschrec</item>
-        <item name="sixth">fersatrec</item>
+        <item name="sixth">fersatla</item>
         <item name="seventh">fersherec</item>
         <item name="eighth">recctr</item>
         <item name="ninth">studcentr</item>
         <item name="tenth">tranhub_a</item>
     </string-array>
     <string-array name="emory_emory_stop_tags">
-        <item name="first">marta_e</item>
-        <item name="second">clifwesl_e</item>
-        <item name="third">clifgate_e</item>
-        <item name="fourth">hsrbldg_a</item>
-        <item name="fifth">fersatrec</item>
+        <item name="first">fersatla_d</item>
+        <item name="second">mart_e</item>
+        <item name="third">piedmorn</item>
+        <item name="fourth">johnrock</item>
+        <item name="fifth">clifwesl_e</item>
+        <item name="sixth">clifgate_e</item>
+        <item name="seventh">hsrb_a</item>
     </string-array>
     <string-array name="emory_gatech_stop_tags">
-        <item name="first">emory_d</item>
-        <item name="second">clifgate_g</item>
-        <item name="third">clifwesl_g</item>
-        <item name="fourth">marta_g</item>
+        <item name="first">hsrb_d</item>
+        <item name="second">woodmemo</item>
+        <item name="third">clifgate</item>
+        <item name="fourth">clifwesl_g</item>
+        <item name="fifth">rockjohn</item>
+        <item name="sixth">morpied</item>
+        <item name="seventh">marta_g</item>
+        <item name="seventh">fersatla_a</item>
     </string-array>
     <string-array name="night_fitten_stop_tags">
         <item name="first">cloucomm</item>
         <item name="second">tech4th_ib</item>
         <item name="third">technorth_ib</item>
-        <item name="fourth">creccent_ib</item>
-        <item name="fifth">fitthall_a</item>
+        <item name="fourth">tranhub_f</item>
+        <item name="fifth">creccent_ib</item>
+        <item name="sixth">fitthall_a</item>
     </string-array>
     <string-array name="night_culc_stop_tags">
         <item name="first">8thhemp</item>
         <item name="second">creccent_ob</item>
-        <item name="third">technorth_ob</item>
-        <item name="fourth">tech4th_ob</item>
+        <item name="third">tranhub_b</item>
+        <item name="fourth">technorth_ob</item>
+        <item name="fifth">tech4th_ob</item>
     </string-array>
     <string-array name="green_tep_stop_titles">
         <item name="first">greentechstate</item>
@@ -264,16 +288,6 @@
         <item name="third">greencherferst</item>
         <item name="fourth">greennara</item>
         <item name="fifth">greentep_a</item>
-    </string-array>
-    <string-array name="green_hub_stop_titles">
-        <item name="first">green14thstat</item>
-        <item name="second">greengcat</item>
-        <item name="third">greenglc</item>
-        <item name="fourth">greenbake</item>
-        <item name="fifth">greenfersstat</item>
-        <item name="sixth">greenfersherec</item>
-        <item name="seventh">greenrecctr</item>
-        <item name="eighth">greenstudcentr</item>
     </string-array>
     <string-array name="green_fourteenth_stop_titles">
         <item name="first">greenstatetech</item>
@@ -345,15 +359,14 @@
     <item name="id_three" type="id"/>
     <item name="id_four" type="id"/>
     <item name="id_five" type="id"/>
+    <item name="id_six" type="id"/>
 
     <string name="title_activity_stop">Stop Times</string>
     <string name="title_activity_stop_list">Route Stops</string>
     <string name="title_activity_about">About</string>
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_alerts">Active Alerts</string>
-    <string name="title_activity_about_pager">AboutPager</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_map">Map</string>
 
 </resources>

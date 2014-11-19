@@ -19,6 +19,8 @@
             android:divider="#E5E5E5"
             android:dividerHeight="0dp"
             android:clipToPadding="false"
+            android:clipChildren="false"
+            android:paddingBottom="@dimen/padding_bottom"
             android:listSelector="#00000000"/>
 
     </LinearLayout>

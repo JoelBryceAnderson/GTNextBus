@@ -1,9 +1,5 @@
 package com.janderson.gtnextbus.adapters;
 
-/**
- * Created by JoelAnderson on 5/16/14.
- */
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
@@ -12,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
-import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,17 +21,12 @@ import com.janderson.gtnextbus.items.RouteItem;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-/**
- * Created by JoelAnderson on 5/15/14.
- */
-
 public class DestinationAdapter extends BaseAdapter {
 
     private Context context;
     private ArrayList<RouteItem> destinationItems;
     private int color;
     private boolean headerIsDisabled;
-    private boolean boldFirst;
 
 
     ViewHolder holder = new ViewHolder();
@@ -72,45 +62,33 @@ public class DestinationAdapter extends BaseAdapter {
             convertView = mInflater.inflate(R.layout.card, null);
             holder.imgIcon = (ImageView) convertView.findViewById(R.id.card_image);
             holder.mText = (TextView) convertView.findViewById(R.id.stop);
-            loadBitmap(destinationItems.get(position).getIcon(), holder.imgIcon);
             convertView.setTag(R.id.id_one, holder.mText);
             convertView.setTag(R.id.id_two, holder.imgIcon);
         } else {
             holder.mText = (TextView) convertView.getTag(R.id.id_one);
             holder.imgIcon = (ImageView) convertView.getTag(R.id.id_two);
         }
+        holder.imgIcon.setImageResource(destinationItems.get(position).getIcon());
         holder.imgIcon.setVisibility(View.VISIBLE);
         holder.mText.setText(destinationItems.get(position).getTitle());
 
-        boldFirst = false;
+        boolean boldFirst = false;
 
         if (holder.mText.getText().toString().equals("Red Route")) {
             color = Color.parseColor("#CC0000");
             boldFirst = true;
-        }
-
-        if (holder.mText.getText().toString().equals("Blue Route")) {
+        } else  if (holder.mText.getText().toString().equals("Blue Route")) {
             color = Color.parseColor("#0000FF");
             boldFirst = true;
-        }
-
-        if (holder.mText.getText().toString().equals("To Technology Enterprise Park")) {
+        } else if (holder.mText.getText().toString().equals("To Technology Enterprise Park")) {
             color = Color.parseColor("#669900");
-        }
-
-        if (holder.mText.getText().toString().equals("To Marta Station")) {
+        } else if (holder.mText.getText().toString().equals("To Marta Station")) {
             color = Color.parseColor("#FFBB33");
-        }
-
-        if (holder.mText.getText().toString().equals("To CULC")) {
+        } else if (holder.mText.getText().toString().equals("To CULC")) {
             color = Color.parseColor("#9933CC");
-        }
-
-        if (holder.mText.getText().toString().equals("To Emory")) {
+        } else if (holder.mText.getText().toString().equals("To Emory")) {
             color = Color.parseColor("#000080");
-        }
-
-        if (holder.mText.getText().toString().equals("Favorite Stops")) {
+        } else if (holder.mText.getText().toString().equals("Favorite Stops")) {
             color = Color.parseColor("#000000");
         }
 
@@ -145,70 +123,4 @@ public class DestinationAdapter extends BaseAdapter {
         }
         return true;
     }
-
-    public void loadBitmap(int resId, ImageView mImageView) {
-        BitmapWorkerTask task = new BitmapWorkerTask(mImageView);
-        task.execute(resId);
-    }
-
-    public static int calculateInSampleSize(
-            BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
-
-        if (height > reqHeight || width > reqWidth) {
-
-            final int halfHeight = height / 2;
-            final int halfWidth = width / 2;
-
-            while ((halfHeight / inSampleSize) > reqHeight
-                    && (halfWidth / inSampleSize) > reqWidth) {
-                inSampleSize *= 2;
-            }
-        }
-
-        return inSampleSize;
-    }
-
-    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
-                                                         int reqWidth, int reqHeight) {
-
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(res, resId, options);
-
-        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeResource(res, resId, options);
-    }
-
-    class BitmapWorkerTask extends AsyncTask<Integer, Void, Bitmap> {
-        private final WeakReference<ImageView> imageViewReference;
-        private int data = 0;
-
-        public BitmapWorkerTask(ImageView imageView) {
-            imageViewReference = new WeakReference<ImageView>(imageView);
-        }
-
-        @Override
-        protected Bitmap doInBackground(Integer... params) {
-            data = params[0];
-            final Bitmap bitmap = decodeSampledBitmapFromResource(
-                    context.getResources(), params[0], 1000, 800);
-            return bitmap;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            if (imageViewReference != null && bitmap != null) {
-                final ImageView imageView = imageViewReference.get();
-                if (imageView != null) {
-                    imageView.setImageBitmap(bitmap);
-                }
-            }
-        }
-    }
-
 }

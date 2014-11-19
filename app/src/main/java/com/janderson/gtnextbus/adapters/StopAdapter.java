@@ -1,10 +1,5 @@
 package com.janderson.gtnextbus.adapters;
 
-/**
- * Created by JoelAnderson on 5/15/14.
- */
-
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
@@ -28,7 +23,6 @@ public class StopAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<StopItem> stopItems;
     private String color;
-    private ImageView imgIcon;
 
     public StopAdapter(Context context, ArrayList<StopItem> stopItems, String color) {
         this.context = context;
@@ -60,7 +54,7 @@ public class StopAdapter extends BaseAdapter {
             TextView txtTitle = (TextView) convertView.findViewById(R.id.stop);
             txtTitle.setText(stopItems.get(position).getTitle());
             txtTitle.setTextColor(Color.parseColor(color));
-            imgIcon = (ImageView) convertView.findViewById(R.id.card_image);
+            ImageView imgIcon = (ImageView) convertView.findViewById(R.id.card_image);
             imgIcon.setVisibility(View.GONE);
             if (position == 0) {
                 txtTitle.setTextSize(30);
@@ -76,10 +70,7 @@ public class StopAdapter extends BaseAdapter {
 
     @Override
     public boolean isEnabled(int position) {
-        if (position == 0) {
-            return false;
-        }
-        return true;
+        return position != 0;
     }
 
 

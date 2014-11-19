@@ -2,29 +2,18 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
-        android:title="Preferences"
-        android:layout="@layout/activity_settings">
-        </PreferenceCategory>
-    <PreferenceCategory
         android:title="BUS ARRIVAL ALERTS">
         <Preference
             android:title="Active alerts"
             android:key="activeAlerts"/>
-        <CheckBoxPreference
+        <SwitchPreference
             android:title="Vibrate"
             android:defaultValue="true"
             android:key="vibrateNotification"/>
-        <CheckBoxPreference
+        <SwitchPreference
             android:title="Play sound"
             android:defaultValue="true"
             android:key="soundNotification"/>
-    </PreferenceCategory>
-    <PreferenceCategory
-        android:title="APPEARANCE">
-        <CheckBoxPreference
-            android:title="Transparent navigation bar"
-            android:defaultValue="false"
-            android:key="transparentNav"/>
     </PreferenceCategory>
     <PreferenceCategory
         android:title="ABOUT">
