@@ -37,9 +37,6 @@ public class TrolleyFragment extends Fragment {
         final ActionBar actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
         actionBar.setTitle("Tech Trolley");
         String[] destinations = getResources().getStringArray(R.array.trolley_destinations);
-        ColorDrawable headerColor = new ColorDrawable(
-                Color.parseColor("#ffca28"));
-        actionBar.setBackgroundDrawable(headerColor);
         ListView mRouteList = (ListView) getView().findViewById(R.id.trolley_cards);
         if (savedInstanceState != null) {
             mRouteList.setLayoutAnimation(null);

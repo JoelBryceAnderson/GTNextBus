@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:fitsSystemWindows="true"
     tools:context="com.janderson.gtnextbus.activities.About">
 
     <android.support.v7.widget.Toolbar
@@ -13,7 +12,8 @@
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:elevation="4dp"
-        android:background="#ffca28"/>
+        android:paddingTop="@dimen/toolbar_padding"
+        android:background="?attr/colorPrimary"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -23,7 +23,8 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:paddingTop="@dimen/padding_top"
+        android:layout_marginTop="@dimen/padding_top"
+        android:paddingTop="@dimen/toolbar_padding"
         android:paddingBottom="@dimen/padding_bottom"
         android:focusable="true"
         android:id="@+id/about_layout">

@@ -22,7 +22,6 @@ public class About extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.slide_in_activity, R.anim.stay_put_activity);
         setContentView(R.layout.activity_about);
         android.support.v7.widget.Toolbar mToolbar =
                 (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar_about);
@@ -113,18 +112,12 @@ public class About extends ActionBarActivity {
 
             case android.R.id.home:
                 finish();
-                overridePendingTransition(R.anim.stay_put_activity, R.anim.slide_out_activity);
 
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.stay_put_activity, R.anim.slide_out_activity);
-    }
 
     public void sendEmail() {
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(

@@ -16,7 +16,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -80,7 +79,6 @@ public class StopActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.slide_in_activity, R.anim.stay_put_activity);
         backupManager = new BackupManager(this);
         setContentView(R.layout.activity_stop);
         android.support.v7.widget.Toolbar mToolbar =
@@ -148,7 +146,6 @@ public class StopActivity extends ActionBarActivity {
         runTask();
     }
 
-
     private void runTask() {
         RssFeedTask rssTask = new RssFeedTask(this);
         rssTask.execute();
@@ -184,10 +181,6 @@ public class StopActivity extends ActionBarActivity {
         return s.concat(route);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
-    }
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -197,7 +190,6 @@ public class StopActivity extends ActionBarActivity {
                     startActivity(returnToMain);
                 }
                 finish();
-                overridePendingTransition(R.anim.stay_put_activity, R.anim.slide_out_activity);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -211,7 +203,6 @@ public class StopActivity extends ActionBarActivity {
             Intent returnToMain = new Intent(this, MainActivity.class);
             startActivity(returnToMain);
         }
-        overridePendingTransition(R.anim.stay_put_activity, R.anim.slide_out_activity);
     }
 
 
@@ -283,23 +274,15 @@ public class StopActivity extends ActionBarActivity {
         }
     }
 
-    public static boolean isNumeric(String str)
-    {
-        try
-        {
-            double d = Double.parseDouble(str);
-        }
-        catch(NumberFormatException nfe)
-        {
-            return false;
-        }
-        return true;
+    public static boolean isNumeric(String str) {
+        return str.matches("\\d");
     }
 
     private void createReminder(int position) {
         switch (position) {
             default:
-                String onClickText = ((StopItem) stopList.getItemAtPosition(position)).getTitle().toString();
+                String onClickText = ((StopItem) stopList.getItemAtPosition(position))
+                        .getTitle().toString();
                 alertPref = getSharedPreferences("alerts", MODE_PRIVATE);
                 posString = Integer.toString(position);
                 String stringKey = routeName + title + stop + posString;

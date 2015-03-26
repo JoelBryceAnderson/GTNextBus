@@ -12,7 +12,7 @@
 
     <ImageView
         android:layout_width="fill_parent"
-        android:layout_height="160dp"
+        android:layout_height="184dp"
         android:scaleType="centerCrop"
         android:id="@+id/large_image_drawer"/>
 

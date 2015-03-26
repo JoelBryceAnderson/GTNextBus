@@ -63,9 +63,6 @@ public class FavoriteFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         final ActionBar actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
         actionBar.setTitle("Favorite Stops");
-        ColorDrawable headerColor = new ColorDrawable(
-                Color.parseColor("#ffca28"));
-        actionBar.setBackgroundDrawable(headerColor);
         header = getResources().getString(R.string.favorite_destinations_header);
         mRouteList = (ListView) getView().findViewById(R.id.favorite_cards);
         LinearLayout noFavoritesLayout = (LinearLayout)
@@ -163,18 +160,18 @@ public class FavoriteFragment extends Fragment {
         for (Map.Entry<String, ?> entry : keys.entrySet()) {
             Set<String> item = (Set<String>) entry.getValue();
             Object[] itemArray = item.toArray();
-            for (int i = 0; i < itemArray.length; i++) {
-                if (itemArray[i].toString().startsWith("?")) {
-                    name = itemArray[i].toString().substring(1);
+            for (Object anItemArray : itemArray) {
+                if (anItemArray.toString().startsWith("?")) {
+                    name = anItemArray.toString().substring(1);
                     names[pos] = name;
-                } else if (itemArray[i].toString().startsWith("*")) {
-                    route = itemArray[i].toString().substring(1);
+                } else if (anItemArray.toString().startsWith("*")) {
+                    route = anItemArray.toString().substring(1);
                     routeTags[pos] = route;
-                } else if (itemArray[i].toString().startsWith("$")) {
-                    stop = itemArray[i].toString().substring(1);
+                } else if (anItemArray.toString().startsWith("$")) {
+                    stop = anItemArray.toString().substring(1);
                     stopTags[pos] = stop;
-                } else if (itemArray[i].toString().startsWith("#")) {
-                    color = itemArray[i].toString();
+                } else if (anItemArray.toString().startsWith("#")) {
+                    color = anItemArray.toString();
                     colors[pos] = color;
                 }
             }

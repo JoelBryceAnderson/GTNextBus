@@ -28,15 +28,11 @@ public class StopListActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.slide_in_activity, R.anim.stay_put_activity);
         setContentView(R.layout.activity_stop_list);
         android.support.v7.widget.Toolbar mToolbar =
                 (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar_stop_list);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Route Stops");
-        ColorDrawable headerColor = new ColorDrawable(
-                Color.parseColor("#ffca28"));
-        getSupportActionBar().setBackgroundDrawable(headerColor);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
         String[] strings = intent.getStringArrayExtra("extra");
@@ -46,7 +42,7 @@ public class StopListActivity extends ActionBarActivity {
         color = strings[1];
         routeTag = strings[2];
         ListView stopList = (ListView) this.findViewById(R.id.stop_list_cards);
-        ArrayList<StopItem> stopItems = new ArrayList<StopItem>();
+        ArrayList<StopItem> stopItems = new ArrayList<>();
         stopItems.add(new StopItem(title));
         for (String stop : stops) {
             stopItems.add(new StopItem(stop));
@@ -80,7 +76,6 @@ public class StopListActivity extends ActionBarActivity {
         if (intent != null) {
             startActivity(intent);
         } else {
-            // error in creating fragment
             Log.e("MainActivity", "Error in creating activity");
         }
     }
@@ -90,18 +85,12 @@ public class StopListActivity extends ActionBarActivity {
 
             case android.R.id.home:
                 finish();
-                overridePendingTransition(R.anim.stay_put_activity, R.anim.slide_out_activity);
 
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.stay_put_activity, R.anim.slide_out_activity);
-    }
 }
 
 

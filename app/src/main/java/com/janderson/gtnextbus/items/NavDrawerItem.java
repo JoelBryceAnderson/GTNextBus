@@ -5,7 +5,6 @@ public class NavDrawerItem {
     private String title;
     private int icon;
     private boolean isIcon;
-    private int largeImage;
 
     public NavDrawerItem(String title, int icon, boolean isIcon){
         this.title = title;

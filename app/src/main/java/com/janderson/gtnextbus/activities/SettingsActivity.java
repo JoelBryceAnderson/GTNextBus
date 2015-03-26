@@ -16,7 +16,6 @@ public class SettingsActivity extends ActionBarActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.slide_in_activity, R.anim.stay_put_activity);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
         setContentView(R.layout.activity_settings);
         android.support.v7.widget.Toolbar mToolbar =
@@ -33,17 +32,10 @@ public class SettingsActivity extends ActionBarActivity {
 
             case android.R.id.home:
                 finish();
-                overridePendingTransition(R.anim.stay_put_activity, R.anim.slide_out_activity);
 
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.stay_put_activity, R.anim.slide_out_activity);
     }
 
     public static class MyPreferenceFragment extends PreferenceFragment {

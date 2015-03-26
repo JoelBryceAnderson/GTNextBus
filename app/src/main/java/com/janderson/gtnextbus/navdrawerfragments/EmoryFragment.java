@@ -37,9 +37,6 @@ public class EmoryFragment extends Fragment {
         final ActionBar actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
         actionBar.setTitle("Emory Shuttle");
         String[] destinations = getResources().getStringArray(R.array.emory_destinations);
-        ColorDrawable headerColor = new ColorDrawable(
-                Color.parseColor("#ffca28"));
-        actionBar.setBackgroundDrawable(headerColor);
         ListView mRouteList = (ListView) getView().findViewById(R.id.emory_cards);
         if (savedInstanceState != null) {
             mRouteList.setLayoutAnimation(null);

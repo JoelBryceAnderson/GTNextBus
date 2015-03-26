@@ -2,7 +2,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="fill_parent"
     android:layout_width="fill_parent"
-    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
@@ -12,8 +11,9 @@
         android:layout_height="wrap_content"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:paddingTop="@dimen/toolbar_padding"
         android:elevation="4dp"
-        android:background="#ffca28">
+        android:background="?attr/colorPrimary">
 
         <Spinner
             android:id="@+id/map_route_spinner"

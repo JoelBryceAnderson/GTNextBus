@@ -51,13 +51,12 @@ public class AlertsActivity extends ActionBarActivity {
     private static final int MOVE_DURATION = 150;
     private static final int SWIPE_DURATION = 250;
     private int removedPosition;
-    private HashMap<Long, Integer> mItemIdTopMap = new HashMap<Long, Integer>();
+    private HashMap<Long, Integer> mItemIdTopMap = new HashMap<>();
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.slide_in_activity, R.anim.stay_put_activity);
         setContentView(R.layout.activity_alerts);
         android.support.v7.widget.Toolbar mToolbar =
                 (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar_alerts);
@@ -67,7 +66,7 @@ public class AlertsActivity extends ActionBarActivity {
         noAlertsText = (TextView) findViewById(R.id.no_alerts_text);
         noAlertsImage = (ImageView) findViewById(R.id.no_alerts_image);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        alertItems = new ArrayList<StopItem>();
+        alertItems = new ArrayList<>();
         SharedPreferences alertPref = getSharedPreferences("alerts", MODE_PRIVATE);
         Map<String, ?> keys = alertPref.getAll();
         alertRoutes = new String[keys.size()];
@@ -121,18 +120,12 @@ public class AlertsActivity extends ActionBarActivity {
 
             case android.R.id.home:
                 finish();
-                overridePendingTransition(R.anim.stay_put_activity, R.anim.slide_out_activity);
 
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.stay_put_activity, R.anim.slide_out_activity);
-    }
 
     private void removeItem(int position) {
         int arrayPosition = (position - 1);
@@ -151,32 +144,32 @@ public class AlertsActivity extends ActionBarActivity {
         SharedPreferences alertPref = getSharedPreferences("alerts", MODE_PRIVATE);
         alertPref.edit().remove(stringKey).apply();
 
-        List<String> alertRoutesTemp = new LinkedList<String>(
+        List<String> alertRoutesTemp = new LinkedList<>(
                 Arrays.asList(alertRoutes));
         alertRoutesTemp.remove(arrayPosition);
         alertRoutes = alertRoutesTemp.toArray(new
                 String[alertRoutesTemp.size()]);
 
 
-        List<String> alertTitlesTemp = new LinkedList<String>(
+        List<String> alertTitlesTemp = new LinkedList<>(
                 Arrays.asList(alertTitles));
         alertTitlesTemp.remove(arrayPosition);
         alertTitles = alertTitlesTemp.toArray(new
                 String[alertTitlesTemp.size()]);
 
-        List<String> alertPosStringsTemp = new LinkedList<String>(Arrays.asList(
+        List<String> alertPosStringsTemp = new LinkedList<>(Arrays.asList(
                 alertPosStrings));
         alertPosStringsTemp.remove(arrayPosition);
         alertPosStrings = alertPosStringsTemp.toArray(new
                 String[alertPosStringsTemp.size()]);
 
-        List<String> alertStopsTemp = new LinkedList<String>(
+        List<String> alertStopsTemp = new LinkedList<>(
                 Arrays.asList(alertStops));
         alertStopsTemp.remove(arrayPosition);
         alertStops = alertStopsTemp.toArray(new
                 String[alertStopsTemp.size()]);
 
-        List<Integer> alertNumbersTemp = new LinkedList<Integer>(
+        List<Integer> alertNumbersTemp = new LinkedList<>(
                 Arrays.asList(alertNumbers));
         alertNumbersTemp.remove(arrayPosition);
         alertNumbers = alertNumbersTemp.toArray(new

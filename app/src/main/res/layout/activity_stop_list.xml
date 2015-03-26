@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/activity_stop_list"
-    android:fitsSystemWindows="true"
     tools:context="com.janderson.gtnextbus.activities.StopListActivity">
 
     <android.support.v7.widget.Toolbar
@@ -13,8 +12,9 @@
         android:layout_height="wrap_content"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:paddingTop="@dimen/toolbar_padding"
         android:elevation="4dp"
-        android:background="#ffca28"/>
+        android:background="?attr/colorPrimary"/>
 
         <ListView
             android:id="@+id/stop_list_cards"
@@ -26,6 +26,7 @@
             android:dividerHeight="0dp"
             android:listSelector="#00000000"
             android:layout_marginTop="@dimen/padding_top"
+            android:paddingTop="@dimen/toolbar_padding"
             android:paddingBottom="@dimen/padding_bottom"
             android:layoutAnimation="@anim/listview_anim"
             android:clipChildren="false"

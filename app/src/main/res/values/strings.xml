@@ -41,11 +41,14 @@
     </string-array>
 
     <array name="icons">
-        <item>@drawable/ic_gear_40</item>
+        <item>@drawable/ic_gear</item>
         <item>@drawable/ic_nav_bus</item>
         <item>@drawable/ic_nav_moon</item>
         <item>@drawable/ic_nav_star</item>
         <item>@drawable/ic_nav_trolley</item>
+        <item>@drawable/ic_clockwise</item>
+        <item>@drawable/ic_counterclockwise</item>
+        <item>@drawable/ic_health</item>
     </array>
 
     <string-array name="red_routes">

@@ -6,7 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
-import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
@@ -44,7 +44,6 @@ public class MainActivity extends ActionBarActivity {
     private boolean changeFragment;
     private int positionToDisplay;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,12 +64,12 @@ public class MainActivity extends ActionBarActivity {
                 .obtainTypedArray(R.array.icons);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ArrayList<NavDrawerItem> navDrawerItems = new ArrayList<NavDrawerItem>();
+        ArrayList<NavDrawerItem> navDrawerItems = new ArrayList<>();
         navDrawerItems.add(new NavDrawerItem("image"));
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], icons.getResourceId(1, -1), true));
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], icons.getResourceId(1, -1), true));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], icons.getResourceId(5, -1), true));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], icons.getResourceId(6, -1), true));
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], icons.getResourceId(1, -1), true));
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], icons.getResourceId(4, -1), true));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], icons.getResourceId(7, -1), true));
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], icons.getResourceId(4, -1), true));
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], icons.getResourceId(2, -1), true));
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[6], icons.getResourceId(3, -1), true));
@@ -86,10 +85,17 @@ public class MainActivity extends ActionBarActivity {
                 R.string.app_name,
                 R.string.app_name
         ) {
+            @Override
             public void onDrawerClosed(View drawerView) {
                 if (changeFragment) {
                     displayView(positionToDisplay);
                 }
+            }
+            @Override
+            public void onDrawerOpened(View drawerView) {
+            }
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -205,7 +211,6 @@ public class MainActivity extends ActionBarActivity {
             }
         }
     }
-
 
     @Override
     public void onSaveInstanceState(Bundle outState) {

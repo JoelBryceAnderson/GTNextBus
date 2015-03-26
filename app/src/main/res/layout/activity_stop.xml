@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:fitsSystemWindows="true"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:id="@+id/activity_stop"
@@ -16,7 +15,8 @@
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:elevation="4dp"
-        android:background="#ffca28"/>
+        android:paddingTop="@dimen/toolbar_padding"
+        android:background="?attr/colorPrimary"/>
 
     <RelativeLayout
         android:orientation="vertical"
@@ -26,6 +26,7 @@
         android:clipToPadding="false"
         android:layout_marginTop="@dimen/padding_top"
         android:paddingBottom="@dimen/padding_bottom"
+        android:paddingTop="@dimen/toolbar_padding"
         android:id="@+id/lay">
 
         <android.support.v4.widget.SwipeRefreshLayout

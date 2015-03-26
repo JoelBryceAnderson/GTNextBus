@@ -2,17 +2,17 @@
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@color/gray</item>
-        <item name="colorPrimary">#ffca28</item>
-        <item name="colorAccent">#ffb300</item>
-        <item name="colorPrimaryDark">#ffb300</item>
+        <item name="colorPrimary">#FBC02D</item>
+        <item name="colorAccent">#FFC107</item>
+        <item name="colorPrimaryDark">#FF9800</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
-        <item name="spinBars">false</item>
         <item name="color">@android:color/white</item>
+        <item name="spinBars">false</item>
     </style>
 
     <style name="dialog_animation">

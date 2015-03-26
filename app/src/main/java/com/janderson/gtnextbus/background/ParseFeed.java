@@ -77,8 +77,6 @@ public class ParseFeed {
                             thirdTime = predict + " minutes";
                             notYetThird = false;
                         }
-                        else{
-                        }
                         break;
 
                     case XmlPullParser.END_TAG:

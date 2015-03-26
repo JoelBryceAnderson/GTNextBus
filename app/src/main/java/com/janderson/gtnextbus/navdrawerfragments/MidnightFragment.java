@@ -36,9 +36,6 @@ public class MidnightFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         final ActionBar actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
         actionBar.setTitle("Midnight Rambler");
-        ColorDrawable headerColor = new ColorDrawable(
-                Color.parseColor("#ffca28"));
-        actionBar.setBackgroundDrawable(headerColor);
         String[] destinations = getResources().getStringArray(R.array.midnight_destinations);
         ListView mRouteList = (ListView) getView().findViewById(R.id.midnight_cards);
         if (savedInstanceState != null) {

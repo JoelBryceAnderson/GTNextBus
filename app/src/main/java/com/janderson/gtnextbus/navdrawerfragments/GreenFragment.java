@@ -36,9 +36,6 @@ public class GreenFragment extends Fragment {
         final ActionBar actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
         actionBar.setTitle("Green Route");
         String[] destinations = getResources().getStringArray(R.array.green_destinations);
-        ColorDrawable headerColor = new ColorDrawable(
-                Color.parseColor("#ffca28"));
-        actionBar.setBackgroundDrawable(headerColor);
         ListView mRouteList = (ListView) getView().findViewById(R.id.green_cards);
         if (savedInstanceState != null) {
             mRouteList.setLayoutAnimation(null);
